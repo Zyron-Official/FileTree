@@ -8,7 +8,7 @@ This documentation guides you on how to integrate and use the ```FileTree``` lib
 
 2. **Integration**
 
-   ##### &#9702; 2.1. Dependencies
+    &#9702; 2.1. Dependencies
 
     &#9702; 2.2. Initialization and Loading
 
@@ -26,15 +26,15 @@ This documentation guides you on how to integrate and use the ```FileTree``` lib
 
     &#9702; 3.4. Create
 
-**Customizing Icons**
+4. **Customizing Icons**
 
-**Thread System**
+5. **Thread System**
 
-**Example (Swing)**
+5. **Example (Swing)**
 
-**Frequently Asked Questions (FAQ)**
+7. **Frequently Asked Questions (FAQ)**
 
-1. **Introduction**
+## 1. **Introduction**
 
 The FileTree library provides a robust and modular way to manage and display file trees within your IDEs and code editors. It offers the following key features:
 
