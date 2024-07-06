@@ -6,9 +6,9 @@ This documentation guides you on how to integrate and use the ```FileTree``` lib
 ### Table of Contents:
 
 
-1. ### Introduction
+### 1. Introduction
 
-2. ### Integration
+### 2. Integration
 
     &#9702; 2.1. Dependencies
 
@@ -18,7 +18,7 @@ This documentation guides you on how to integrate and use the ```FileTree``` lib
 
     &#9702; 2.4. Event Handling
 
-3. ### File Operations
+### 3. File Operations
 
     &#9702; 3.1. Copy, Cut, Paste
 
@@ -28,13 +28,13 @@ This documentation guides you on how to integrate and use the ```FileTree``` lib
 
     &#9702; 3.4. Create
 
-4. ### Customizing Icons
+### 4. Customizing Icons
 
-5. ### Thread System
+### 5. Thread System
 
-5. ### Example (Swing)
+### 6. Example (Swing)
 
-7. ### Frequently Asked Questions (FAQ)
+### 7. Frequently Asked Questions (FAQ)
 
 ## 1. Introduction
 
@@ -72,13 +72,12 @@ fileTree.loadTree();
 
 This step involves integrating the ```FileTree``` library with your IDE's UI framework. The specific implementation will vary depending on your chosen UI framework. Below are examples for common frameworks:
 
-- **Swing (Java):** Use a JTree component and create a custom TreeModel that uses the FileTreeNode data from your ```FileTree``` object.
-
+- **Swing (Java):** Use a JTree component and create a custom TreeModel that uses the FileTreeNode data from your ```FileTree``` object. 
 Alternatively, use the FileTreeAdapter (if provided) to populate the JTree.
 
 - **SWT (Java):** Similar to Swing, use a TreeViewer and a custom TreeContentProvider to map your FileTreeNode data.
 
-- **Jetpack Compose (Android/Kotlin):** Define a composable that renders the file tree using your ```FileTree``` data.
+- **Jetpack Compose (Android/Kotlin):** Define a composable that renders the file tree using your ```FileTree``` data. 
 
 You might need to create a custom composable to display the tree nodes (similar to a custom TreeCellRenderer in Swing).
 
@@ -226,21 +225,21 @@ public class IDEExample {
 
 ## 7. Frequently Asked Questions (FAQ)
 
-**Q:** How do I get the selected file or folder in the file tree?
+### Q: How do I get the selected file or folder in the file tree?
 
-**A:** Use the event listener for node selection to retrieve the selected node. The selected node will likely represent the FileTreeNode object that you can use to access the underlying File object.
+### A: Use the event listener for node selection to retrieve the selected node. The selected node will likely represent the FileTreeNode object that you can use to access the underlying File object.
 
-**Q:** How do I refresh the file tree after making changes to the file system?
+### Q: How do I refresh the file tree after making changes to the file system?
 
-**A:** Use the loadTree() method to reload the tree structure. If you only need to update a portion of the tree, you can refresh specific nodes or sections.
+### A: Use the loadTree() method to reload the tree structure. If you only need to update a portion of the tree, you can refresh specific nodes or sections.
 
-**Q:** Can I customize the appearance of the file tree?
+### Q: Can I customize the appearance of the file tree?
 
-**A:** Yes, you can customize the appearance by using custom renderers (Swing, SWT) or composables (Jetpack Compose) to control the display of nodes.
+### A: Yes, you can customize the appearance by using custom renderers (Swing, SWT) or composables (Jetpack Compose) to control the display of nodes.
 
-**Q:** Can I use the FileTree library for other purposes besides IDEs and Code Editors?
+### Q: Can I use the FileTree library for other purposes besides IDEs and Code Editors?
 
-**A:** Yes, the library can be adapted for other applications that require file tree management, such as file explorers or project management tools.
+### A: Yes, the library can be adapted for other applications that require file tree management, such as file explorers or project management tools.
 
 ### License
 ```
