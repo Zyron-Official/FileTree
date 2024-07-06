@@ -74,13 +74,13 @@ This step involves integrating the ```FileTree``` library with your IDE's UI fra
 
 - **Swing (Java):** Use a JTree component and create a custom TreeModel that uses the FileTreeNode data from your ```FileTree``` object. 
 
-Alternatively, use the FileTreeAdapter (if provided) to populate the JTree.
+    Alternatively, use the FileTreeAdapter (if provided) to populate the JTree.
 
 - **SWT (Java):** Similar to Swing, use a TreeViewer and a custom TreeContentProvider to map your FileTreeNode data.
 
 - **Jetpack Compose (Android/Kotlin):** Define a composable that renders the file tree using your ```FileTree``` data. 
 
-You might need to create a custom composable to display the tree nodes (similar to a custom TreeCellRenderer in Swing).
+    You might need to create a custom composable to display the tree nodes (similar to a custom TreeCellRenderer in Swing).
 
 ### Example (Swing):
 
