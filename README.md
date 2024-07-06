@@ -10,7 +10,7 @@ This documentation guides you on how to integrate and use the ```FileTree``` lib
 
  2.1. Dependencies
 
-- &#x9702; 2.2. Initialization and Loading
+- &#9702; 2.2. Initialization and Loading
 
 ○ 2.3. UI Integration
 
