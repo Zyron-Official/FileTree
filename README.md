@@ -59,19 +59,15 @@ First, add the FileTree library as a dependency to your project using a build sy
 
 Create an Instance: Instantiate a FileTree object, providing the root directory:
 
+```java
 FileTree fileTree = new FileTree(new File("/")); // Replace with your root directory
-content_copy
-Use code with caution.
-Java
+```
 
 Load the Tree: Call the loadTree() method to load the initial file tree structure. This will load the root directory and its immediate children:
 
 ```java
 fileTree.loadTree();
 ```
-content_copy
-Use code with caution.
-Java
 2.3. UI Integration
 
 This step involves integrating the FileTree library with your IDE's UI framework. The specific implementation will vary depending on your chosen UI framework. Below are examples for common frameworks:
