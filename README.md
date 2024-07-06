@@ -1,8 +1,8 @@
-##FileTree Library: A Powerful File Explorer for IDEs and Code Editors
+## FileTree Library: A Powerful File Explorer for IDEs and Code Editors
 
 This documentation guides you on how to integrate and use the ```FileTree``` library within your IDEs and Code Editors to provide a user-friendly and efficient file browsing experience.
 
-__Table of Contents:
+__ Table of Contents:
 
 Introduction
 
