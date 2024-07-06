@@ -72,24 +72,25 @@ fileTree.loadTree();
 
 This step involves integrating the FileTree library with your IDE's UI framework. The specific implementation will vary depending on your chosen UI framework. Below are examples for common frameworks:
 
-Swing (Java):
+- **Swing (Java):**
 
 Use a JTree component and create a custom TreeModel that uses the FileTreeNode data from your FileTree object.
 
 Alternatively, use the FileTreeAdapter (if provided) to populate the JTree.
 
-SWT (Java):
+- **SWT (Java):**
 
 Similar to Swing, use a TreeViewer and a custom TreeContentProvider to map your FileTreeNode data.
 
-Jetpack Compose (Android/Kotlin):
+- **Jetpack Compose (Android/Kotlin):**
 
 Define a composable that renders the file tree using your FileTree data.
 
 You might need to create a custom composable to display the tree nodes (similar to a custom TreeCellRenderer in Swing).
 
-Example (Swing):
+**Example (Swing):**
 
+```java
 import com.example.filetree.FileTree;
 import javax.swing.*;
 import java.awt.*;
@@ -130,9 +131,8 @@ public class IDEExample {
         // Implement a custom TreeModel based on your FileTree data
     }
 }
-content_copy
-Use code with caution.
-Java
+```
+
 2.4. Event Handling
 
 Your FileTree library should provide events or callbacks that you can use to react to user actions within the file tree:
