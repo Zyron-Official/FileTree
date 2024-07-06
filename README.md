@@ -40,15 +40,15 @@ This documentation guides you on how to integrate and use the ```FileTree``` lib
 
 The ```FileTree``` library provides a robust and modular way to manage and display file trees within your IDEs and code editors. It offers the following key features:
 
-Hierarchical File Tree Representation: Presents files and folders in a hierarchical tree structure.
+- **Hierarchical File Tree Representation:** Presents files and folders in a hierarchical tree structure.
 
-Lazy Loading: Optimizes loading time by only loading child nodes when expanded.
+- **Lazy Loading:** Optimizes loading time by only loading child nodes when expanded.
 
-Asynchronous File Operations: Performs file operations (copy, paste, delete, etc.) in the background to avoid blocking the UI.
+- **Asynchronous File Operations:** Performs file operations (copy, paste, delete, etc.) in the background to avoid blocking the UI.
 
-Customizable Icons: Allows you to set custom icons for files and folders.
+- **Customizable Icons:** Allows you to set custom icons for files and folders.
 
-Flexibility: Integrates seamlessly with various IDE UI frameworks (Swing, SWT, Jetpack Compose).
+- **Flexibility:** Integrates seamlessly with various IDE UI frameworks (Swing, SWT, Jetpack Compose).
 
 ## 2. Integration
 **2.1. Dependencies**
