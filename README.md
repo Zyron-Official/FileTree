@@ -50,25 +50,25 @@ Customizable Icons: Allows you to set custom icons for files and folders.
 
 Flexibility: Integrates seamlessly with various IDE UI frameworks (Swing, SWT, Jetpack Compose).
 
-2. Integration
-2.1. Dependencies
+## 2. Integration
+**2.1. Dependencies**
 
-First, add the FileTree library as a dependency to your project using a build system like Maven or Gradle. The specific instructions for adding a dependency will depend on your IDE and build system.
+First, add the ```FileTree``` library as a dependency to your project using a build system like Maven or Gradle. The specific instructions for adding a dependency will depend on your IDE and build system.
 
-2.2. Initialization and Loading
+**2.2. Initialization and Loading**
 
-Create an Instance: Instantiate a FileTree object, providing the root directory:
+**Create an Instance:** Instantiate a FileTree object, providing the root directory:
 
 ```java
 FileTree fileTree = new FileTree(new File("/")); // Replace with your root directory
 ```
 
-Load the Tree: Call the loadTree() method to load the initial file tree structure. This will load the root directory and its immediate children:
+**Load the Tree:** Call the loadTree() method to load the initial file tree structure. This will load the root directory and its immediate children:
 
 ```java
 fileTree.loadTree();
 ```
-2.3. UI Integration
+**2.3. UI Integration**
 
 This step involves integrating the FileTree library with your IDE's UI framework. The specific implementation will vary depending on your chosen UI framework. Below are examples for common frameworks:
 
