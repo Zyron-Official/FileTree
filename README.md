@@ -72,17 +72,17 @@ fileTree.loadTree();
 
 This step involves integrating the FileTree library with your IDE's UI framework. The specific implementation will vary depending on your chosen UI framework. Below are examples for common frameworks:
 
-- **Swing (Java):**
+-**Swing (Java):**
 
 Use a JTree component and create a custom TreeModel that uses the FileTreeNode data from your FileTree object.
 
 Alternatively, use the FileTreeAdapter (if provided) to populate the JTree.
 
-- **SWT (Java):**
+-**SWT (Java):**
 
 Similar to Swing, use a TreeViewer and a custom TreeContentProvider to map your FileTreeNode data.
 
-- **Jetpack Compose (Android/Kotlin):**
+-**Jetpack Compose (Android/Kotlin):**
 
 Define a composable that renders the file tree using your FileTree data.
 
