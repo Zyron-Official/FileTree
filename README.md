@@ -3,12 +3,12 @@
 This documentation guides you on how to integrate and use the ```FileTree``` library within your IDEs and Code Editors to provide a user-friendly and efficient file browsing experience.
 
 
-**Table of Contents:**
+###Table of Contents:
 
 
-1. **Introduction**
+1. ### Introduction
 
-2. **Integration**
+2. ### Integration
 
     &#9702; 2.1. Dependencies
 
@@ -18,7 +18,7 @@ This documentation guides you on how to integrate and use the ```FileTree``` lib
 
     &#9702; 2.4. Event Handling
 
-3. **File Operations**
+3. ### File Operations
 
     &#9702; 3.1. Copy, Cut, Paste
 
@@ -28,15 +28,15 @@ This documentation guides you on how to integrate and use the ```FileTree``` lib
 
     &#9702; 3.4. Create
 
-4. **Customizing Icons**
+4. ### Customizing Icons
 
-5. **Thread System**
+5. ### Thread System
 
-5. **Example (Swing)**
+5. ### Example (Swing)
 
-7. **Frequently Asked Questions (FAQ)**
+7. ### Frequently Asked Questions (FAQ)
 
-## 1. **Introduction**
+## 1. Introduction
 
 The ```FileTree``` library provides a robust and modular way to manage and display file trees within your IDEs and code editors. It offers the following key features:
 
@@ -44,11 +44,11 @@ The ```FileTree``` library provides a robust and modular way to manage and displ
 
 - **Lazy Loading:** Optimizes loading time by only loading child nodes when expanded.
 
-- **Asynchronous File Operations:** Performs file operations (copy, paste, delete, etc.) in the background to avoid blocking the UI.
+- **Asynchronous File Operations:** Performs file operations ((copy, paste, delete, etc.)* in the background to avoid blocking the UI.
 
 - **Customizable Icons:** Allows you to set custom icons for files and folders.
 
-- **Flexibility:** Integrates seamlessly with various IDE UI frameworks (Swing, SWT, Jetpack Compose).
+- **Flexibility:** Integrates seamlessly with various IDE UI frameworks *(Swing, SWT, Jetpack Compose)*.
 
 ## 2. Integration
 ### 2.1. Dependencies
@@ -63,7 +63,7 @@ First, add the ```FileTree``` library as a dependency to your project using a bu
 FileTree fileTree = new FileTree(new File("/")); // Replace with your root directory
 ```
 
-**2. Load the Tree:** Call the loadTree() method to load the initial file tree structure. This will load the root directory and its immediate children:
+**2. Load the Tree:** Call the *loadTree()* method to load the initial file tree structure. This will load the root directory and its immediate children:
 
 ```java
 fileTree.loadTree();
@@ -72,21 +72,15 @@ fileTree.loadTree();
 
 This step involves integrating the FileTree library with your IDE's UI framework. The specific implementation will vary depending on your chosen UI framework. Below are examples for common frameworks:
 
-- **Swing (Java):**
+- **Swing (Java):** Use a JTree component and create a custom TreeModel that uses the FileTreeNode data from your FileTree object.
 
-Use a JTree component and create a custom TreeModel that uses the FileTreeNode data from your FileTree object.
+Alternatively, use the FileTreeAdapter *(if provided)* to populate the JTree.
 
-Alternatively, use the FileTreeAdapter (if provided) to populate the JTree.
+- **SWT (Java):** Similar to Swing, use a TreeViewer and a custom TreeContentProvider to map your FileTreeNode data.
 
-- **SWT (Java):**
+- **Jetpack Compose (Android/Kotlin):** Define a composable that renders the file tree using your FileTree data.
 
-Similar to Swing, use a TreeViewer and a custom TreeContentProvider to map your FileTreeNode data.
-
-- **Jetpack Compose (Android/Kotlin):**
-
-Define a composable that renders the file tree using your FileTree data.
-
-You might need to create a custom composable to display the tree nodes (similar to a custom TreeCellRenderer in Swing).
+You might need to create a custom composable to display the tree nodes *(similar to a custom TreeCellRenderer in Swing)*.
 
 ### Example (Swing):
 
@@ -135,13 +129,13 @@ public class IDEExample {
 
 ### 2.4. Event Handling
 
-Your FileTree library should provide events or callbacks that you can use to react to user actions within the file tree:
+Your ```FileTree``` library should provide events or callbacks that you can use to react to user actions within the file tree:
 
 **Node Selection:** Register a listener to get notified when the user selects a file or folder.
 
 **Expansion/Collapse:** Get notified when a folder is expanded or collapsed.
 
-**File Operations Completion:** Get notified when file operations (copy, paste, delete, etc.) are completed.
+**File Operations Completion:** Get notified when file operations *(copy, paste, delete, etc.)* are completed.
 
 Handle these events in your IDE's logic to perform actions like opening files, displaying properties, or refreshing UI elements.
 
@@ -151,37 +145,37 @@ The FileTree library provides methods for performing common file system operatio
 
 ### 3.1. Copy, Cut, Paste
 
-**Copy:** Use the copyFile(source: File, destination: File) method to copy a file or folder.
+**Copy:** Use the copyFile*(source: File, destination: File)* method to copy a file or folder.
 
-**Cut:** Use the moveFile(source: File, destination: File) method to move a file or folder.
+**Cut:** Use the moveFile*(source: File, destination: File)* method to move a file or folder.
 
 **Paste:** You'll need to implement paste logic within your IDE, using the copied or cut file from the clipboard and the copyFile or moveFile methods to perform the actual file operation.
 
 ### 3.2. Delete
 
-Use the deleteFile(file: File) method to delete a file or folder. If you delete a folder, it will recursively delete all its contents.
+Use the deleteFile*(file: File)* method to delete a file or folder. If you delete a folder, it will recursively delete all its contents.
 
 ### 3.3. Rename
 
-Use the renameFile(file: File, newName: String) method to rename a file or folder.
+Use the renameFile*(file: File, newName: String)* method to rename a file or folder.
 
 ### 3.4. Create
 
-**Create File:** Use the createFile(parent: File, fileName: String) method to create a new file.
+**Create File:** Use the createFile*(parent: File, fileName: String)* method to create a new file.
 
-**Create Folder:** Use the createFolder(parent: File, folderName: String) method to create a new folder.
+**Create Folder:** Use the createFolder*(parent: File, folderName: String)* method to create a new folder.
 
 ## 4. Customizing Icons
 
 The ```FileTree``` library allows you to specify custom icons for files and folders. You can either provide a default set of icons or allow users to customize them within your IDE's settings.
 
-Resource IDs (Android): If you're using Android, you can provide resource IDs (e.g., R.drawable.my_folder_icon) for icons.
+Resource IDs (Android): If you're using Android, you can provide resource IDs *(e.g., R.drawable.my_folder_icon)* for icons.
 
 Paths (Generic): For cross-platform compatibility, you can allow users to provide file paths for icon images.
 
 ## 5. Thread System
 
-The FileTree library typically uses a thread system to perform file operations in the background. This ensures that the UI thread remains responsive while the operations are executed. The library may provide methods for controlling the thread system:
+The ```FileTree``` library typically uses a thread system to perform file operations in the background. This ensures that the UI thread remains responsive while the operations are executed. The library may provide methods for controlling the thread system:
 
 **Initiating Loading:** You may need to start a background thread to load the initial file tree structure.
 
@@ -256,7 +250,7 @@ Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
 You may obtain a copy of the License at
 
-[Link](http://www.apache.org/licenses/LICENSE-2.0)
+http://www.apache.org/licenses/LICENSE-2.0
 
 Unless required by applicable law or agreed to in writing, software
 distributed under the License is distributed on an "AS IS" BASIS,
