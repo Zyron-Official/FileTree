@@ -6,17 +6,17 @@ This documentation guides you on how to integrate and use the ```FileTree``` lib
 ### Table of Contents:
 
 
-    **1. Introduction**
+   **1. Introduction**
 
-    **2. Integration**
+   **2. Integration**
 
-     &#9702; 2.1. Dependencies
+    &#9702; 2.1. Dependencies
 
-     &#9702; 2.2. Initialization and Loading
+    &#9702; 2.2. Initialization and Loading
 
-     &#9702; 2.3. UI Integration
+    &#9702; 2.3. UI Integration
 
-     &#9702; 2.4. Event Handling
+    &#9702; 2.4. Event Handling
 
     **3. File Operations**
 
