@@ -145,17 +145,17 @@ Your FileTree library should provide events or callbacks that you can use to rea
 
 Handle these events in your IDE's logic to perform actions like opening files, displaying properties, or refreshing UI elements.
 
-**3. File Operations**
+## 3. File Operations
 
 The FileTree library provides methods for performing common file system operations.
 
 **3.1. Copy, Cut, Paste**
 
-Copy: Use the copyFile(source: File, destination: File) method to copy a file or folder.
+**Copy:** Use the copyFile(source: File, destination: File) method to copy a file or folder.
 
-Cut: Use the moveFile(source: File, destination: File) method to move a file or folder.
+**Cut:** Use the moveFile(source: File, destination: File) method to move a file or folder.
 
-Paste: You'll need to implement paste logic within your IDE, using the copied or cut file from the clipboard and the copyFile or moveFile methods to perform the actual file operation.
+**Paste:** You'll need to implement paste logic within your IDE, using the copied or cut file from the clipboard and the copyFile or moveFile methods to perform the actual file operation.
 
 **3.2. Delete**
 
@@ -171,7 +171,7 @@ Use the renameFile(file: File, newName: String) method to rename a file or folde
 
 **Create Folder:** Use the createFolder(parent: File, folderName: String) method to create a new folder.
 
-**4. Customizing Icons**
+## 4. Customizing Icons
 
 The ```FileTree``` library allows you to specify custom icons for files and folders. You can either provide a default set of icons or allow users to customize them within your IDE's settings.
 
@@ -179,7 +179,7 @@ Resource IDs (Android): If you're using Android, you can provide resource IDs (e
 
 Paths (Generic): For cross-platform compatibility, you can allow users to provide file paths for icon images.
 
-**5. Thread System**
+## 5. Thread System
 
 The FileTree library typically uses a thread system to perform file operations in the background. This ensures that the UI thread remains responsive while the operations are executed. The library may provide methods for controlling the thread system:
 
@@ -187,7 +187,7 @@ The FileTree library typically uses a thread system to perform file operations i
 
 **Pausing/Resuming:** In some cases, you might want to pause or resume loading operations.
 
-**6. Example (Swing)**
+## 6. Example (Swing)
 
 Here's a basic example of using the FileTree library with Swing:
 
@@ -248,7 +248,7 @@ Q: Can I use the FileTree library for other purposes besides IDEs and Code Edito
 
 A: Yes, the library can be adapted for other applications that require file tree management, such as file explorers or project management tools.
 
-### License
+## License
 ```
 Copyright 2024 Zyron
 
