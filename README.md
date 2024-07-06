@@ -38,7 +38,7 @@ This documentation guides you on how to integrate and use the ```FileTree``` lib
 
 ## 1. **Introduction**
 
-The FileTree library provides a robust and modular way to manage and display file trees within your IDEs and code editors. It offers the following key features:
+The ```FileTree``` library provides a robust and modular way to manage and display file trees within your IDEs and code editors. It offers the following key features:
 
 Hierarchical File Tree Representation: Presents files and folders in a hierarchical tree structure.
 
@@ -66,7 +66,7 @@ Java
 
 Load the Tree: Call the loadTree() method to load the initial file tree structure. This will load the root directory and its immediate children:
 
-fileTree.loadTree();
+```fileTree.loadTree();```
 content_copy
 Use code with caution.
 Java
