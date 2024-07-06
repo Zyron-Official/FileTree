@@ -8,33 +8,33 @@ This documentation guides you on how to integrate and use the ```FileTree``` lib
 
 2. **Integration**
 
- 2.1. Dependencies
+ 2.1. **Dependencies**
 
-- &#9702; 2.2. Initialization and Loading
+&#9702; 2.2. Initialization and Loading
 
-○ 2.3. UI Integration
+&#9702; 2.3. UI Integration
 
-○ 2.4. Event Handling
+&#9702; 2.4. Event Handling
 
-** File Operations
+**File Operations**
 
-3.1. Copy, Cut, Paste
+&#9702; 3.1. Copy, Cut, Paste
 
-3.2. Delete
+&#9702; 3.2. Delete
 
-3.3. Rename
+&#9702; 3.3. Rename
 
-3.4. Create
+&#9702; 3.4. Create
 
-Customizing Icons
+**Customizing Icons**
 
-Thread System
+**Thread System**
 
-Example (Swing)
+**Example (Swing)**
 
-Frequently Asked Questions (FAQ)
+**Frequently Asked Questions (FAQ)**
 
-1. Introduction
+1. **Introduction**
 
 The FileTree library provides a robust and modular way to manage and display file trees within your IDEs and code editors. It offers the following key features:
 
