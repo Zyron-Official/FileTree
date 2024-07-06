@@ -66,7 +66,9 @@ Java
 
 Load the Tree: Call the loadTree() method to load the initial file tree structure. This will load the root directory and its immediate children:
 
-```kotlin fileTree.loadTree();```
+```java
+fileTree.loadTree();
+```
 content_copy
 Use code with caution.
 Java
