@@ -10,23 +10,23 @@ This documentation guides you on how to integrate and use the ```FileTree``` lib
 
   **2. Integration**
 
-   - &#9702; 2.1. Dependencies
+    &#9702; 2.1. Dependencies
 
-   - &#9702; 2.2. Initialization and Loading
+    &#9702; 2.2. Initialization and Loading
 
-   - &#9702; 2.3. UI Integration
+    &#9702; 2.3. UI Integration
 
-   - &#9702; 2.4. Event Handling
+    &#9702; 2.4. Event Handling
 
   **3. File Operations**
 
-   - &#9702; 3.1. Copy, Cut, Paste
+    &#9702; 3.1. Copy, Cut, Paste
 
-   - &#9702; 3.2. Delete
+    &#9702; 3.2. Delete
 
-   - &#9702; 3.3. Rename
+    &#9702; 3.3. Rename
 
-   - &#9702; 3.4. Create
+    &#9702; 3.4. Create
 
   **4. Customizing Icons**
 
