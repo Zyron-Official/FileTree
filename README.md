@@ -8,9 +8,9 @@ This documentation guides you on how to integrate and use the ```FileTree``` lib
 
 2. **Integration**
 
-○ 2.1. Dependencies
+ 2.1. Dependencies
 
-○ 2.2. Initialization and Loading
+- &#x25CB; 2.2. Initialization and Loading
 
 ○ 2.3. UI Integration
 
