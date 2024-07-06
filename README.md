@@ -2,7 +2,9 @@
 
 This documentation guides you on how to integrate and use the ```FileTree``` library within your IDEs and Code Editors to provide a user-friendly and efficient file browsing experience.
 
+
 **Table of Contents:**
+
 
 1. **Introduction**
 
