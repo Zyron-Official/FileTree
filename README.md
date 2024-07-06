@@ -57,13 +57,13 @@ First, add the ```FileTree``` library as a dependency to your project using a bu
 
 **2.2. Initialization and Loading**
 
-**Create an Instance:** Instantiate a FileTree object, providing the root directory:
+**1. Create an Instance:** Instantiate a FileTree object, providing the root directory:
 
 ```java
 FileTree fileTree = new FileTree(new File("/")); // Replace with your root directory
 ```
 
-**Load the Tree:** Call the loadTree() method to load the initial file tree structure. This will load the root directory and its immediate children:
+**2. Load the Tree:** Call the loadTree() method to load the initial file tree structure. This will load the root directory and its immediate children:
 
 ```java
 fileTree.loadTree();
@@ -133,23 +133,23 @@ public class IDEExample {
 }
 ```
 
-2.4. Event Handling
+**2.4. Event Handling**
 
 Your FileTree library should provide events or callbacks that you can use to react to user actions within the file tree:
 
-Node Selection: Register a listener to get notified when the user selects a file or folder.
+**Node Selection:** Register a listener to get notified when the user selects a file or folder.
 
-Expansion/Collapse: Get notified when a folder is expanded or collapsed.
+**Expansion/Collapse:** Get notified when a folder is expanded or collapsed.
 
-File Operations Completion: Get notified when file operations (copy, paste, delete, etc.) are completed.
+**File Operations Completion:** Get notified when file operations (copy, paste, delete, etc.) are completed.
 
 Handle these events in your IDE's logic to perform actions like opening files, displaying properties, or refreshing UI elements.
 
-3. File Operations
+**3. File Operations**
 
 The FileTree library provides methods for performing common file system operations.
 
-3.1. Copy, Cut, Paste
+**3.1. Copy, Cut, Paste**
 
 Copy: Use the copyFile(source: File, destination: File) method to copy a file or folder.
 
@@ -157,40 +157,41 @@ Cut: Use the moveFile(source: File, destination: File) method to move a file or 
 
 Paste: You'll need to implement paste logic within your IDE, using the copied or cut file from the clipboard and the copyFile or moveFile methods to perform the actual file operation.
 
-3.2. Delete
+**3.2. Delete**
 
 Use the deleteFile(file: File) method to delete a file or folder. If you delete a folder, it will recursively delete all its contents.
 
-3.3. Rename
+**3.3. Rename**
 
 Use the renameFile(file: File, newName: String) method to rename a file or folder.
 
-3.4. Create
+**3.4. Create**
 
-Create File: Use the createFile(parent: File, fileName: String) method to create a new file.
+**Create File:** Use the createFile(parent: File, fileName: String) method to create a new file.
 
-Create Folder: Use the createFolder(parent: File, folderName: String) method to create a new folder.
+**Create Folder:** Use the createFolder(parent: File, folderName: String) method to create a new folder.
 
-4. Customizing Icons
+**4. Customizing Icons**
 
-The FileTree library allows you to specify custom icons for files and folders. You can either provide a default set of icons or allow users to customize them within your IDE's settings.
+The ```FileTree``` library allows you to specify custom icons for files and folders. You can either provide a default set of icons or allow users to customize them within your IDE's settings.
 
 Resource IDs (Android): If you're using Android, you can provide resource IDs (e.g., R.drawable.my_folder_icon) for icons.
 
 Paths (Generic): For cross-platform compatibility, you can allow users to provide file paths for icon images.
 
-5. Thread System
+**5. Thread System**
 
 The FileTree library typically uses a thread system to perform file operations in the background. This ensures that the UI thread remains responsive while the operations are executed. The library may provide methods for controlling the thread system:
 
-Initiating Loading: You may need to start a background thread to load the initial file tree structure.
+**Initiating Loading:** You may need to start a background thread to load the initial file tree structure.
 
-Pausing/Resuming: In some cases, you might want to pause or resume loading operations.
+**Pausing/Resuming:** In some cases, you might want to pause or resume loading operations.
 
-6. Example (Swing)
+**6. Example (Swing)**
 
 Here's a basic example of using the FileTree library with Swing:
 
+```java
 import com.example.filetree.FileTree;
 import javax.swing.*;
 import java.awt.*;
@@ -227,10 +228,9 @@ public class IDEExample {
         // Implement a custom TreeModel based on your FileTree data
     }
 }
-content_copy
-Use code with caution.
-Java
-7. Frequently Asked Questions (FAQ)
+```
+
+## 7. Frequently Asked Questions (FAQ)
 
 Q: How do I get the selected file or folder in the file tree?
 
