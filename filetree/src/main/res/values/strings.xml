@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">FileTree</string>
+    <string name="action_create_file">create_file</string>
+    <string name="action_create_folder">create_folder</string>
+    <string name="action_copy">copy</string>
+    <string name="action_cut">cut</string>
+    <string name="action_paste">paste</string>
+    <string name="action_delete">delete</string>
+    <string name="action_rename">rename</string>
+</resources>

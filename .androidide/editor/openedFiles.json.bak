@@ -1,0 +1,35 @@
+{
+  "allFiles": [
+    {
+      "file": "/storage/emulated/0/AndroidIDEProjects/FileTree/filetree/src/main/res/values/ids.xml",
+      "selection": {
+        "end": {
+          "column": 0,
+          "index": 188,
+          "line": 6
+        },
+        "start": {
+          "column": 0,
+          "index": 188,
+          "line": 6
+        }
+      }
+    },
+    {
+      "file": "/storage/emulated/0/AndroidIDEProjects/FileTree/filetree/src/main/java/com/zyron/filetree/NodeManager.java",
+      "selection": {
+        "end": {
+          "column": 0,
+          "index": 1596,
+          "line": 52
+        },
+        "start": {
+          "column": 0,
+          "index": 1596,
+          "line": 52
+        }
+      }
+    }
+  ],
+  "selectedFile": "/storage/emulated/0/AndroidIDEProjects/FileTree/filetree/src/main/java/com/zyron/filetree/NodeManager.java"
+}
