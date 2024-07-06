@@ -8,7 +8,7 @@ This documentation guides you on how to integrate and use the ```FileTree``` lib
 
 2. **Integration**
 
- 2.1. **Dependencies**
+&#9702; 2.1. Dependencies
 
 &#9702; 2.2. Initialization and Loading
 
