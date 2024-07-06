@@ -2,21 +2,21 @@
 
 This documentation guides you on how to integrate and use the ```FileTree``` library within your IDEs and Code Editors to provide a user-friendly and efficient file browsing experience.
 
-__ Table of Contents:
+** Table of Contents:
 
-Introduction
+1. ** Introduction
 
-Integration
+2. ** Integration
 
-2.1. Dependencies
+○ 2.1. Dependencies
 
-2.2. Initialization and Loading
+○ 2.2. Initialization and Loading
 
-2.3. UI Integration
+○ 2.3. UI Integration
 
-2.4. Event Handling
+○ 2.4. Event Handling
 
-File Operations
+** File Operations
 
 3.1. Copy, Cut, Paste
 
