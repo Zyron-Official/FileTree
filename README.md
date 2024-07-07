@@ -153,17 +153,21 @@ The ```FileTree``` library provides methods for performing common file system op
 
 ### 3.2. Delete
 
-Use the ```java deleteFile(file: File)``` method to delete a file or folder. If you delete a folder, it will recursively delete all its contents.
+Use the ```java 
+deleteFile(file: File)``` method to delete a file or folder. If you delete a folder, it will recursively delete all its contents.
 
 ### 3.3. Rename
 
-Use the ```java renameFile(file: File, newName: String)``` method to rename a file or folder.
+Use the ```java 
+renameFile(file: File, newName: String)``` method to rename a file or folder.
 
 ### 3.4. Create
 
-**Create File:** Use the ```java createFile(parent: File, fileName: String)``` method to create a new file.
+**Create File:** Use the ```java 
+createFile(parent: File, fileName: String)``` method to create a new file.
 
-**Create Folder:** Use the ```java createFolder(parent: File, folderName: String)``` method to create a new folder.
+**Create Folder:** Use the ```java 
+createFolder(parent: File, folderName: String)``` method to create a new folder.
 
 ## 4. Customizing Icons
 
