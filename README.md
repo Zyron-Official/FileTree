@@ -145,35 +145,31 @@ The ```FileTree``` library provides methods for performing common file system op
 
 ### 3.1. Copy, Cut, Paste
 
-**Copy:** Use the ```java copyFile(source: File, destination: File)``` method to copy a file or folder.
+**Copy:** Use the ```copyFile(source: File, destination: File)``` method to copy a file or folder.
 
-**Cut:** Use the ```java moveFile(source: File, destination: File)``` method to move a file or folder.
+**Cut:** Use the ```moveFile(source: File, destination: File)``` method to move a file or folder.
 
 **Paste:** You'll need to implement paste logic within your IDE, using the copied or cut file from the clipboard and the copyFile or moveFile methods to perform the actual file operation.
 
 ### 3.2. Delete
 
-Use the ```java 
-deleteFile(file: File)``` method to delete a file or folder. If you delete a folder, it will recursively delete all its contents.
+Use the ```deleteFile(file: File)``` method to delete a file or folder. If you delete a folder, it will recursively delete all its contents.
 
 ### 3.3. Rename
 
-Use the ```java 
-renameFile(file: File, newName: String)``` method to rename a file or folder.
+Use the ```renameFile(file: File, newName: String)``` method to rename a file or folder.
 
 ### 3.4. Create
 
-**Create File:** Use the ```java 
-createFile(parent: File, fileName: String)``` method to create a new file.
+**Create File:** Use the ```createFile(parent: File, fileName: String)``` method to create a new file.
 
-**Create Folder:** Use the ```java 
-createFolder(parent: File, folderName: String)``` method to create a new folder.
+**Create Folder:** Use the ```createFolder(parent: File, folderName: String)``` method to create a new folder.
 
 ## 4. Customizing Icons
 
 The ```FileTree``` library allows you to specify custom icons for files and folders. You can either provide a default set of icons or allow users to customize them within your IDE's settings.
 
-Resource IDs (Android): If you're using Android, you can provide resource IDs (e.g., R.drawable.my_folder_icon) for icons.
+Resource IDs (Android): If you're using Android, you can provide resource IDs (e.g., R.drawable.iconFolder) for icons.
 
 Paths (Generic): For cross-platform compatibility, you can allow users to provide file paths for icon images.
 
