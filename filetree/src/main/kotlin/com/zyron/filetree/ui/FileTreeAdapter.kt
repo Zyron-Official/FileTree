@@ -27,29 +27,22 @@ interface FileTreeClickListener {
     fun onFolderClick(folder: File)
 }
 
-class FileTreeAdapter(
-    val context: Context,
-    val fileTree: FileTree,
-    val folderIcon: Drawable,
-    val fileIcon: Drawable,
-    val listener: FileTreeClickListener? = null
+class FileTreeAdapter(val context: Context, val fileTree: FileTree, val folderIcon: Drawable, val fileIcon: Drawable, val listener: FileTreeClickListener? = null
 ) : RecyclerView.Adapter<FileTreeAdapter.FileTreeNodeViewHolder>() {
 
     private val mainHandler = Handler(Looper.getMainLooper())
-    private var clipboard: File? = null // For cut/copy operations
+    private var clipboard: File? = null 
 
-    // ... (onCreateViewHolder, getItemCount) ...
-    
     override fun getItemCount(): Int {
-    return fileTree.getNodes().size // Use fileTree.getNodes() to access the list
+    return fileTree.getNodes().size 
 }
-    
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): FileTreeNodeViewHolder {
         val view = LayoutInflater.from(parent.context)
-            .inflate(R.layout.recycler_view_item, parent, false) // Replace with your layout
+            .inflate(R.layout.recycler_view_item, parent, false) 
         return FileTreeNodeViewHolder(view)
     }
-    
+
 
     override fun onBindViewHolder(holder: FileTreeNodeViewHolder, position: Int) {
         val node = fileTree.getNodes()[position]
@@ -64,15 +57,14 @@ class FileTreeAdapter(
                 } else {
                     fileTree.expandNode(node)
                 }
-                // Update the UI on the main thread
                 mainHandler.post {
-                    notifyItemRangeChanged(position + 1, fileTree.getNodes().size - (position + 1))
+                    notifyItemChanged(position + 1, fileTree.getNodes().size - (position + 1))
                 }
             } else {
                 listener?.onFileClick(node.file)
             }
         }
-        
+
 
         // Context menu for file and folder actions
         holder.itemView.setOnLongClickListener {
@@ -124,7 +116,7 @@ class FileTreeAdapter(
                         }
                         true
                     }
-                    R.id.action_rename -> {
+       /*             R.id.action_rename -> {
                         val renameDialog = EditTextDialog(context, "Rename", node.file.name)
                         renameDialog.setPositiveButton("Rename") { _, newName ->
                             if (newName.isNotBlank()) {
@@ -165,7 +157,7 @@ class FileTreeAdapter(
                         }
                         createDialog.show()
                         true
-                    }
+                    }*/
                     else -> false
                 }
             }
@@ -173,8 +165,8 @@ class FileTreeAdapter(
             true
         }
     }
-    
-    
+
+
 
     inner class FileTreeNodeViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val fileNameTextView: TextView = itemView.findViewById(R.id.fileNameTextView)
