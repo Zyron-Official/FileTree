@@ -5,7 +5,7 @@ import android.content.Context
 import android.widget.EditText
 
 class EditTextDialog(context: Context, title: String, initialText: String) {
-
+/*
     private val dialog: AlertDialog
     private val editText: EditText
 
@@ -36,4 +36,4 @@ class EditTextDialog(context: Context, title: String, initialText: String) {
     }
 
     private var onPositiveButtonClickListener: ((dialog: AlertDialog, text: String) -> Unit)? = null
-}
+*/}
