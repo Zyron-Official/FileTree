@@ -4,72 +4,175 @@ import android.content.Context
 import android.graphics.drawable.Drawable
 import android.os.Handler
 import android.os.Looper
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
-import android.widget.TextView
-import androidx.core.content.ContextCompat
+import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
-import com.zyron.filetree.R // Import your R class
-import com.zyron.filetree.FileTree // Import your FileTree class
-import com.zyron.filetree.model.FileTreeNode 
-import com.zyron.filetree.operations.FileOperationExecutor 
-import com.zyron.filetree.utils.EditTextDialog 
-import android.widget.PopupMenu
-import android.view.Menu
+import com.zyron.filetree.R
+import com.zyron.filetree.FileTree
+import com.zyron.filetree.model.FileTreeNode
+import com.zyron.filetree.model.FileTreeNodeDiffCallback
+import com.zyron.filetree.ui.FileTreeViewHolder
 import java.io.File
-import java.util.*
+import java.nio.file.Files
 
 interface FileTreeClickListener {
     fun onFileClick(file: File)
     fun onFolderClick(folder: File)
 }
 
-class FileTreeAdapter(val context: Context, val fileTree: FileTree, val folderIcon: Drawable, val fileIcon: Drawable, val listener: FileTreeClickListener? = null
-) : RecyclerView.Adapter<FileTreeAdapter.FileTreeNodeViewHolder>() {
+class FileTreeAdapter(
+    private val context: Context,
+    private val fileTree: FileTree,
+    private val iconFolder: Drawable,
+    private val iconFile: Drawable,
+    private val iconChevronExpanded: Drawable,
+    private val iconChevronCollapsed: Drawable,
+    private val listener: FileTreeClickListener? = null
+) : RecyclerView.Adapter<FileTreeViewHolder>() {
 
     private val mainHandler = Handler(Looper.getMainLooper())
-    private var clipboard: File? = null 
-
-    override fun getItemCount(): Int {
-    return fileTree.getNodes().size 
+    private var clipboard: File? = null
+    private var nodes: MutableList<FileTreeNode> = mutableListOf()
+    
+    // Inside your FileTreeAdapter.kt file
+private fun getFileIconDrawable(file: File): Drawable? {
+    // Implement logic to get the appropriate file icon drawable based on file type
+    // Example logic:
+    // if (file.isDirectory()) return directoryIconDrawable
+    // else if (file.isFile()) return fileIconDrawable
+    // else return defaultIconDrawable
+    return null // Replace with your actual implementation
 }
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): FileTreeNodeViewHolder {
-        val view = LayoutInflater.from(parent.context)
-            .inflate(R.layout.recycler_view_item, parent, false) 
-        return FileTreeNodeViewHolder(view)
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): FileTreeViewHolder {
+        val view = LayoutInflater.from(parent.context).inflate(R.layout.recycler_view_item, parent, false)
+        return FileTreeViewHolder(view)
     }
 
+    override fun onBindViewHolder(holder: FileTreeViewHolder, position: Int) {
+    val node = nodes[position]
 
-    override fun onBindViewHolder(holder: FileTreeNodeViewHolder, position: Int) {
-        val node = fileTree.getNodes()[position]
-        holder.fileNameTextView.text = node.file.name
-        holder.fileIconImageView.setImageDrawable(if (node.file.isDirectory) folderIcon else fileIcon)
-        holder.chevronImageView.visibility = if (node.file.isDirectory && node.isExpanded) View.VISIBLE else View.GONE
+    // Set file name
+    holder.fileNameViewHolder.text = node.file.name
 
-        holder.itemView.setOnClickListener {
-            if (node.file.isDirectory) {
-                if (node.isExpanded) {
-                    fileTree.collapseNode(node)
-                } else {
-                    fileTree.expandNode(node)
-                }
-                mainHandler.post {
-                    notifyItemChanged(position + 1, fileTree.getNodes().size - (position + 1))
-                }
+    // Handle icons
+    if (Files.isDirectory(node.file.toPath())) {
+        holder.chevronIconViewHolder.visibility = View.VISIBLE
+        val chevronIcon = if (node.isExpanded) {
+            iconChevronCollapsed
+        } else {
+            iconChevronExpanded
+        }
+        holder.chevronIconViewHolder.setImageDrawable(chevronIcon)
+
+        holder.fileIconViewHolder.visibility = View.GONE // Hide file icon for directories
+    } else {
+        holder.chevronIconViewHolder.visibility = View.INVISIBLE // Hide chevron for files if not needed
+        holder.fileIconViewHolder.visibility = View.VISIBLE
+        // Set file icon drawable based on file type
+        val fileIcon = getFileIconDrawable(node.file)
+        holder.fileIconViewHolder.setImageDrawable(fileIcon ?: defaultFileIconDrawable)
+    }
+
+    // Handle click listener
+    holder.itemView.setOnClickListener {
+        if (Files.isDirectory(node.file.toPath())) {
+            if (node.isExpanded) {
+                fileTree.collapseNode(node)
             } else {
-                listener?.onFileClick(node.file)
+                fileTree.expandNode(node)
+            }
+            // Update the chevron icon after expanding/collapsing the node
+            val updatedChevronIcon = if (node.isExpanded) {
+                iconChevronCollapsed
+            } else {
+                iconChevronExpanded
+            }
+            holder.chevronIconViewHolder.setImageDrawable(updatedChevronIcon)
+            // Notify item changed to update the view
+            notifyItemChanged(holder.adapterPosition)
+        } else {
+            listener?.onFileClick(node.file)
+        }
+    }
+}
+    
+     fun setLoading(node: FileTreeNode, loading: Boolean) {
+        val position = nodes.indexOf(node)
+        if (position != RecyclerView.NO_POSITION) {
+            nodes[position].isLoading = loading
+            notifyItemChanged(position)
+        }
+    }
+
+    override fun getItemCount(): Int {
+        return nodes.size
+    }
+
+    fun updateNodes(newNodes: List<FileTreeNode>) {
+        val diffResult = DiffUtil.calculateDiff(
+            FileTreeNodeDiffCallback(nodes, newNodes)
+        )
+        nodes.clear()
+        nodes.addAll(newNodes)
+        diffResult.dispatchUpdatesTo(this)
+    }
+}
+
+//Expand and Collapse Animation
+/*    private fun expand(v: View) {
+        v.measure(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT)
+        val targetHeight = v.measuredHeight
+
+        v.layoutParams.height = 0
+        v.visibility = View.VISIBLE
+        val a: Animation = object : Animation() {
+            override fun willChangeBounds(): Boolean {
+                return true
+            }
+
+            override fun applyTransformation(interpolatedTime: Float, t: Transformation) {
+                v.layoutParams.height = if (interpolatedTime == 1f)
+                    ViewGroup.LayoutParams.WRAP_CONTENT
+                else
+                    (targetHeight * interpolatedTime).toInt()
+                v.requestLayout()
             }
         }
 
+        a.duration = (targetHeight / v.context.resources.displayMetrics.density).toInt().toLong() / 2
+        v.startAnimation(a)
+    }
+
+    private fun collapse(v: View) {
+        val initialHeight = v.measuredHeight
+
+        val a: Animation = object : Animation() {
+            override fun willChangeBounds(): Boolean {
+                return true
+            }
+
+            override fun applyTransformation(interpolatedTime: Float, t: Transformation) {
+                if (interpolatedTime == 1f) {
+                    v.visibility = View.GONE
+                } else {
+                    v.layoutParams.height = initialHeight - (initialHeight * interpolatedTime).toInt()
+                    v.requestLayout()
+                }
+            }
+        }
+
+        a.duration = (initialHeight / v.context.resources.displayMetrics.density).toInt().toLong() / 2
+        v.startAnimation(a)
+    } 
+}*/
 
         // Context menu for file and folder actions
-        holder.itemView.setOnLongClickListener {
+     /*   holder.itemView.setOnLongClickListener {
             val menu = PopupMenu(context, it)
-            if (node.file.isDirectory) {
+            if (Files.isDirectory(node.file.toPath())) {
                 menu.menu.add(Menu.NONE, R.id.action_create_file, Menu.NONE, "Create File")
                 menu.menu.add(Menu.NONE, R.id.action_create_folder, Menu.NONE, "Create Folder")
             }
@@ -92,8 +195,8 @@ class FileTreeAdapter(val context: Context, val fileTree: FileTree, val folderIc
                     }
                     R.id.action_paste -> {
                         if (clipboard != null) {
-                            if (node.file.isDirectory) {
-                                fileTree.copyFile(clipboard!!, File(node.file, clipboard!!.name))
+                            if (Files.isDirectory(node.file.toPath())) {
+                                fileTree.copyFile(clipboard!!, File(node.file.toPath().toString(), clipboard!!.name))
                             } else {
                                 fileTree.copyFile(clipboard!!, node.file.parentFile!!)
                             }
@@ -116,7 +219,7 @@ class FileTreeAdapter(val context: Context, val fileTree: FileTree, val folderIc
                         }
                         true
                     }
-       /*             R.id.action_rename -> {
+                    R.id.action_rename -> {
                         val renameDialog = EditTextDialog(context, "Rename", node.file.name)
                         renameDialog.setPositiveButton("Rename") { _, newName ->
                             if (newName.isNotBlank()) {
@@ -156,8 +259,8 @@ class FileTreeAdapter(val context: Context, val fileTree: FileTree, val folderIc
                             }
                         }
                         createDialog.show()
-                        true
-                    }*/
+                        true 
+                    }
                     else -> false
                 }
             }
@@ -165,12 +268,4 @@ class FileTreeAdapter(val context: Context, val fileTree: FileTree, val folderIc
             true
         }
     }
-
-
-
-    inner class FileTreeNodeViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        val fileNameTextView: TextView = itemView.findViewById(R.id.fileNameTextView)
-        val fileIconImageView: ImageView = itemView.findViewById(R.id.fileIconImageView)
-        val chevronImageView: ImageView = itemView.findViewById(R.id.chevronImageView)
-    }
-}
+}*/
