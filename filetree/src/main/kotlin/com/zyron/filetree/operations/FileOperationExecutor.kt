@@ -8,7 +8,7 @@ import java.util.concurrent.ThreadPoolExecutor
 import java.util.concurrent.TimeUnit
 
 class FileOperationExecutor {
-
+/*
     // Define your thread pool for performing file operations
     private val executor: ThreadPoolExecutor = ThreadPoolExecutor(
         2,
@@ -23,7 +23,7 @@ class FileOperationExecutor {
         executor.execute {
             try {
                 // Copy the file using Java File API
-                source.copyTo(destination, overwrite = true)
+                Files.copy(source.toPath(), destination.toPath(), StandardCopyOption.REPLACE_EXISTING)
                 Log.d("FileOperationExecutor", "File copied successfully: ${source.absolutePath} to ${destination.absolutePath}")
             } catch (e: Exception) {
                 // Handle exceptions
@@ -36,7 +36,7 @@ class FileOperationExecutor {
         executor.execute {
             try {
                 // Move the file using Java File API
-                source.renameTo(destination)
+                Files.move(source.toPath(), destination.toPath(), StandardCopyOption.REPLACE_EXISTING)
                 Log.d("FileOperationExecutor", "File moved successfully: ${source.absolutePath} to ${destination.absolutePath}")
             } catch (e: Exception) {
                 // Handle exceptions
@@ -49,10 +49,12 @@ class FileOperationExecutor {
         executor.execute {
             try {
                 // Delete the file using Java File API
-                if (file.isDirectory) {
-                    file.deleteRecursively()
+                if (Files.isDirectory(file.toPath())) {
+                    Files.walk(file.toPath())
+                        .sorted(Comparator.reverseOrder())
+                        .forEach { Files.delete(it) }
                 } else {
-                    file.delete()
+                    Files.delete(file.toPath())
                 }
                 Log.d("FileOperationExecutor", "File deleted successfully: ${file.absolutePath}")
             } catch (e: Exception) {
@@ -66,7 +68,7 @@ class FileOperationExecutor {
         executor.execute {
             try {
                 // Rename the file using Java File API
-                file.renameTo(File(file.parentFile!!, newName))
+                Files.move(file.toPath(), Paths.get(file.parentFile!!.absolutePath, newName), StandardCopyOption.REPLACE_EXISTING)
                 Log.d("FileOperationExecutor", "File renamed successfully: ${file.absolutePath} to ${newName}")
             } catch (e: Exception) {
                 // Handle exceptions
@@ -79,7 +81,7 @@ class FileOperationExecutor {
         executor.execute {
             try {
                 // Create the file using Java File API
-                File(parent, fileName).createNewFile()
+                Files.createFile(Paths.get(parent.absolutePath, fileName))
                 Log.d("FileOperationExecutor", "File created successfully: ${File(parent, fileName).absolutePath}")
             } catch (e: Exception) {
                 // Handle exceptions
@@ -92,12 +94,12 @@ class FileOperationExecutor {
         executor.execute {
             try {
                 // Create the folder using Java File API
-                File(parent, folderName).mkdirs()
+                Files.createDirectories(Paths.get(parent.absolutePath, folderName))
                 Log.d("FileOperationExecutor", "Folder created successfully: ${File(parent, folderName).absolutePath}")
             } catch (e: Exception) {
                 // Handle exceptions
                 Log.e("FileOperationExecutor", "Error creating folder: ${e.message}")
             }
         }
-    }
+    }*/
 }
