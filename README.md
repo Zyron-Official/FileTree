@@ -59,13 +59,13 @@ First, add the ```FileTree``` library as a dependency to your project using a bu
 
 **1. Create an Instance:** Instantiate a FileTree object, providing the root directory:
 
-```java
+```kotlin
 FileTree fileTree = new FileTree(new File("/")); // Replace with your root directory
 ```
 
 **2. Load the Tree:** Call the loadTree() method to load the initial file tree structure. This will load the root directory and its immediate children:
 
-```java
+```kotlin
 fileTree.loadTree();
 ```
 ### 2.3. UI Integration
@@ -84,7 +84,7 @@ This step involves integrating the ```FileTree``` library with your IDE's UI fra
 
 ### Example (Swing):
 
-```java
+```kotlin
 import com.example.filetree.FileTree;
 import javax.swing.*;
 import java.awt.*;
@@ -185,7 +185,7 @@ The ```FileTree``` library typically uses a thread system to perform file operat
 
 Here's a basic example of using the FileTree library with Swing:
 
-```java
+```kotlin
 import com.example.filetree.FileTree;
 import javax.swing.*;
 import java.awt.*;
