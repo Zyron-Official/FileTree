@@ -1,36 +1,31 @@
-// In com/zyron/filetree/ui/FileTreeAdapter.kt
-
-package com.zyron.filetree.ui
+package com.zyron.filetree.adapter
 
 import android.content.Context
-import android.graphics.drawable.Drawable
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.util.*
+import android.view.*
 import androidx.core.content.ContextCompat
-import androidx.recyclerview.widget.DiffUtil
-import androidx.recyclerview.widget.RecyclerView
+import androidx.recyclerview.widget.*
+import com.zyron.filetree.R
 import com.zyron.filetree.FileTree
 import com.zyron.filetree.FileTreeAdapterUpdateListener
-import com.zyron.filetree.R
-import com.zyron.filetree.model.FileTreeNode
-import com.zyron.filetree.model.FileTreeNodeDiffCallback
-import com.zyron.filetree.provider.FileIconProvider
+import com.zyron.filetree.viewholder.FileTreeViewHolder
+import com.zyron.filetree.viewmodel.*
+import com.zyron.filetree.provider.FileTreeIconProvider
+import kotlinx.coroutines.*
 import java.io.File
 import java.nio.file.Files
-import android.util.TypedValue
 
 interface FileTreeClickListener {
     fun onFileClick(file: File)
     fun onFolderClick(folder: File)
+    fun onFileLongClick(file: File): Boolean
+    fun onFolderLongClick(folder: File): Boolean
 }
 
 class FileTreeAdapter(
     private val context: Context,
     private val fileTree: FileTree,
-    private val fileIconProvider: FileIconProvider,
-    private val iconChevronExpanded: Drawable,
-    private val iconChevronCollapsed: Drawable,
+    private val fileTreeIconProvider: FileTreeIconProvider,
     private val listener: FileTreeClickListener? = null
 ) : RecyclerView.Adapter<FileTreeViewHolder>(), FileTreeAdapterUpdateListener {
 
@@ -42,73 +37,73 @@ class FileTreeAdapter(
     }
 
     override fun onBindViewHolder(holder: FileTreeViewHolder, position: Int) {
-    val node = nodes[position]
-    
-    val indentationDp = 16 * node.level 
-    val indentationPx = TypedValue.applyDimension(
-        TypedValue.COMPLEX_UNIT_DIP, 
-        indentationDp.toFloat(), 
-        context.resources.displayMetrics
-    ).toInt()
-    
-    val layoutParams = holder.itemView.layoutParams as ViewGroup.MarginLayoutParams
-    layoutParams.leftMargin = indentationPx
-    holder.itemView.layoutParams = layoutParams
+        val node = nodes[position]
 
-    holder.fileNameTextView.text = node.file.name
+        // Calculate indentation based on node level
+        val indentationDp = 16 * node.level
+        val indentationPx = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, indentationDp.toFloat(), context.resources.displayMetrics).toInt()
 
-    if (Files.isDirectory(node.file.toPath())) {
-        // Directory handling 
-        holder.chevronLoadingSwitcher.visibility = View.VISIBLE
-        holder.fileIconImageView.setImageDrawable(
-            ContextCompat.getDrawable(context, fileIconProvider.getFolderIcon())
-        )
+        // Check the layout direction from the context
+        val isRtl = context.resources.configuration.layoutDirection == View.LAYOUT_DIRECTION_RTL
 
-        if (node.isLoading) {
-            holder.chevronLoadingSwitcher.displayedChild = 1 // Show progress indicator
+        // Set left or right margin based on layout direction
+        val layoutParams = holder.itemView.layoutParams as ViewGroup.MarginLayoutParams
+        if (isRtl) {
+            layoutParams.rightMargin = indentationPx
+            layoutParams.leftMargin = 0
         } else {
-            holder.chevronLoadingSwitcher.displayedChild = 0 // Show chevron icon
+            layoutParams.leftMargin = indentationPx
+            layoutParams.rightMargin = 0
+        }
+        holder.itemView.layoutParams = layoutParams
+
+        // Set padding for ViewHolder itself and its items
+        holder.itemView.setPadding(4, 4, 4, 4)
+        holder.chevronIconView.setPadding(0, 0, 0, 0)
+        holder.fileIconView.setPadding(0, 0, 0, 0)
+        holder.fileNameView.setPadding(6, 7, 7, 6)
+
+        if (Files.isDirectory(node.file.toPath())) {
+            holder.chevronIconView.visibility = View.VISIBLE
+            holder.fileIconView.setImageDrawable(ContextCompat.getDrawable(context, fileTreeIconProvider.getFolderIcon()))
+            holder.fileNameView.text = node.file.name
+
             val chevronIcon = if (node.isExpanded) {
-                iconChevronCollapsed
+                fileTreeIconProvider.getChevronCollapseIcon()
             } else {
-                iconChevronExpanded
+                fileTreeIconProvider.getChevronExpandIcon()
             }
-            holder.chevronImageView.setImageDrawable(chevronIcon)
-        }
+            holder.chevronIconView.setImageDrawable(ContextCompat.getDrawable(context, chevronIcon))
 
-        // Directory click handling:
-        holder.itemView.setOnClickListener {
-            if (node.isExpanded) {
-                fileTree.collapseNode(node)
-                notifyItemChanged(holder.bindingAdapterPosition)
-            } else {
-                node.isLoading = true
-                notifyItemChanged(holder.bindingAdapterPosition)
-
-                fileTree.expandNode(node)
-                node.isLoading = false
-
+            holder.itemView.setOnClickListener {
+                if (node.isExpanded) {
+                    fileTree.collapseNode(node)
+                } else {
+                    fileTree.expandNode(node)
+                }
                 notifyItemChanged(holder.bindingAdapterPosition)
             }
+        } else if (node.file.isFile) {
+            holder.chevronIconView.visibility = View.GONE
+            holder.fileIconView.setImageDrawable(ContextCompat.getDrawable(context, fileTreeIconProvider.getIconForFile(node.file)))
+            holder.fileNameView.text = node.file.name
+
+            holder.itemView.setOnClickListener {
+                listener?.onFileClick(node.file)
+            }
+
+            holder.itemView.setOnLongClickListener {
+                listener?.onFileLongClick(node.file) ?: false
+            }
         }
+    }
 
-    } else { 
-        // File Handling:
-        holder.chevronLoadingSwitcher.visibility = View.GONE 
-        holder.fileIconImageView.setImageDrawable(
-            ContextCompat.getDrawable(context, fileIconProvider.getIconForFile(node.file))
-        )
-
-        // Handle file clicks:
-        holder.itemView.setOnClickListener { 
-            listener?.onFileClick(node.file)
+    override fun onFileTreeUpdated(startPosition: Int, itemCount: Int) {
+        if (itemCount > 0) {
+            notifyItemRangeInserted(startPosition, itemCount)
+        } else {
+            notifyItemRangeRemoved(startPosition, -itemCount)
         }
-    } 
-}
-
-    override fun onFileTreeUpdated() {
-        updateNodes(fileTree.getNodes())
-        notifyDataSetChanged()
     }
 
     fun updateNodes(newNodes: List<FileTreeNode>) {
@@ -117,58 +112,85 @@ class FileTreeAdapter(
         nodes.addAll(newNodes)
         diffResult.dispatchUpdatesTo(this)
     }
-    
+
     override fun getItemCount(): Int {
-    return nodes.size // Return the size of the ENTIRE nodes list 
+        return nodes.size
+    }
 }
-}
+    
+/*    private fun expandNodeWithAnimation(view: View, node: FileTreeNode, position: Int) {
+        node.isLoading = true
+        notifyItemChanged(position)
 
-//Expand and Collapse Animation
-/*    private fun expand(v: View) {
-        v.measure(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT)
-        val targetHeight = v.measuredHeight
+        val initialHeight = view.height
+        view.measure(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT)
+        val targetHeight = view.measuredHeight
 
-        v.layoutParams.height = 0
-        v.visibility = View.VISIBLE
-        val a: Animation = object : Animation() {
-            override fun willChangeBounds(): Boolean {
-                return true
-            }
+        val layoutParams = view.layoutParams
+        layoutParams.height = initialHeight
+        view.layoutParams = layoutParams
+        view.visibility = View.VISIBLE
 
-            override fun applyTransformation(interpolatedTime: Float, t: Transformation) {
-                v.layoutParams.height = if (interpolatedTime == 1f)
-                    ViewGroup.LayoutParams.WRAP_CONTENT
-                else
-                    (targetHeight * interpolatedTime).toInt()
-                v.requestLayout()
-            }
+        val valueAnimator = ValueAnimator.ofInt(initialHeight, targetHeight)
+        valueAnimator.addUpdateListener { animation ->
+            val animValue = animation.animatedValue as Int
+            val lp = view.layoutParams
+            lp.height = animValue
+            view.layoutParams = lp
         }
 
-        a.duration = (targetHeight / v.context.resources.displayMetrics.density).toInt().toLong() / 2
-        v.startAnimation(a)
+        valueAnimator.addListener(object : AnimatorListenerAdapter() {
+            override fun onAnimationEnd(animation: Animator) {
+                val lp = view.layoutParams
+                lp.height = ViewGroup.LayoutParams.WRAP_CONTENT
+                view.layoutParams = lp
+                
+                fileTree.expandNode(node)
+
+                node.isLoading = false
+                notifyItemChanged(position)
+            }
+        })
+
+        valueAnimator.duration = 3
+        valueAnimator.start()
     }
 
-    private fun collapse(v: View) {
-        val initialHeight = v.measuredHeight
 
-        val a: Animation = object : Animation() {
-            override fun willChangeBounds(): Boolean {
-                return true
-            }
+    private fun collapseNodeWithAnimation(view: View, node: FileTreeNode, position: Int) {
+    node.isLoading = true
+        notifyItemChanged(position)
+        
+        val initialHeight = view.height
+        view.measure(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT)
+        val targetHeight = view.measuredHeight
+        
+        val layoutParams = view.layoutParams
+        layoutParams.height = initialHeight
+        view.layoutParams = layoutParams
+        view.visibility = View.VISIBLE
 
-            override fun applyTransformation(interpolatedTime: Float, t: Transformation) {
-                if (interpolatedTime == 1f) {
-                    v.visibility = View.GONE
-                } else {
-                    v.layoutParams.height = initialHeight - (initialHeight * interpolatedTime).toInt()
-                    v.requestLayout()
-                }
-            }
+        val valueAnimator = ValueAnimator.ofInt(initialHeight, targetHeight)
+        valueAnimator.addUpdateListener { animation ->
+            val animValue = animation.animatedValue as Int
+            val lp = view.layoutParams
+            lp.height = animValue
+            view.layoutParams = lp
         }
-
-        a.duration = (initialHeight / v.context.resources.displayMetrics.density).toInt().toLong() / 2
-        v.startAnimation(a)
-    } 
+        valueAnimator.addListener(object : AnimatorListenerAdapter() {
+            override fun onAnimationEnd(animation: Animator) {
+                
+                val lp = view.layoutParams
+                lp.height = ViewGroup.LayoutParams.WRAP_CONTENT
+                view.layoutParams = lp
+                fileTree.collapseNode(node)
+                node.isLoading = false
+                notifyItemChanged(position)
+            }
+        })
+        valueAnimator.duration = 3
+        valueAnimator.start()
+    }
 }*/
 
         // Context menu for file and folder actions
