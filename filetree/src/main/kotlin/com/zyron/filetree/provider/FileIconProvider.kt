@@ -3,7 +3,14 @@ package com.zyron.filetree.provider
 import androidx.annotation.DrawableRes
 import java.io.File
 
-interface FileIconProvider {
+interface FileTreeIconProvider {
+
+    @DrawableRes
+    fun getChevronExpandIcon(): Int
+    
+    @DrawableRes
+    fun getChevronCollapseIcon(): Int
+    
     @DrawableRes
     fun getFolderIcon(): Int
 
@@ -15,4 +22,5 @@ interface FileIconProvider {
 
     @DrawableRes
     fun getIconForExtension(extension: String): Int
+    
 }
