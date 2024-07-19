@@ -20,3 +20,7 @@
 # Exclude the RecyclerViewItemBinding from the filetree module
 -dontwarn com.zyron.filetree.databinding.RecyclerViewItemBinding
 -keep class com.zyron.filetree.databinding.RecyclerViewItemBinding { *; }
+
+# Exclude DataBinderMapperImpl from multiple sources
+-dontwarn com.zyron.filetree.DataBinderMapperImpl
+-keep class com.zyron.filetree.DataBinderMapperImpl { *; }
