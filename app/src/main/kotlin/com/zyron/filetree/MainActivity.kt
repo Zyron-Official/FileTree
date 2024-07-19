@@ -8,39 +8,52 @@ import android.os.Bundle
 import android.os.Build
 import android.os.Environment
 import android.provider.Settings
+import android.content.Context
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
+import androidx.appcompat.app.*
+import androidx.appcompat.widget.Toolbar
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.zyron.filetree.ui.FileTreeAdapter
-import com.zyron.filetree.ui.FileTreeClickListener
-import com.zyron.filetree.extensions.IntendedFileIconProvider
+import androidx.drawerlayout.widget.DrawerLayout
+import com.google.android.material.navigation.NavigationView
+import com.zyron.filetree.adapter.FileTreeAdapter
+import com.zyron.filetree.adapter.FileTreeClickListener
+import com.zyron.filetree.extensions.IntendedFileIconProvider 
 import java.io.File
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : AppCompatActivity(), FileTreeClickListener {
     companion object {
         private const val REQUEST_EXTERNAL_STORAGE = 1
         private const val ROOT_DIR = "/storage/emulated/0"
     }
+    
+    private lateinit var drawerLayout: DrawerLayout
+    private lateinit var navigationView: NavigationView
+    private lateinit var actionBarDrawerToggle: ActionBarDrawerToggle
+    private lateinit var toolbar: Toolbar
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         checkPermission()
     }
+    
+    private fun disableDrawerSwipe() {
+    drawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED)
+    }
 
     private fun checkPermission() {
         if (Build.VERSION.SDK_INT < Build.VERSION_CODES.R) {
-            // Check permission for Android 10 and below
             if (ContextCompat.checkSelfPermission(this, Manifest.permission.MANAGE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
                 requestStoragePermission()
             } else {
                 initializeFileTree()
             }
         } else {
-            // Check permission for Android 11 and above with new storage access
             if (Environment.isExternalStorageManager()) {
                 initializeFileTree()
             } else {
@@ -64,13 +77,10 @@ class MainActivity : AppCompatActivity() {
             if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                 initializeFileTree()
             } else {
-                // Permission denied (or only temporarily granted)
                 if (shouldShowRequestPermissionRationale(Manifest.permission.MANAGE_EXTERNAL_STORAGE)) {
-                    // Explain why permission is needed and ask again
                     Toast.makeText(this, "Storage access is required to browse files. Please grant permission.", Toast.LENGTH_SHORT).show()
                     requestStoragePermission()
                 } else {
-                    // User selected "Don't ask again," guide to settings
                     Toast.makeText(this, "Permission denied. Please allow storage access in App Settings.", Toast.LENGTH_SHORT).show()
                     val intent = Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS)
                     intent.data = Uri.parse("package:" + packageName)
@@ -82,53 +92,45 @@ class MainActivity : AppCompatActivity() {
 
 
     private fun initializeFileTree() {
-        val recyclerView: RecyclerView = findViewById(R.id.recyclerView)
-        //val fileTree = FileTree(this, "/storage/emulated/0")
-        val fileTree = FileTree(this, "/storage/emulated/0/AndroidIDEProjects/Falcon Studio")
-        //val fileTree = FileTree(this, "/storage/emulated/0/AndroidIDEProjects/Falcon Studio/app/src/main/java/com/zyron/falconstudio/MainActivity.java"); 
+    val recyclerView: RecyclerView = findViewById(R.id.recyclerView)
+    val fileTree = FileTree(this, "/storage/emulated/0/AndroidIDEProjects/Asset Studio")
+    val fileTreeIconProvider = IntendedFileIconProvider()
+    val fileTreeAdapter = FileTreeAdapter(this, fileTree, fileTreeIconProvider, this) // Pass 'this' as FileTreeClickListener
 
+    val layoutManager = LinearLayoutManager(this) 
 
-        val iconChevronExpanded = ContextCompat.getDrawable(this, R.drawable.ic_chevron_expand)
-        val iconChevronCollapsed = ContextCompat.getDrawable(this, R.drawable.ic_chevron_collapse)
-        val fileIconProvider = IntendedFileIconProvider()
+    recyclerView.layoutManager = layoutManager
+    recyclerView.adapter = fileTreeAdapter
+    recyclerView.setItemViewCacheSize(100)
 
-        val fileTreeAdapter = FileTreeAdapter(
-            this,
-            fileTree,
-            fileIconProvider,
-            iconChevronExpanded!!,
-            iconChevronCollapsed!!,
-            object : FileTreeClickListener {
-                override fun onFileClick(file: File) {
-                    Toast.makeText(this@MainActivity, "File clicked: ${file.absolutePath}", Toast.LENGTH_SHORT).show()
-                }
-
-                override fun onFolderClick(folder: File) {
-                    Toast.makeText(this@MainActivity, "Folder clicked: ${folder.absolutePath}", Toast.LENGTH_SHORT).show()
-                }
-            }
-        )
-
-        val layoutManager = object : LinearLayoutManager(this) {
-            override fun canScrollVertically(): Boolean {
-                return true
+    fileTree.setAdapterUpdateListener(object : FileTreeAdapterUpdateListener {
+        override fun onFileTreeUpdated(startPosition: Int, itemCount: Int) {
+            runOnUiThread {
+                fileTreeAdapter.updateNodes(fileTree.getNodes())
+                fileTreeAdapter.notifyItemRangeChanged(startPosition, itemCount)
             }
         }
+    })
 
-        recyclerView.layoutManager = layoutManager
-        recyclerView.adapter = fileTreeAdapter
-
-        fileTree.setAdapterUpdateListener(object : FileTreeAdapterUpdateListener {
-            override fun onFileTreeUpdated(startPosition: Int, itemCount: Int) {
-                runOnUiThread {
-                    fileTreeAdapter.updateNodes(fileTree.getNodes())
-                    fileTreeAdapter.notifyItemRangeChanged(startPosition, itemCount)
-                    
-                }
-            }
-        })
-
-        fileTree.loadTree()
-    }
+    fileTree.loadTree()
     
+    } 
+   
+    override fun onFileClick(file: File) {
+        Toast.makeText(this, "File clicked: ${file.name}", Toast.LENGTH_SHORT).show()
+    }
+
+    override fun onFolderClick(folder: File) {
+        Toast.makeText(this, "Folder clicked: ${folder.name}", Toast.LENGTH_SHORT).show()
+    }
+
+    override fun onFileLongClick(file: File): Boolean {
+        Toast.makeText(this, "File long-clicked: ${file.name}", Toast.LENGTH_SHORT).show()
+        return true 
+    }
+
+    override fun onFolderLongClick(folder: File): Boolean {
+        Toast.makeText(this, "Folder long-clicked: ${folder.name}", Toast.LENGTH_SHORT).show()
+        return true 
+    }
 }
