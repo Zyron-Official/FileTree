@@ -16,3 +16,7 @@
 # Keep standard library classes used by R8
 -dontwarn java.lang.invoke.**
 -keep class java.lang.invoke.** { *; }
+
+# Exclude the RecyclerViewItemBinding from the filetree module
+-dontwarn com.zyron.filetree.databinding.RecyclerViewItemBinding
+-keep class com.zyron.filetree.databinding.RecyclerViewItemBinding { *; }
