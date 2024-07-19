@@ -10,3 +10,9 @@
 # Preserve the listener classes and their members
 -keep class com.zyron.filetree.FileTreeAdapterUpdateListener { *; }
 -keep class com.zyron.filetree.FileTreeClickListener { *; }
+
+-keep class java.lang.invoke.StringConcatFactory { *; }
+
+# Keep standard library classes used by R8
+-dontwarn java.lang.invoke.**
+-keep class java.lang.invoke.** { *; }
