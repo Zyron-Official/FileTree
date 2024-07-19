@@ -17,15 +17,11 @@ class FileTree(private val context: Context, private val rootDirectory: String) 
     private val expandedNodes: MutableSet<FileTreeNode> = mutableSetOf()
     private var adapterUpdateListener: FileTreeAdapterUpdateListener? = null
     private var loading = false
-
-    // Use a CoroutineScope for background operations with Dispatchers.IO
     private val scope = CoroutineScope(Dispatchers.IO + SupervisorJob())
 
     init {
-        // Cancel scope jobs when the instance of FileTree is cleared
         scope.coroutineContext[Job]?.invokeOnCompletion {
             if (it is CancellationException) {
-                // Handle cancellation if needed
             }
         }
     }
@@ -77,7 +73,6 @@ class FileTree(private val context: Context, private val rootDirectory: String) 
                     node.childrenStartIndex = insertIndex
                     node.childrenEndIndex = insertIndex + children.size
 
-                    // Add children in bulk for better performance
                     val newNodes = children.mapIndexed { index, childFile ->
                         FileTreeNode(
                             file = childFile,
@@ -98,7 +93,7 @@ class FileTree(private val context: Context, private val rootDirectory: String) 
             }
         }
     }
-
+    
     private fun collectAllChildren(
         node: FileTreeNode,
         nodesToRemove: MutableList<FileTreeNode>
@@ -119,7 +114,6 @@ class FileTree(private val context: Context, private val rootDirectory: String) 
                 val nodesToRemove = mutableListOf<FileTreeNode>()
                 collectAllChildren(node, nodesToRemove)
 
-                // Remove nodes in bulk for better performance
                 nodes.removeAll(nodesToRemove)
 
                 withContext(Dispatchers.Main) {
@@ -129,41 +123,11 @@ class FileTree(private val context: Context, private val rootDirectory: String) 
         }
     }
 
-    // Cancel all ongoing coroutines in the scope
     fun cancelAllCoroutines() {
         scope.cancel()
     }
 
-    // Handle cleanup when FileTree instance is no longer needed
     fun onDestroy() {
         scope.coroutineContext[Job]?.cancelChildren()
     }
 }
-
-
-/*
-    // File operations using coroutines
-    fun copyFile(source: File, destination: File) {
-        fileOperationExecutor.copyFile(source, destination)
-    }
-
-    fun moveFile(source: File, destination: File) {
-        fileOperationExecutor.moveFile(source, destination)
-    }
-
-    fun deleteFile(file: File) {
-        fileOperationExecutor.deleteFile(file)
-    }
-
-    fun renameFile(file: File, newName: String) {
-        fileOperationExecutor.renameFile(file, newName)
-    }
-
-    fun createFile(parent: File, fileName: String) {
-        fileOperationExecutor.createFile(parent, fileName)
-    }
-
-    fun createFolder(parent: File, folderName: String) {
-        fileOperationExecutor.createFolder(parent, folderName)
-    }
-}*/
