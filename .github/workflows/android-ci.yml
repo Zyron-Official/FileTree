@@ -38,14 +38,19 @@ jobs:
       - name: Build with Gradle
         run: ./gradlew assembleRelease
 
-      # Step 6: Archive the debug APK
+      # Step 6: Print build output (missing_rules.txt)
+      - name: Print build output
+        if: failure() # This ensures the step runs only if the build fails
+        run: cat app/build/outputs/mapping/release/missing_rules.txt
+
+      # Step 7: Archive the debug APK
       - name: Archive debug APK
         uses: actions/upload-artifact@v2
         with:
           name: app-debug
           path: app/build/outputs/apk/debug/app-debug.apk
 
-      # Step 7: Archive the release APK
+      # Step 8: Archive the release APK
       - name: Archive release APK
         uses: actions/upload-artifact@v2
         with:
