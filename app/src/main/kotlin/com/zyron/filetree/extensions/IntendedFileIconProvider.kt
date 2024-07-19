@@ -1,10 +1,19 @@
 package com.zyron.filetree.extensions
 
-import com.zyron.filetree.provider.FileIconProvider
+import com.zyron.filetree.provider.FileTreeIconProvider
 import com.zyron.filetree.R
 import java.io.File
 
-class IntendedFileIconProvider : FileIconProvider {
+class IntendedFileIconProvider : FileTreeIconProvider {
+
+    override fun getChevronExpandIcon(): Int {
+        return R.drawable.ic_chevron_expand
+    }
+
+    override fun getChevronCollapseIcon(): Int {
+        return R.drawable.ic_chevron_collapse
+    }
+
     override fun getFolderIcon(): Int {
         return R.drawable.ic_folder
     }
@@ -17,6 +26,9 @@ class IntendedFileIconProvider : FileIconProvider {
         return when (file.name) {
             "gradlew.bat" -> R.drawable.ic_file
             "gradlew" -> R.drawable.ic_file
+            "settings.gradle" -> R.drawable.ic_file
+            "build.gradle" -> R.drawable.ic_file
+            "gradle.properties" -> R.drawable.ic_file
             else -> getIconForExtension(file.extension)
         }
     }
@@ -24,6 +36,7 @@ class IntendedFileIconProvider : FileIconProvider {
     override fun getIconForExtension(extension: String): Int {
         return when (extension) {
             "xml" -> R.drawable.ic_file
+            "java" -> R.drawable.ic_file
             "kt" -> R.drawable.ic_file
             else -> getDefaultFileIcon()
         }
