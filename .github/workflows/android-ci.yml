@@ -42,19 +42,25 @@ jobs:
       - name: Print mapping file
         if: failure()
         run: cat filetree/build/outputs/mapping/release/mapping.txt
-
+        
+      # Step 7: Print missing rules if build fails
       - name: Print missing rules
         if: failure()
         run: cat filetree/build/outputs/mapping/release/missing_rules.txt
+        
+      # Step 8: Print build logs if build fails
+      - name: Print build logs
+        if: failure()
+        run: cat app/build/reports/build.log
 
-      # Step 7: Archive the debug APK
+      # Step 9: Archive the debug APK
       - name: Archive debug APK
         uses: actions/upload-artifact@v2
         with:
           name: app-debug
           path: app/build/outputs/apk/debug/app-debug.apk
 
-      # Step 8: Archive the release APK
+      # Step 10: Archive the release APK
       - name: Archive release APK
         uses: actions/upload-artifact@v2
         with:
