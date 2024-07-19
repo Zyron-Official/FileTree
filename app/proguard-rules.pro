@@ -6,3 +6,7 @@
 
 # Preserve the provider classes and their members
 -keep class com.zyron.filetree.provider.** { *; }
+
+# Preserve the listener classes and their members
+-keep class com.zyron.filetree.FileTreeAdapterUpdateListener { *; }
+-keep class com.zyron.filetree.FileTreeClickListener { *; }
