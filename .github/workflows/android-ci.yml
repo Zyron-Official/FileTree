@@ -38,9 +38,9 @@ jobs:
       - name: Build with Gradle
         run: ./gradlew assembleRelease
 
-      # Step 6: Print build output (missing_rules.txt)
-      - name: Print build output
-        if: failure() # This ensures the step runs only if the build fails
+      # Step 6: Print missing rules if build fails
+      - name: Print missing rules
+        if: failure()
         run: cat app/build/outputs/mapping/release/missing_rules.txt
 
       # Step 7: Archive the debug APK
