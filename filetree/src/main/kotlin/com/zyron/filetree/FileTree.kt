@@ -73,7 +73,7 @@ class FileTree(private val context: Context, private val rootDirectory: String) 
                     node.childrenStartIndex = insertIndex
                     node.childrenEndIndex = insertIndex + children.size
 
-                    val newNodes = children.mapIndexed { index, childFile ->
+                    val newNodes = children.mapIndexed { _, childFile ->
                         FileTreeNode(
                             file = childFile,
                             parent = node,
