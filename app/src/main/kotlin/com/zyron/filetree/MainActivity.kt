@@ -1,63 +1,82 @@
 package com.zyron.filetree
 
 import android.Manifest
-import android.content.Intent
-import android.content.pm.PackageManager
-import android.net.Uri
-import android.os.Bundle
-import android.os.Build
-import android.os.Environment
-import android.provider.Settings
-import android.content.Context
-import android.widget.Toast
-import androidx.appcompat.app.AppCompatActivity
-import androidx.core.app.ActivityCompat
-import androidx.core.content.ContextCompat
+import android.content.*
+import android.content.pm.*
+import android.net.*
+import android.os.*
+import android.provider.*
+import android.content.*
+import android.widget.*
 import androidx.appcompat.app.*
-import androidx.appcompat.widget.Toolbar
-import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.GridLayoutManager
-import androidx.recyclerview.widget.RecyclerView
-import androidx.drawerlayout.widget.DrawerLayout
+import androidx.core.app.*
+import androidx.core.view.*
+import androidx.core.content.*
+import androidx.recyclerview.widget.*
+import androidx.drawerlayout.widget.*
 import com.google.android.material.navigation.NavigationView
-import com.zyron.filetree.adapter.FileTreeAdapter
-import com.zyron.filetree.adapter.FileTreeClickListener
-import com.zyron.filetree.extensions.IntendedFileIconProvider 
+import com.google.android.material.appbar.MaterialToolbar
+import com.google.android.material.button.MaterialButton
+import com.zyron.filetree.adapter.*
+import com.zyron.filetree.extensions.*
 import java.io.File
 
 class MainActivity : AppCompatActivity(), FileTreeClickListener {
-    companion object {
-        private const val REQUEST_EXTERNAL_STORAGE = 1
-        private const val ROOT_DIR = "/storage/emulated/0"
-    }
-    
+
+companion object {
+    private const val REQUEST_EXTERNAL_STORAGE = 1
+    private const val REQUEST_DIRECTORY = 2
+    private const val REQUEST_DIRECTORY_SELECTION = 2
+    private const val ROOT_DIR = "/storage/emulated/0"
+}
+
     private lateinit var drawerLayout: DrawerLayout
     private lateinit var navigationView: NavigationView
     private lateinit var actionBarDrawerToggle: ActionBarDrawerToggle
-    private lateinit var toolbar: Toolbar
+    private lateinit var toolbar: MaterialToolbar
+    private var selectedDirectory: String? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+        val toolbar: MaterialToolbar = findViewById(R.id.toolbar)
+        setSupportActionBar(toolbar)
+
+        drawerLayout = findViewById(R.id.drawer_layout)
+        navigationView = findViewById(R.id.navigation_view)
+        actionBarDrawerToggle = ActionBarDrawerToggle(this, drawerLayout, toolbar, R.string.app_name, R.string.app_name)
+        
+        drawerLayout.addDrawerListener(actionBarDrawerToggle)
+        actionBarDrawerToggle.syncState()
+        toolbar.setTitle("FileTree")
+        toolbar.setNavigationOnClickListener {
+            if (drawerLayout.isDrawerOpen(GravityCompat.START)) {
+                drawerLayout.closeDrawer(GravityCompat.START)
+            } else {
+                drawerLayout.openDrawer(GravityCompat.START)
+            }
+        }
+        
+    val chooseDirButton: MaterialButton = findViewById(R.id.btnChooseDir)
+        chooseDirButton.setOnClickListener {
+        selectDirectory()
+        }
+        disableDrawerSwipe()
         checkPermission()
     }
-    
-    private fun disableDrawerSwipe() {
-    drawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED)
-    }
 
+    private fun disableDrawerSwipe() {
+        drawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED)
+    }
+    
     private fun checkPermission() {
         if (Build.VERSION.SDK_INT < Build.VERSION_CODES.R) {
-            if (ContextCompat.checkSelfPermission(this, Manifest.permission.MANAGE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
-                requestStoragePermission()
-            } else {
-                initializeFileTree()
+          if (ContextCompat.checkSelfPermission(this, Manifest.permission.MANAGE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
+              requestStoragePermission()
             }
-        } else {
-            if (Environment.isExternalStorageManager()) {
-                initializeFileTree()
-            } else {
-                requestAllFilesAccess()
+          } else {
+              if (!Environment.isExternalStorageManager()) {
+                  requestAllFilesAccess()
             }
         }
     }
@@ -75,7 +94,6 @@ class MainActivity : AppCompatActivity(), FileTreeClickListener {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
         if (requestCode == REQUEST_EXTERNAL_STORAGE) {
             if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                initializeFileTree()
             } else {
                 if (shouldShowRequestPermissionRationale(Manifest.permission.MANAGE_EXTERNAL_STORAGE)) {
                     Toast.makeText(this, "Storage access is required to browse files. Please grant permission.", Toast.LENGTH_SHORT).show()
@@ -89,33 +107,46 @@ class MainActivity : AppCompatActivity(), FileTreeClickListener {
             }
         }
     }
+    
+    private fun selectDirectory() {
+        val intent = Intent(Intent.ACTION_OPEN_DOCUMENT_TREE)
+        startActivityForResult(intent, REQUEST_DIRECTORY)
+    }
 
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
 
-    private fun initializeFileTree() {
-    val recyclerView: RecyclerView = findViewById(R.id.recyclerView)
-    val fileTree = FileTree(this, "/storage/emulated/0/AndroidIDEProjects/Asset Studio")
-    val fileTreeIconProvider = IntendedFileIconProvider()
-    val fileTreeAdapter = FileTreeAdapter(this, fileTree, fileTreeIconProvider, this) // Pass 'this' as FileTreeClickListener
-
-    val layoutManager = LinearLayoutManager(this) 
-
-    recyclerView.layoutManager = layoutManager
-    recyclerView.adapter = fileTreeAdapter
-    recyclerView.setItemViewCacheSize(100)
-
-    fileTree.setAdapterUpdateListener(object : FileTreeAdapterUpdateListener {
-        override fun onFileTreeUpdated(startPosition: Int, itemCount: Int) {
-            runOnUiThread {
-                fileTreeAdapter.updateNodes(fileTree.getNodes())
-                fileTreeAdapter.notifyItemRangeChanged(startPosition, itemCount)
+        when (requestCode) {
+            REQUEST_DIRECTORY_SELECTION -> {
+                if (resultCode == RESULT_OK && data != null) {
+                    val treeUri = data.data
+                    val path = treeUri?.path?.replace("/tree/primary:", "/storage/emulated/0/")
+                    val fileTree = FileTree(this, path ?: "")
+                    initializeFileTree(fileTree)
+                }
             }
         }
-    })
+    }
 
-    fileTree.loadTree()
-    
-    } 
-   
+    private fun initializeFileTree(fileTree: FileTree) {
+        val recyclerView: RecyclerView = findViewById(R.id.recyclerView)
+        val fileTreeIconProvider = IntendedFileIconProvider()
+        val fileTreeAdapter = FileTreeAdapter(this, fileTree, fileTreeIconProvider, this)
+        val layoutManager = LinearLayoutManager(this)
+        recyclerView.layoutManager = layoutManager
+        recyclerView.adapter = fileTreeAdapter
+        recyclerView.setItemViewCacheSize(4000)
+        fileTree.setAdapterUpdateListener(object : FileTreeAdapterUpdateListener {
+            override fun onFileTreeUpdated(startPosition: Int, itemCount: Int) {
+                runOnUiThread {
+                    fileTreeAdapter.updateNodes(fileTree.getNodes())
+                    fileTreeAdapter.notifyItemRangeChanged(startPosition, itemCount)
+                }
+            }
+        })
+        fileTree.loadFileTree()
+    }
+
     override fun onFileClick(file: File) {
         Toast.makeText(this, "File clicked: ${file.name}", Toast.LENGTH_SHORT).show()
     }
