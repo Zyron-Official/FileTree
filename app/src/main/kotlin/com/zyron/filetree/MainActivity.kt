@@ -57,8 +57,8 @@ companion object {
             }
         }
         
-    val chooseDirButton: MaterialButton = findViewById(R.id.btnChooseDir)
-        chooseDirButton.setOnClickListener {
+    val selectDir: MaterialButton = findViewById(R.id.btnChooseDir)
+        selectDir.setOnClickListener {
         selectDirectory()
         }
         disableDrawerSwipe()
