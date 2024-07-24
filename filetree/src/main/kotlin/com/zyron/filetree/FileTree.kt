@@ -30,7 +30,7 @@ class FileTree(private val context: Context, private val rootDirectory: String) 
         this.adapterUpdateListener = listener
     }
 
-    fun loadTree() {
+    fun loadFileTree() {
         scope.launch {
             if (!loading) {
                 loading = true
