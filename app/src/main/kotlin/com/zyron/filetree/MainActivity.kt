@@ -34,6 +34,7 @@ companion object {
     private lateinit var navigationView: NavigationView
     private lateinit var actionBarDrawerToggle: ActionBarDrawerToggle
     private lateinit var toolbar: MaterialToolbar
+    private lateinit var selectDirectory: MaterialButton
     private var selectedDirectory: String? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -57,8 +58,8 @@ companion object {
             }
         }
         
-    val selectDir: MaterialButton = findViewById(R.id.btnChooseDir)
-        selectDir.setOnClickListener {
+    val selectDirectory: MaterialButton = findViewById(R.id.btnChooseDir)
+        selectDirectory.setOnClickListener {
         selectDirectory()
         }
         disableDrawerSwipe()
