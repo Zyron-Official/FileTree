@@ -10,32 +10,41 @@
     android:fitsSystemWindows="false"
     style="@style/Widget.Material3.DrawerLayout"
     tools:context=".MainActivity">
-
-    <!-- MaterialToolbar -->
-    <com.google.android.material.appbar.MaterialToolbar
-        android:id="@+id/toolbar"
+    
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:minHeight="?attr/actionBarSize"
-        app:title="FileTree"
-        android:gravity="top"
-        app:titleTextAppearance="?attr/textAppearanceTitleLarge"
-        style="@style/Widget.Material3.Toolbar.Surface" />
+        android:layout_height="match_parent">
 
-    <com.google.android.material.button.MaterialButton
-        android:id="@+id/btnChooseDir"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:gravity="center"
-        android:visibility="gone"
-        android:text="oepnDirectory" />
+        <com.google.android.material.appbar.MaterialToolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            app:titleTextAppearance="?attr/textAppearanceTitleLarge"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            style="@style/Widget.Material3.Toolbar.Surface" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/select_directory"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Select Directory"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent" 
+            style="@style/Widget.Material3.Button"/>
+    
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
     <com.google.android.material.navigation.NavigationView
         android:id="@+id/navigation_view"
         android:layout_width="300dp"
         android:layout_height="match_parent"
         android:fitsSystemWindows="false"
-        app:drawerLayoutCornerSize="0dp"
+        app:drawerLayoutCornerSize="4dp"
+        android:padding="8dp"
         android:layout_gravity="start"
         style="@style/Widget.Material3.NavigationView">
 
@@ -54,7 +63,7 @@
                 app:layout_constraintEnd_toEndOf="parent">
 
                 <androidx.core.widget.NestedScrollView
-                    android:layout_width="match_parent"
+                    android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:fillViewport="true"
                     android:orientation="vertical"
@@ -70,21 +79,6 @@
             </HorizontalScrollView>
             
         </androidx.constraintlayout.widget.ConstraintLayout>
-
-<!--
-        <androidx.core.widget.NestedScrollView
-            android:id="@+id/scrollView"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:fillViewport="true"
-            android:orientation="vertical">
-
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/recyclerView"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent" />
-
-        </androidx.core.widget.NestedScrollView> -->
 
     </com.google.android.material.navigation.NavigationView>
 
