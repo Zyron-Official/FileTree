@@ -1,4 +1,4 @@
-## FileTree Library: A Powerful File Explorer for IDEs and Code Editors
+## FileTree: A Simplified File Explorer Library for IDEs and Code Editors.
 
 This documentation guides you on how to integrate and use the ```FileTree``` library within your IDEs and Code Editors to provide a user-friendly and efficient file browsing experience.
 
@@ -59,14 +59,15 @@ First, add the ```FileTree``` library as a dependency to your project using a bu
 
 **1. Create an Instance:** Instantiate a FileTree object, providing the root directory:
 
-```kotlin
-FileTree fileTree = new FileTree(new File("/")); // Replace with your root directory
+```java
+FileTree fileTree = new FileTree(new File("/storage/emulated/0")); 
+// Replace with your root directory
 ```
 
 **2. Load the Tree:** Call the loadTree() method to load the initial file tree structure. This will load the root directory and its immediate children:
 
-```kotlin
-fileTree.loadTree();
+```java
+fileTree.loadFileTree();
 ```
 ### 2.3. UI Integration
 
@@ -84,7 +85,7 @@ This step involves integrating the ```FileTree``` library with your IDE's UI fra
 
 ### Example (Swing):
 
-```kotlin
+```java
 import com.example.filetree.FileTree;
 import javax.swing.*;
 import java.awt.*;
@@ -185,7 +186,7 @@ The ```FileTree``` library typically uses a thread system to perform file operat
 
 Here's a basic example of using the FileTree library with Swing:
 
-```kotlin
+```java
 import com.example.filetree.FileTree;
 import javax.swing.*;
 import java.awt.*;
