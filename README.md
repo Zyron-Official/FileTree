@@ -64,8 +64,7 @@ The specific instructions for adding a dependency will depend on your IDE and bu
 **1. Create an Instance:** Instantiate a FileTree object, providing the root directory:
 
 ```java
-FileTree fileTree = new FileTree(new File("/storage/emulated/0")); 
-// Replace with your root directory
+FileTree fileTree = new FileTree(new File("/storage/emulated/0"));
 ```
 
 **2. Load the Tree:** Call the loadTree() method to load the initial file tree structure. This will load the root directory and its immediate children:
@@ -90,7 +89,7 @@ This step involves integrating the ```FileTree``` library with your IDE's UI fra
 ### Example (Swing):
 
 ```java
-import com.example.filetree.FileTree;
+import com.zyron.filetree.FileTree;
 import javax.swing.*;
 import java.awt.*;
 import java.io.File;
@@ -191,7 +190,7 @@ The ```FileTree``` library typically uses a thread system to perform file operat
 Here's a basic example of using the FileTree library with Swing:
 
 ```java
-import com.example.filetree.FileTree;
+import com.zyron.filetree.FileTree;
 import javax.swing.*;
 import java.awt.*;
 import java.io.File;
