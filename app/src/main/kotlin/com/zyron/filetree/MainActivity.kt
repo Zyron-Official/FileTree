@@ -19,6 +19,7 @@ import com.google.android.material.appbar.MaterialToolbar
 import com.google.android.material.button.MaterialButton
 import com.zyron.filetree.adapter.*
 import com.zyron.filetree.extensions.*
+import com.zyron.filetree.R
 import java.io.File
 
 class MainActivity : AppCompatActivity(), FileTreeClickListener {
@@ -61,9 +62,9 @@ class MainActivity : AppCompatActivity(), FileTreeClickListener {
     }
 
     fun setupListeners() {  
-        val selectDirectory = findViewById<MaterialButton>(R.id.select_directory)
+        val selectDirectory:MaterialButton = findViewById(R.id.select_directory)
         selectDirectory.setOnClickListener {
-            selectDirectory()
+        selectDirectory()
         }
     }
 
@@ -128,8 +129,8 @@ class MainActivity : AppCompatActivity(), FileTreeClickListener {
     }
 
     private fun initializeFileTree(fileTree: FileTree) {
-        val recyclerView = findViewById<RecyclerView>(R.id.recycler_view).apply {
-            setItemViewCacheSize(100)
+        val recyclerView: RecyclerView = findViewById(R.id.recycler_view).apply {
+        setItemViewCacheSize(100)
         }
         val fileTreeIconProvider = IntendedFileIconProvider()
         val fileTreeAdapter = FileTreeAdapter(this, fileTree, fileTreeIconProvider, this)
