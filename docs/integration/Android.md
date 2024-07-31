@@ -1,6 +1,6 @@
 ### Example (Android View-Based):
 
-#### Setup RecyclerView
+#### Define RecyclerView in XML Layout
 
 ```XML
 <?xml version="1.0" encoding="utf-8"?>
@@ -17,7 +17,7 @@
 </LinearLayout>
 ```
 
-#### Setup FileTree
+#### Setup FileTree in Activity or Fragment 
 
 ```kotlin 
 import androidx.recyclerview.widget.RecyclerView 
@@ -67,13 +67,13 @@ class MainActivity : AppCompatActivity(), FileTreeClickListener {
 }
 ```
 
-#### Setup FileIconProvider 
+#### Define Icons in FileIconProvider class
 
 ```Kotlin
 import com.zyron.filetree.provider.FileTreeIconProvider
 import java.io.File
 
-class IntendedFileIconProvider : FileTreeIconProvider {
+class FileIconProvider : FileTreeIconProvider {
 
     override fun getChevronExpandIcon(): Int {
         return R.drawable.ic_chevron_expand
