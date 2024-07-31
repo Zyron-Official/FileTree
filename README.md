@@ -107,6 +107,10 @@ Handle these events in your IDE's logic to perform actions like opening files, d
 The `FileTree` library provides methods for performing common file system operations by using onClick and onLongClick Listeners.
 
 ```kotlin
+import com.zyron.filetree.FileTreeClickListener 
+
+class FileOperationExecutor: FileTreeClickListener {
+
     override fun onFileClick(file: File) {
         Toast.makeText(this, "File clicked: ${file.name}", Toast.LENGTH_SHORT).show()
     }
