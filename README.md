@@ -72,23 +72,23 @@ This step involves integrating the ```FileTree``` library with your IDE's UI fra
 
 - **Android View-Based (Android/Kotlin/Java):** Use `RecyclerView` to display your `FileTree` data.
 
-    **Example** [Getting Sarted](docs/integration/Android.md)
+    Example [Getting Sarted](docs/integration/Android.md)
 
 - **Jetpack Compose (Android/Kotlin):** Define a composable that renders the file tree using your ```FileTree``` data. 
 
     You might need to create a custom composable to display the tree nodes (similar to a custom TreeCellRenderer in Swing).
 
-    **Example** [Getting Sarted](docs/integration/Android-Jetpack-Compose.md)
+    Example [Getting Sarted](docs/integration/Android-Jetpack-Compose.md)
 
 - **Swing (Java):** Use a JTree component and create a custom TreeModel that uses the FileTreeNode data from your ```FileTree``` object. 
 
     Alternatively, use the FileTreeAdapter (if provided) to populate the JTree.
 
-    **Example** [Getting Sarted](docs/integration/Java-Swing.md)
+    Example [Getting Sarted](docs/integration/Java-Swing.md)
 
 - **SWT (Java):** Similar to Swing, use a TreeViewer and a custom TreeContentProvider to map your FileTreeNode data.
 
-    **Example** [Getting Sarted](docs/integration/Java-SWT.md)
+    Example [Getting Sarted](docs/integration/Java-SWT.md)
 
 ### 2.4. Event Handling
 
@@ -144,11 +144,11 @@ The ```FileTree``` library typically uses a thread system to perform file operat
 
 **Pausing/Resuming:** In some cases, you might want to pause or resume loading operations.
 
-## 6. Example (Swing)
+## 6. Example (Android view-based)
 
 Here's a basic example of using the FileTree library with Android views:
 
-#### Layout
+#### XML Layout
 
 ```xml
 <?xml version="1.0" encoding="utf-8"?>
@@ -163,10 +163,9 @@ Here's a basic example of using the FileTree library with Android views:
         android:layout_height="match_parent" />
 
 </LinearLayout>
-
 ```
 
-#### Integration
+#### Integration Kotlin
 
 ```kotlin
 import androidx.recyclerview.widget.RecyclerView 
