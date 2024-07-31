@@ -1,33 +1,21 @@
-# Preserve all classes in the filetree module
--keep class com.zyron.filetree.** { *; }
+# Add project specific ProGuard rules here.
+# You can control the set of applied configuration files using the
+# proguardFiles setting in build.gradle.
+#
+# For more details, see
+#   http://developer.android.com/guide/developing/tools/proguard.html
 
-# Preserve all classes in the filetree adapter module
--keep class com.zyron.filetree.adapter.** { *; }
+# If your project uses WebView with JS, uncomment the following
+# and specify the fully qualified class name to the JavaScript interface
+# class:
+#-keepclassmembers class fqcn.of.javascript.interface.for.webview {
+#   public *;
+#}
 
-# Preserve all classes in the filetree provider module
--keep class com.zyron.filetree.provider.** { *; }
+# Uncomment this to preserve the line number information for
+# debugging stack traces.
+#-keepattributes SourceFile,LineNumberTable
 
-# Preserve data binding classes
--keep class com.zyron.filetree.databinding.** { *; }
-
-# Preserve classes referenced by reflection
--keep class * {
-    @androidx.annotation.Keep *;
-    @androidx.databinding.BindingAdapter *;
-    @androidx.databinding.BindingConversion *;
-}
-
-# Keep all annotations (useful for libraries that use annotations)
--keepattributes *Annotation*
-
-# Keep all Parcelable classes
--keep class * implements android.os.Parcelable {
-    public static final android.os.Parcelable$Creator *;
-}
-
-# Preserve data binding generated classes
--keep class com.zyron.filetree.BR { *; }
--keep class * extends androidx.databinding.ViewDataBinding { *; }
-
-# Prevent removal of specific classes used in reflection
--dontwarn java.lang.invoke.**
+# If you keep the line number information, uncomment this to
+# hide the original source file name.
+#-renamesourcefileattribute SourceFile
