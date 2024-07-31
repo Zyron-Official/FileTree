@@ -1,4 +1,4 @@
-#### Example (Java SWT):
+### Example (Java SWT):
 
 #### 1. Define custom `TreeContentProvider` this provider will supply data to the 
 `Tree:`
@@ -99,7 +99,7 @@ public class FileTreeSWT {
 }
 ```
 
-#### Explanation 
+### Explanation 
 
 **1. FileTreeContentProvider:**
 
@@ -117,7 +117,7 @@ public class FileTreeSWT {
 
    &#9702; Sets the root directory as the input for the tree and opens the window.
 
-#### Notes 
+### Notes 
 
 - Ensure SWT is correctly included in your project dependencies.
 
