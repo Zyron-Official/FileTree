@@ -72,31 +72,23 @@ This step involves integrating the ```FileTree``` library with your IDE's UI fra
 
 - **Android View-Based (Android/Kotlin/Java):** Use `RecyclerView` to display your `FileTree` data.
 
-    Example [Getting Sarted](docs/integration/Android.md)
+    Docs [Getting Sarted](docs/integration/Android.md)
 
 - **Jetpack Compose (Android/Kotlin):** Define a composable that renders the file tree using your ```FileTree``` data. 
 
-    You might need to create a custom composable to display the tree nodes (similar to a custom TreeCellRenderer in Swing).
-
-    Example [Getting Sarted](docs/integration/Android-Jetpack-Compose.md)
+    Docs [Getting Sarted](docs/integration/Android-Jetpack-Compose.md)
 
 - **Swing (Java):** Use a JTree component and create a custom TreeModel that uses the FileTreeNode data from your ```FileTree``` object. 
 
-    Alternatively, use the FileTreeAdapter (if provided) to populate the JTree.
-
-    Example [Getting Sarted](docs/integration/Java-Swing.md)
+    Docs [Getting Sarted](docs/integration/Java-Swing.md)
 
 - **SWT (Java):** Similar to Swing, use a TreeViewer and a custom TreeContentProvider to map your FileTreeNode data.
 
-    Example [Getting Sarted](docs/integration/Java-SWT.md)
+    Docs [Getting Sarted](docs/integration/Java-SWT.md)
 
 ### 2.4. Event Handling
 
-Your ```FileTree``` library should provide events or callbacks that you can use to react to user actions within the file tree:
-
-**Node Selection:** Register a listener to get notified when the user selects a file or folder.
-
-**Expansion/Collapse:** Get notified when a folder is expanded or collapsed.
+The ```FileTree``` library provides events that you can use to react to user actions within the file tree:
 
 **File Operations Completion:** Get notified when file operations (copy, paste, delete, etc.) are completed.
 
@@ -135,7 +127,7 @@ class FileOperationExecutor : FileTreeClickListener {
 
 The `FileTree` library allows you to specify custom icons for files and folders. 
 
-Here's an example to customize icons
+Here's a basic example to customize icons
 
 ```kotlin
 import com.zyron.filetree.provider.FileTreeIconProvider
@@ -183,7 +175,7 @@ class FileIconProvider : FileTreeIconProvider {
 
 ## 5. Asynchronous File System
 
-The `FileTree` library typically uses a asynchronous system powered by Coroutines to perform core file functions(expand, collapse, loading files in FileTree) in the background thread. This ensures that the UI thread remains responsive while the functions are executed.
+The `FileTree` library typically uses a asynchronous system powered by built-in Kotlin Coroutines to perform core file functions(expand, collapse, loading files in FileTree) in the background thread. This ensures that the UI thread remains responsive while the functions are executed.
 
 ## 6. Example (Android view-based)
 
@@ -215,11 +207,11 @@ import com.zyron.filetree.adapter.FileTreeAdapter
 import com.zyron.filetree.FileTree
 import java.io.File
 
-class MainActivity : AppCompatActivity(), FileTreeClickListener {
+class MainActivity : AppCompatActivity() {
 
         private fun initializeFileTree(fileTree: FileTree) {
-        val fileTree = FileTree(this, "storage/emulated/0")
         val recyclerView: RecyclerView = findViewById(R.id.recycler_view)
+        val fileTree = FileTree(this, "storage/emulated/0")
         val fileTreeIconProvider = IntendedFileIconProvider()
         val fileTreeAdapter = FileTreeAdapter(this, fileTree, fileTreeIconProvider, this)
         val layoutManager = LinearLayoutManager(this)
@@ -246,7 +238,7 @@ class MainActivity : AppCompatActivity(), FileTreeClickListener {
 
 **Q:** How do I refresh the file tree after making changes to the file system?
 
-**A:** Use the loadTree() method to reload the tree structure. If you only need to update a portion of the tree, you can refresh specific nodes or sections.
+**A:** Use the loadFileTree() method to reload the tree structure. If you only need to update a portion of the tree, you can refresh specific nodes or sections.
 
 **Q:** Can I customize the appearance of the file tree?
 
