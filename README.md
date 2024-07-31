@@ -151,9 +151,9 @@ The `FileTree` library typically uses a thread system to perform file operations
 
 Here's a basic example of using the FileTree library with Android views:
 
-#### XML Layout
+#### Define RecyclerView in Layout (XML)
 
-```xml
+```XML
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
@@ -168,9 +168,9 @@ Here's a basic example of using the FileTree library with Android views:
 </LinearLayout>
 ```
 
-#### Integration Kotlin
+#### Setup FileTree in Activity or Fragment (Kotlin)
 
-```kotlin
+```kotlin 
 import androidx.recyclerview.widget.RecyclerView 
 import androidx.recyclerview.widget.LinearLayoutManager 
 import com.zyron.filetree.adapter.FileTreeAdapter 
@@ -197,23 +197,51 @@ class MainActivity : AppCompatActivity(), FileTreeClickListener {
             }
         })
     }
+}
+```
 
-    override fun onFileClick(file: File) {
-        Toast.makeText(this, "File clicked: ${file.name}", Toast.LENGTH_SHORT).show()
+#### Define Icons in FileIconProvider Class (Kotlin)
+
+```Kotlin
+import com.zyron.filetree.provider.FileTreeIconProvider
+import java.io.File
+
+class FileIconProvider : FileTreeIconProvider {
+
+    override fun getChevronExpandIcon(): Int {
+        return R.drawable.ic_chevron_expand
     }
 
-    override fun onFolderClick(folder: File) {
-        Toast.makeText(this, "Folder clicked: ${folder.name}", Toast.LENGTH_SHORT).show()
+    override fun getChevronCollapseIcon(): Int {
+        return R.drawable.ic_chevron_collapse
     }
 
-    override fun onFileLongClick(file: File): Boolean {
-        Toast.makeText(this, "File long-clicked: ${file.name}", Toast.LENGTH_SHORT).show()
-        return true 
+    override fun getFolderIcon(): Int {
+        return R.drawable.ic_folder
     }
 
-    override fun onFolderLongClick(folder: File): Boolean {
-        Toast.makeText(this, "Folder long-clicked: ${folder.name}", Toast.LENGTH_SHORT).show()
-        return true 
+    override fun getDefaultFileIcon(): Int {
+        return R.drawable.ic_file
+    }
+
+    override fun getIconForFile(file: File): Int {
+        return when (file.name) {
+            "gradlew.bat" -> R.drawable.ic_gradlewbat
+            "gradlew" -> R.drawable.ic_gradlew
+            "settings.gradle" -> R.drawable.ic_gradle_settings
+            "build.gradle" -> R.drawable.ic_gradle_build
+            "gradle.properties" -> R.drawable.ic_gradle_properties
+            else -> getIconForExtension(file.extension)
+        }
+    }
+
+    override fun getIconForExtension(extension: String): Int {
+        return when (extension) {
+            "xml" -> R.drawable.ic_xml
+            "java" -> R.drawable.ic_java
+            "kt" -> R.drawable.ic_kotlin
+            else -> getDefaultFileIcon()
+        }
     }
 }
 ```
