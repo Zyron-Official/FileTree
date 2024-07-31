@@ -1,7 +1,6 @@
 ### Example (Java SWT):
 
-#### 1. Define custom `TreeContentProvider` this provider will supply data to the 
-`Tree:`
+#### 1. Define custom `TreeContentProvider` this provider will supply data to the `Tree:`
 
 ```java 
 import org.eclipse.jface.viewers.ITreeContentProvider;
