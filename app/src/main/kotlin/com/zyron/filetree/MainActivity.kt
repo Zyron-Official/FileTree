@@ -30,6 +30,7 @@ companion object {
 }
 
     private lateinit var drawerLayout: DrawerLayout
+    private lateinit var recyclerView: RecyclerView 
     private lateinit var navigationView: NavigationView
     private lateinit var actionBarDrawerToggle: ActionBarDrawerToggle
     private lateinit var toolbar: MaterialToolbar
