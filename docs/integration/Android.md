@@ -17,7 +17,7 @@
 </LinearLayout>
 ```
 
-#### Setup FileTree in Activity or Fragment 
+#### Setup FileTree in Activity or Fragment(Kotlin)
 
 ```kotlin 
 import androidx.recyclerview.widget.RecyclerView 
@@ -67,7 +67,7 @@ class MainActivity : AppCompatActivity(), FileTreeClickListener {
 }
 ```
 
-#### Define Icons in FileIconProvider class
+#### Define Icons in FileIconProvider Class(Kotlin)
 
 ```Kotlin
 import com.zyron.filetree.provider.FileTreeIconProvider
