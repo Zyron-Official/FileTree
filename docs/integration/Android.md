@@ -1,6 +1,6 @@
 ### Example (Android View-Based):
 
-#### XML Layout
+#### Setup RecyclerView
 
 ```XML
 <?xml version="1.0" encoding="utf-8"?>
@@ -17,7 +17,8 @@
 </LinearLayout>
 ```
 
-#### Integration in Kotlin
+#### Setup FileTree
+
 ```kotlin 
 import androidx.recyclerview.widget.RecyclerView 
 import androidx.recyclerview.widget.LinearLayoutManager 
@@ -62,6 +63,52 @@ class MainActivity : AppCompatActivity(), FileTreeClickListener {
     override fun onFolderLongClick(folder: File): Boolean {
         Toast.makeText(this, "Folder long-clicked: ${folder.name}", Toast.LENGTH_SHORT).show()
         return true 
+    }
+}
+```
+
+#### Setup FileIconProvider 
+
+```Kotlin
+import com.zyron.filetree.provider.FileTreeIconProvider
+import java.io.File
+
+class IntendedFileIconProvider : FileTreeIconProvider {
+
+    override fun getChevronExpandIcon(): Int {
+        return R.drawable.ic_chevron_expand
+    }
+
+    override fun getChevronCollapseIcon(): Int {
+        return R.drawable.ic_chevron_collapse
+    }
+
+    override fun getFolderIcon(): Int {
+        return R.drawable.ic_folder
+    }
+
+    override fun getDefaultFileIcon(): Int {
+        return R.drawable.ic_file
+    }
+
+    override fun getIconForFile(file: File): Int {
+        return when (file.name) {
+            "gradlew.bat" -> R.drawable.ic_file
+            "gradlew" -> R.drawable.ic_file
+            "settings.gradle" -> R.drawable.ic_file
+            "build.gradle" -> R.drawable.ic_file
+            "gradle.properties" -> R.drawable.ic_file
+            else -> getIconForExtension(file.extension)
+        }
+    }
+
+    override fun getIconForExtension(extension: String): Int {
+        return when (extension) {
+            "xml" -> R.drawable.ic_file
+            "java" -> R.drawable.ic_file
+            "kt" -> R.drawable.ic_file
+            else -> getDefaultFileIcon()
+        }
     }
 }
 ```
