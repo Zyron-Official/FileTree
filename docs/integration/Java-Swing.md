@@ -1,49 +1,80 @@
 #### Example (Java Swing):
 
+#### 1. Define custom `TreeModel`
+
 ```kotlin 
-import androidx.recyclerview.widget.RecyclerView 
-import androidx.recyclerview.widget.LinearLayoutManager 
-import com.zyron.filetree.adapter.FileTreeAdapter 
-import com.zyron.filetree.FileTree
-import java.io.File
+import javax.swing.tree.DefaultMutableTreeNode;
+import javax.swing.tree.DefaultTreeModel;
+import javax.swing.tree.TreeModel;
+import java.io.File;
+import java.util.ArrayList;
+import java.util.List;
 
-class MainActivity : AppCompatActivity(), FileTreeClickListener {
+public class FileTreeModel extends DefaultTreeModel {
+    public FileTreeModel(File root) {
+        super(createNode(root));
+    }
 
-        private fun initializeFileTree(fileTree: FileTree) {
-        val fileTree = FileTree(this, "storage/emulated/0")
-        val recyclerView: RecyclerView = findViewById(R.id.recycler_view)
-        val fileTreeIconProvider = IntendedFileIconProvider()
-        val fileTreeAdapter = FileTreeAdapter(this, fileTree, fileTreeIconProvider, this)
-        val layoutManager = LinearLayoutManager(this)
-        recyclerView.layoutManager = layoutManager
-        recyclerView.adapter = fileTreeAdapter
-        fileTree.loadFileTree()
-        fileTree.setAdapterUpdateListener(object : FileTreeAdapterUpdateListener {
-            override fun onFileTreeUpdated(startPosition: Int, itemCount: Int) {
-                runOnUiThread {
-                    fileTreeAdapter.updateNodes(fileTree.getNodes())
-                    fileTreeAdapter.notifyItemRangeChanged(startPosition, itemCount)
-                }
+    private static DefaultMutableTreeNode createNode(File file) {
+        DefaultMutableTreeNode node = new DefaultMutableTreeNode(file.getName());
+        if (file.isDirectory()) {
+            for (File child : file.listFiles()) {
+                node.add(createNode(child));
             }
-        })
-    }
-
-    override fun onFileClick(file: File) {
-        Toast.makeText(this, "File clicked: ${file.name}", Toast.LENGTH_SHORT).show()
-    }
-
-    override fun onFolderClick(folder: File) {
-        Toast.makeText(this, "Folder clicked: ${folder.name}", Toast.LENGTH_SHORT).show()
-    }
-
-    override fun onFileLongClick(file: File): Boolean {
-        Toast.makeText(this, "File long-clicked: ${file.name}", Toast.LENGTH_SHORT).show()
-        return true 
-    }
-
-    override fun onFolderLongClick(folder: File): Boolean {
-        Toast.makeText(this, "Folder long-clicked: ${folder.name}", Toast.LENGTH_SHORT).show()
-        return true 
+        }
+        return node;
     }
 }
 ```
+
+#### 2. Setup JTree
+
+```kotlin
+import javax.swing.*;
+import java.awt.*;
+import java.io.File;
+
+public class FileTreeFrame extends JFrame {
+    public FileTreeFrame() {
+        setTitle("File Tree");
+        setSize(400, 300);
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setLocationRelativeTo(null);
+
+        // Create and set up the JTree
+        File rootFile = new File("/storage/emulated/0");
+        FileTreeModel fileTreeModel = new FileTreeModel(rootFile);
+        JTree fileTree = new JTree(fileTreeModel);
+
+        // Add the JTree to a JScrollPane
+        JScrollPane scrollPane = new JScrollPane(fileTree);
+        add(scrollPane, BorderLayout.CENTER);
+
+        // Load and update the file tree
+        // In Swing, you might need to add additional logic for updating the JTree if data changes
+    }
+
+    public static void main(String[] args) {
+        SwingUtilities.invokeLater(() -> {
+            FileTreeFrame frame = new FileTreeFrame();
+            frame.setVisible(true);
+        });
+    }
+}
+```
+
+#### Explanation 
+
+#### `FileTreeModel:` 
+
+Extends DefaultTreeModel to provide a tree model based on the file system. 
+
+createNode(File file): Recursively creates tree nodes for directories and files. 
+
+#### `FileTreeFrame:` 
+
+Sets up the main application window. 
+
+Initializes `JTree` with `FileTreeModel` and adds it to a JScrollPane. 
+
+This frame will display the file tree in a Swing application.
