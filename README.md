@@ -154,6 +154,8 @@ The ```FileTree``` library typically uses a thread system to perform file operat
 
 Here's a basic example of using the FileTree library with Android views:
 
+#### Layout
+
 ```xml
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
@@ -161,7 +163,7 @@ Here's a basic example of using the FileTree library with Android views:
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <RecyclerView
+    <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recycler_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
@@ -170,28 +172,54 @@ Here's a basic example of using the FileTree library with Android views:
 
 ```
 
+### Integration
+
 ```kotlin
-class FileTreeViewModel : ViewModel() {
-    private val _fileTreeState = MutableStateFlow(FileTreeState())
-    val fileTreeState: StateFlow<FileTreeState> = _fileTreeState.asStateFlow()
+import androidx.recyclerview.widget.RecyclerView 
+import androidx.recyclerview.widget.LinearLayoutManager 
+import com.zyron.filetree.adapter.FileTreeAdapter 
+import com.zyron.filetree.FileTree
+import java.io.File
 
-    init {
-        loadFileTree()
-    }
+class MainActivity : AppCompatActivity(), FileTreeClickListener {
 
-    private fun loadFileTree() {
-        // Initialize FileTree and load data
-        val fileTree = FileTree(/* context */, "/storage/emulated/0")
+        private fun initializeFileTree(fileTree: FileTree) {
+        val fileTree = FileTree(this, "storage/emulated/0")
+        val recyclerView: RecyclerView = findViewById(R.id.recycler_view)
+        val fileTreeIconProvider = IntendedFileIconProvider()
+        val fileTreeAdapter = FileTreeAdapter(this, fileTree, fileTreeIconProvider, this)
+        val layoutManager = LinearLayoutManager(this)
+        recyclerView.layoutManager = layoutManager
+        recyclerView.adapter = fileTreeAdapter
         fileTree.loadFileTree()
         fileTree.setAdapterUpdateListener(object : FileTreeAdapterUpdateListener {
             override fun onFileTreeUpdated(startPosition: Int, itemCount: Int) {
-                _fileTreeState.value = FileTreeState(fileTree.getNodes())
+                runOnUiThread {
+                    fileTreeAdapter.updateNodes(fileTree.getNodes())
+                    fileTreeAdapter.notifyItemRangeChanged(startPosition, itemCount)
+                }
             }
         })
     }
-}
 
-data class FileTreeState(val nodes: List<FileTreeNode> = emptyList())
+    override fun onFileClick(file: File) {
+        Toast.makeText(this, "File clicked: ${file.name}", Toast.LENGTH_SHORT).show()
+    }
+
+    override fun onFolderClick(folder: File) {
+        Toast.makeText(this, "Folder clicked: ${folder.name}", Toast.LENGTH_SHORT).show()
+    }
+
+    override fun onFileLongClick(file: File): Boolean {
+        Toast.makeText(this, "File long-clicked: ${file.name}", Toast.LENGTH_SHORT).show()
+        return true 
+    }
+
+    override fun onFolderLongClick(folder: File): Boolean {
+        Toast.makeText(this, "Folder long-clicked: ${folder.name}", Toast.LENGTH_SHORT).show()
+        return true 
+    }
+}
 ```
 
 ## 7. Frequently Asked Questions (FAQ)
