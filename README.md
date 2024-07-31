@@ -32,7 +32,7 @@ This documentation guides you on how to integrate and use the ```FileTree``` lib
 
   **5. Thread System**
 
-  **6. Example (Swing)**
+  **6. Example (Android View-Based)**
 
   **7. Frequently Asked Questions (FAQ)**
 
@@ -152,45 +152,46 @@ The ```FileTree``` library typically uses a thread system to perform file operat
 
 ## 6. Example (Swing)
 
-Here's a basic example of using the FileTree library with Swing:
+Here's a basic example of using the FileTree library with Android views:
 
-```java
-import com.zyron.filetree.FileTree;
-import javax.swing.*;
-import java.awt.*;
-import java.io.File;
+```xml
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
 
-public class IDEExample {
+    <RecyclerView
+        android:id="@+id/recycler_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
 
-    private JTree fileTree;
-    private FileTree fileTreeModel;
+</LinearLayout>
 
-    public void init() {
-        // 1. Create a FileTree instance
-        fileTreeModel = new FileTree(new File("/")); // Your root directory
+```
 
-        // 2. Load the file tree
-        fileTreeModel.loadTree();
+```kotlin
+class FileTreeViewModel : ViewModel() {
+    private val _fileTreeState = MutableStateFlow(FileTreeState())
+    val fileTreeState: StateFlow<FileTreeState> = _fileTreeState.asStateFlow()
 
-        // 3. Create a JTree and set a custom TreeModel (optional)
-        fileTree = new JTree();
-        fileTree.setModel(new CustomTreeModel(fileTreeModel.getNodes()));
-
-        // 4. Add listeners for selection, expansion, and other events 
-        //    and handle them accordingly in your IDE logic. 
-        // 5. Handle file operations
-        fileTreeModel.copyFile(sourceFile, destinationFile); // Example
-        fileTreeModel.deleteFile(fileToDelete); // Example
-
-        // 6. Add your icons for files and folders (using custom renderers or the
-        //    FileTreeAdapter if provided)
+    init {
+        loadFileTree()
     }
 
-    // Custom TreeModel for JTree (optional)
-    public class CustomTreeModel extends DefaultTreeModel {
-        // Implement a custom TreeModel based on your FileTree data
+    private fun loadFileTree() {
+        // Initialize FileTree and load data
+        val fileTree = FileTree(/* context */, "/storage/emulated/0")
+        fileTree.loadFileTree()
+        fileTree.setAdapterUpdateListener(object : FileTreeAdapterUpdateListener {
+            override fun onFileTreeUpdated(startPosition: Int, itemCount: Int) {
+                _fileTreeState.value = FileTreeState(fileTree.getNodes())
+            }
+        })
     }
 }
+
+data class FileTreeState(val nodes: List<FileTreeNode> = emptyList())
 ```
 
 ## 7. Frequently Asked Questions (FAQ)
