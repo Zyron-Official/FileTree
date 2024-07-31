@@ -1,4 +1,4 @@
-## FileTree: A Simplified File Explorer Library for IDEs and Code Editors.
+0## FileTree: A Simplified File Explorer Library for IDEs and Code Editors.
 
 This documentation guides you on how to integrate and use the ```FileTree``` library within your IDEs and Code Editors to provide a user-friendly and efficient file browsing experience.
 
@@ -88,13 +88,13 @@ This step involves integrating the ```FileTree``` library with your IDE's UI fra
 
     You might need to create a custom composable to display the tree nodes (similar to a custom TreeCellRenderer in Swing).
 
-***Android View-Based*** [Getting Sarted](docs/integration/Android.md)
+**Android View-Based** [Getting Sarted](docs/integration/Android.md)
 
-***Android Jetpack Compose*** [Getting Sarted](docs/integration/Android-Jetpack-Compose.md)
+**Android Jetpack Compose** [Getting Sarted](docs/integration/Android-Jetpack-Compose.md)
 
-***Swing*** [Getting Sarted](docs/integration/Java-Swing.md)
+**Swing** [Getting Sarted](docs/integration/Java-Swing.md)
 
-***SWT*** [Getting Sarted](docs/integration/Java-SWT.md)
+**SWT** [Getting Sarted](docs/integration/Java-SWT.md)
 
 ### 2.4. Event Handling
 
