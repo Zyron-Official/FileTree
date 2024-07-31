@@ -1,4 +1,4 @@
-#### Example (Java Swing):
+### Example (Java Swing):
 
 #### 1. Define custom `TreeModel`
 
@@ -63,7 +63,7 @@ public class FileTreeFrame extends JFrame {
 }
 ```
 
-#### Explanation 
+### Explanation 
 
 - `FileTreeModel:` 
 
@@ -79,6 +79,8 @@ public class FileTreeFrame extends JFrame {
 
    &#9702; This frame will display the file tree in a Swing application.
 
-#### Note
+### Note
 
-it is a basic example of FileTree library implementation in Swing(Java), you might need to enhance it with additional implementations like icons.
+- This example assumes a simple file tree structure. Depending on your needs, you might need to enhance it with additional features like icons, dynamic loading, or custom renderers.
+
+- For large directories or frequent updates, consider optimizing data loading and UI updates to ensure smooth performance.
