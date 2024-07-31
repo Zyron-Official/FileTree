@@ -1,4 +1,4 @@
-0## FileTree: A Simplified File Explorer Library for IDEs and Code Editors.
+## FileTree: A Simplified File Explorer Library for IDEs and Code Editors.
 
 This documentation guides you on how to integrate and use the ```FileTree``` library within your IDEs and Code Editors to provide a user-friendly and efficient file browsing experience.
 
@@ -78,23 +78,23 @@ This step involves integrating the ```FileTree``` library with your IDE's UI fra
 
 - **Android View-Based (Android/Kotlin/Java):** Use `RecyclerView` to display your `FileTree` data.
 
-    **Android View-Based** [Getting Sarted](docs/integration/Android.md)
+    **Example** [Getting Sarted](docs/integration/Android.md)
 
 - **Jetpack Compose (Android/Kotlin):** Define a composable that renders the file tree using your ```FileTree``` data. 
 
     You might need to create a custom composable to display the tree nodes (similar to a custom TreeCellRenderer in Swing).
 
-    **Android Jetpack Compose** [Getting Sarted](docs/integration/Android-Jetpack-Compose.md)
+    **Example** [Getting Sarted](docs/integration/Android-Jetpack-Compose.md)
 
 - **Swing (Java):** Use a JTree component and create a custom TreeModel that uses the FileTreeNode data from your ```FileTree``` object. 
 
     Alternatively, use the FileTreeAdapter (if provided) to populate the JTree.
 
-    **Swing** [Getting Sarted](docs/integration/Java-Swing.md)
+    **Example** [Getting Sarted](docs/integration/Java-Swing.md)
 
 - **SWT (Java):** Similar to Swing, use a TreeViewer and a custom TreeContentProvider to map your FileTreeNode data.
 
-    **SWT** [Getting Sarted](docs/integration/Java-SWT.md)
+    **Example** [Getting Sarted](docs/integration/Java-SWT.md)
 
 ### 2.4. Event Handling
 
