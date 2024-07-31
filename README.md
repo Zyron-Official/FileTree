@@ -78,23 +78,23 @@ This step involves integrating the ```FileTree``` library with your IDE's UI fra
 
 - **Android View-Based (Android/Kotlin/Java):** Use `RecyclerView` to display your `FileTree` data.
 
-- **Swing (Java):** Use a JTree component and create a custom TreeModel that uses the FileTreeNode data from your ```FileTree``` object. 
-
-    Alternatively, use the FileTreeAdapter (if provided) to populate the JTree.
-
-- **SWT (Java):** Similar to Swing, use a TreeViewer and a custom TreeContentProvider to map your FileTreeNode data.
+    **Android View-Based** [Getting Sarted](docs/integration/Android.md)
 
 - **Jetpack Compose (Android/Kotlin):** Define a composable that renders the file tree using your ```FileTree``` data. 
 
     You might need to create a custom composable to display the tree nodes (similar to a custom TreeCellRenderer in Swing).
 
-**Android View-Based** [Getting Sarted](docs/integration/Android.md)
+    **Android Jetpack Compose** [Getting Sarted](docs/integration/Android-Jetpack-Compose.md)
 
-**Android Jetpack Compose** [Getting Sarted](docs/integration/Android-Jetpack-Compose.md)
+- **Swing (Java):** Use a JTree component and create a custom TreeModel that uses the FileTreeNode data from your ```FileTree``` object. 
 
-**Swing** [Getting Sarted](docs/integration/Java-Swing.md)
+    Alternatively, use the FileTreeAdapter (if provided) to populate the JTree.
 
-**SWT** [Getting Sarted](docs/integration/Java-SWT.md)
+    **Swing** [Getting Sarted](docs/integration/Java-Swing.md)
+
+- **SWT (Java):** Similar to Swing, use a TreeViewer and a custom TreeContentProvider to map your FileTreeNode data.
+
+    **SWT** [Getting Sarted](docs/integration/Java-SWT.md)
 
 ### 2.4. Event Handling
 
