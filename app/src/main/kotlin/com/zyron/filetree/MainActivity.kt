@@ -25,9 +25,7 @@ class MainActivity : AppCompatActivity(), FileTreeClickListener {
 
 companion object {
     private const val REQUEST_EXTERNAL_STORAGE = 1
-    private const val REQUEST_DIRECTORY = 2
     private const val REQUEST_DIRECTORY_SELECTION = 2
-    private const val ROOT_DIR = "/storage/emulated/0"
 }
 
     private lateinit var drawerLayout: DrawerLayout
@@ -58,16 +56,11 @@ companion object {
             }
         }
         
-    val selectDirectory: MaterialButton = findViewById(R.id.btnChooseDir)
+    val selectDirectory: MaterialButton = findViewById(R.id.select_directory)
         selectDirectory.setOnClickListener {
         selectDirectory()
         }
-        disableDrawerSwipe()
         checkPermission()
-    }
-
-    private fun disableDrawerSwipe() {
-        drawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED)
     }
     
     private fun checkPermission() {
@@ -111,7 +104,7 @@ companion object {
     
     private fun selectDirectory() {
         val intent = Intent(Intent.ACTION_OPEN_DOCUMENT_TREE)
-        startActivityForResult(intent, REQUEST_DIRECTORY)
+        startActivityForResult(intent, REQUEST_DIRECTORY_SELECTION)
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
@@ -130,13 +123,15 @@ companion object {
     }
 
     private fun initializeFileTree(fileTree: FileTree) {
-        val recyclerView: RecyclerView = findViewById(R.id.recyclerView)
+        val recyclerView = findViewById<RecyclerView>(R.id.recycler_veiw).apply {
+        setItemViewCacheSize(100)
+        }
         val fileTreeIconProvider = IntendedFileIconProvider()
         val fileTreeAdapter = FileTreeAdapter(this, fileTree, fileTreeIconProvider, this)
         val layoutManager = LinearLayoutManager(this)
         recyclerView.layoutManager = layoutManager
         recyclerView.adapter = fileTreeAdapter
-        recyclerView.setItemViewCacheSize(4000)
+        fileTree.loadFileTree()
         fileTree.setAdapterUpdateListener(object : FileTreeAdapterUpdateListener {
             override fun onFileTreeUpdated(startPosition: Int, itemCount: Int) {
                 runOnUiThread {
@@ -145,9 +140,8 @@ companion object {
                 }
             }
         })
-        fileTree.loadFileTree()
     }
-
+    
     override fun onFileClick(file: File) {
         Toast.makeText(this, "File clicked: ${file.name}", Toast.LENGTH_SHORT).show()
     }
