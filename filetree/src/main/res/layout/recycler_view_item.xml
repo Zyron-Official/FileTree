@@ -1,63 +1,25 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    android:orientation="horizontal">
 
-    <ViewFlipper
-        android:id="@+id/chevronLoadingSwitcher"
-        android:layout_width="24dp"
-        android:layout_height="24dp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent">
-
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content">
-
-            <com.google.android.material.imageview.ShapeableImageView
-                android:id="@+id/chevronIconView"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:tint="?attr/colorPrimary" />
-
-            <com.google.android.material.progressindicator.CircularProgressIndicator
-                android:id="@+id/laodingProgressIndicator"
-                android:layout_width="0dp"
-                android:layout_height="0dp"
-                android:visibility="gone"
-                app:layout_constraintTop_toTopOf="@id/chevronIconView"
-                app:layout_constraintBottom_toBottomOf="@id/chevronIconView"
-                app:layout_constraintStart_toStartOf="@id/chevronIconView"
-                app:layout_constraintEnd_toEndOf="@id/chevronIconView"
-                android:indeterminate="true" />
-            
-        </androidx.constraintlayout.widget.ConstraintLayout>
-        
-    </ViewFlipper>
+    <com.google.android.material.imageview.ShapeableImageView
+        android:id="@+id/chevronIconView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
 
     <com.google.android.material.imageview.ShapeableImageView
         android:id="@+id/fileIconView"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:layout_constraintStart_toEndOf="@id/chevronLoadingSwitcher"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:tint="?attr/colorPrimary" />
+        android:layout_height="wrap_content" />
 
     <com.google.android.material.textview.MaterialTextView
         android:id="@+id/fileNameView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:layout_constraintStart_toEndOf="@id/fileIconView"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"
-        android:textColor="?attr/colorOnSurface"
+        android:textColor="?attr/colorSurfaceInverse"
         android:textAppearance="@style/TextAppearance.Material3.BodySmall" />
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+</LinearLayout>
