@@ -78,8 +78,6 @@ This step involves integrating the ```FileTree``` library with your IDE's UI fra
 
 - **Android View-Based(Android/Kotlin/Java):** Use `RecyclerView` to display your `FileTree` data.
 
-Example (Android/Kotlin) [Click to View](docs/integration/Android.md)
-
 - **Swing (Java):** Use a JTree component and create a custom TreeModel that uses the FileTreeNode data from your ```FileTree``` object. 
 
     Alternatively, use the FileTreeAdapter (if provided) to populate the JTree.
@@ -139,6 +137,14 @@ class MainActivity : AppCompatActivity(), FileTreeClickListener {
     }
 }
 ```
+
+Android View-Based [(Android/Kotlin)](docs/integration/Android.md)
+
+Android Jetpack Compose[(Android/Kotlin)](docs/integration/Android.md)
+
+Swing [(Java)](docs/integration/Android.md)
+
+SWT [(Java)](docs/integration/Android.md)
 
 ### 2.4. Event Handling
 
