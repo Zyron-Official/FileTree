@@ -22,7 +22,7 @@ This documentation guides you on how to integrate and use the ```FileTree``` lib
 
   **4. Customizing Icons**
 
-  **5. Asynchronous System**
+  **5. Asynchronous File System**
 
   **6. Example (Android View-Based)**
 
@@ -38,7 +38,7 @@ The ```FileTree``` library provides a robust and modular way to manage and displ
 
 - **Lazy Loading:** Optimizes loading time by only loading child nodes when expanded.
 
-- **Asynchronous File Operations:** Performs file operations (copy, paste, delete, etc.) in the background to avoid blocking the UI.
+- **Asynchronous File System:** Performs file functions (expand, collapsd, loading files in FileTree, etc.) in the background thread to avoid blocking the UI.
 
 - **Customizable Icons:** Allows you to set custom icons for files and folders.
 
@@ -139,13 +139,9 @@ Resource IDs (Android): If you're using Android, you can provide resource IDs (e
 
 Paths (Generic): For cross-platform compatibility, you can allow users to provide file paths for icon images.
 
-## 5. Asynchronous System
+## 5. Asynchronous File System
 
-The `FileTree` library typically uses a thread system to perform file operations in the background. This ensures that the UI thread remains responsive while the operations are executed. The library may provide methods for controlling the thread system:
-
-**Initiating Loading:** You may need to start a background thread to load the initial file tree structure.
-
-**Pausing/Resuming:** In some cases, you might want to pause or resume loading operations.
+The `FileTree` library typically uses a asynchronous system powered by Coroutines to perform core file functions(expand, collapse, loading files in FileTree) in the background thread. This ensures that the UI thread remains responsive while the functions are executed.
 
 ## 6. Example (Android view-based)
 
