@@ -196,7 +196,7 @@ Here's a basic example of using the `FileTree` library with Android views:
 </LinearLayout>
 ```
 
-#### Setup `FileTree` in Activity or Fragment (Kotlin)
+#### Setup FileTree in Activity or Fragment (Kotlin)
 
 ```kotlin 
 import androidx.recyclerview.widget.RecyclerView 
