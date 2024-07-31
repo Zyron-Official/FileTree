@@ -63,9 +63,10 @@ The specific instructions for adding a dependency will depend on your IDE and bu
 
 **1. Create an Instance:** Instantiate a FileTree object, providing the root directory:
 
-```java
-FileTree fileTree = new FileTree(new File("/storage/emulated/0"));
-```
+| Language | Code                                                   |
+|----------|--------------------------------------------------------|
+| Java     | ```java<br>FileTree fileTree = new FileTree(this, "/storage/emulated/0");<br>``` |
+| Kotlin   | ```kotlin<br>val fileTree = FileTree(this, "/storage/emulated/0")<br>``` |
 
 **2. Load the Tree:** Call the loadTree() method to load the initial file tree structure. This will load the root directory and its immediate children:
 
