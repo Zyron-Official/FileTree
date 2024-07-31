@@ -55,11 +55,13 @@ companion object {
                 drawerLayout.openDrawer(GravityCompat.START)
             }
         }
-        
-    val selectDir = findViewById<MaterialButton>(R.id.select_directory)
-        selectDir.setOnClickListener {
+    
+    fun setupListeners() {  
+    val selectDirectory = findViewById<MaterialButton>(R.id.select_directory)
+        selectDirectory.setOnClickListener {
         selectDirectory()
         }
+    }
         checkPermission()
     }
     
