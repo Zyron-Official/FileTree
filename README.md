@@ -76,6 +76,8 @@ fileTree.loadFileTree()
 
 This step involves integrating the ```FileTree``` library with your IDE's UI framework. The specific implementation will vary depending on your chosen UI framework. Below are examples for common frameworks:
 
+- **Android View-Based(Android/Kotlin/Java):** Use `RecyclerView` to display your `FileTree` data.
+
 - **Swing (Java):** Use a JTree component and create a custom TreeModel that uses the FileTreeNode data from your ```FileTree``` object. 
 
     Alternatively, use the FileTreeAdapter (if provided) to populate the JTree.
