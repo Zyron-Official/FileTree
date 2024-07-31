@@ -19,3 +19,18 @@
 # If you keep the line number information, uncomment this to
 # hide the original source file name.
 #-renamesourcefileattribute SourceFile
+
+# Keep the FileTree class
+-keep class com.zyron.filetree.FileTree { *; }
+
+# Keep the FileTreeAdapterUpdateListener class
+-keep class com.zyron.filetree.FileTreeAdapterUpdateListener { *; }
+
+# Keep the FileTreeAdapter class
+-keep class com.zyron.filetree.adapter.FileTreeAdapter { *; }
+
+# Keep the FileTreeClickListener class
+-keep class com.zyron.filetree.adapter.FileTreeClickListener { *; }
+
+# Keep the FileTreeIconProvider class
+-keep class com.zyron.filetree.provider.FileTreeIconProvider { *; }
