@@ -1,4 +1,4 @@
-#### Example (Android - Jetpack Compose):
+### Example (Android - Jetpack Compose):
 
 #### 1. Define a composable funtion 
 
@@ -85,7 +85,7 @@ class MainActivity : ComponentActivity() {
 }
 ```
 
-#### Explanation 
+### Explanation 
 
 - `FileTreeScreen:` Main composable function displaying the file tree.
  
