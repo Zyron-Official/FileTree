@@ -67,14 +67,18 @@ public class FileTreeFrame extends JFrame {
 
 - `FileTreeModel:` 
 
-Extends DefaultTreeModel to provide a tree model based on the file system. 
+   &#9702; Extends DefaultTreeModel to provide a tree model based on the file system. 
 
-createNode(File file): Recursively creates tree nodes for directories and files. 
+   &#9702; createNode(File file): Recursively creates tree nodes for directories and files. 
 
 - `FileTreeFrame:` 
 
-Sets up the main application window. 
+   &#9702; Sets up the main application window. 
 
-Initializes `JTree` with `FileTreeModel` and adds it to a JScrollPane. 
+   &#9702; Initializes `JTree` with `FileTreeModel` and adds it to a JScrollPane. 
 
-This frame will display the file tree in a Swing application.
+   &#9702; This frame will display the file tree in a Swing application.
+
+#### Note
+
+it is a basic example of FileTree library implementation in Swing(Java), you might need to enhance it with additional implementations like icons.
