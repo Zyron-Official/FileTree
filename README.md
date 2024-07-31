@@ -20,21 +20,15 @@ This documentation guides you on how to integrate and use the ```FileTree``` lib
 
   **3. File Operations**
 
-   &#9702; 3.1. Copy, Cut, Paste
-
-   &#9702; 3.2. Delete
-
-   &#9702; 3.3. Rename
-
-   &#9702; 3.4. Create
-
   **4. Customizing Icons**
 
-  **5. Thread System**
+  **5. Asynchronous System**
 
   **6. Example (Android View-Based)**
 
   **7. Frequently Asked Questions (FAQ)**
+
+  **8. License.**
 
 ## 1. Introduction
 
@@ -172,7 +166,7 @@ Here's a basic example of using the FileTree library with Android views:
 
 ```
 
-### Integration
+#### Integration
 
 ```kotlin
 import androidx.recyclerview.widget.RecyclerView 
@@ -240,7 +234,7 @@ class MainActivity : AppCompatActivity(), FileTreeClickListener {
 
 **A:** Yes, the library can be adapted for other applications that require file tree management, such as file explorers or project management tools.
 
-### License
+## License
 ```
 Copyright 2024 Zyron
 
