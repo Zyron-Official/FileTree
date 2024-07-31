@@ -104,41 +104,40 @@ Handle these events in your IDE's logic to perform actions like opening files, d
 
 ## 3. File Operations
 
-The ```FileTree``` library provides methods for performing common file system operations.
+The `FileTree` library provides methods for performing common file system operations by using onClick and onLongClick Listeners.
 
-### 3.1. Copy, Cut, Paste
+```kotlin
+    override fun onFileClick(file: File) {
+        Toast.makeText(this, "File clicked: ${file.name}", Toast.LENGTH_SHORT).show()
+    }
 
-**Copy:** Use the ```copyFile(source: File, destination: File)``` method to copy a file or folder.
+    override fun onFolderClick(folder: File) {
+        Toast.makeText(this, "Folder clicked: ${folder.name}", Toast.LENGTH_SHORT).show()
+    }
 
-**Cut:** Use the ```moveFile(source: File, destination: File)``` method to move a file or folder.
+    override fun onFileLongClick(file: File): Boolean {
+        Toast.makeText(this, "File long-clicked: ${file.name}", Toast.LENGTH_SHORT).show()
+        return true 
+    }
 
-**Paste:** You'll need to implement paste logic within your IDE, using the copied or cut file from the clipboard and the copyFile or moveFile methods to perform the actual file operation.
-
-### 3.2. Delete
-
-Use the ```deleteFile(file: File)``` method to delete a file or folder. If you delete a folder, it will recursively delete all its contents.
-
-### 3.3. Rename
-
-Use the ```renameFile(file: File, newName: String)``` method to rename a file or folder.
-
-### 3.4. Create
-
-**Create File:** Use the ```createFile(parent: File, fileName: String)``` method to create a new file.
-
-**Create Folder:** Use the ```createFolder(parent: File, folderName: String)``` method to create a new folder.
+    override fun onFolderLongClick(folder: File): Boolean {
+        Toast.makeText(this, "Folder long-clicked: ${folder.name}", Toast.LENGTH_SHORT).show()
+        return true 
+    }
+}
+```
 
 ## 4. Customizing Icons
 
-The ```FileTree``` library allows you to specify custom icons for files and folders. You can either provide a default set of icons or allow users to customize them within your IDE's settings.
+The `FileTree` library allows you to specify custom icons for files and folders. You can either provide a default set of icons or allow users to customize them within your IDE's settings.
 
 Resource IDs (Android): If you're using Android, you can provide resource IDs (e.g., R.drawable.iconFolder) for icons.
 
 Paths (Generic): For cross-platform compatibility, you can allow users to provide file paths for icon images.
 
-## 5. Thread System
+## 5. Asynchronous System
 
-The ```FileTree``` library typically uses a thread system to perform file operations in the background. This ensures that the UI thread remains responsive while the operations are executed. The library may provide methods for controlling the thread system:
+The `FileTree` library typically uses a thread system to perform file operations in the background. This ensures that the UI thread remains responsive while the operations are executed. The library may provide methods for controlling the thread system:
 
 **Initiating Loading:** You may need to start a background thread to load the initial file tree structure.
 
