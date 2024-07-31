@@ -1,6 +1,6 @@
 ## FileTree: A Simplified File Explorer Library for IDEs and Code Editors.
 
-This documentation guides you on how to integrate and use the ```FileTree``` library within your IDEs and Code Editors to provide a user-friendly and efficient file browsing experience.
+This documentation guides you on how to integrate and use the `FileTree` library within your IDEs and Code Editors to provide a user-friendly and efficient file browsing experience.
 
 
 ### Table of Contents:
@@ -32,22 +32,22 @@ This documentation guides you on how to integrate and use the ```FileTree``` lib
 
 ## 1. Introduction
 
-The ```FileTree``` library provides a robust and modular way to manage and display file trees within your IDEs and code editors. It offers the following key features:
+The `FileTree` library provides a robust and modular way to manage and display file trees within your IDEs and code editors. It offers the following key features:
 
 - **Hierarchical File Tree Representation:** Presents files and folders in a hierarchical tree structure.
 
 - **Lazy Loading:** Optimizes loading time by only loading child nodes when expanded.
 
-- **Asynchronous File System:** Performs file functions (expand, collapsd, loading files in FileTree, etc.) in the background thread to avoid blocking the UI.
+- **Asynchronous File System:** Performs file functions like expanding, collapsing, loading files in `FileTree`, etc. in the background thread to avoid blocking the Main UI Thread.
 
 - **Customizable Icons:** Allows you to set custom icons for files and folders.
 
-- **Flexibility:** Integrates seamlessly with various IDE UI frameworks (Swing, SWT, Jetpack Compose).
+- **Flexibility:** Integrates seamlessly with various IDE UI frameworks (Android Views, Swing, SWT, Jetpack Compose).
 
 ## 2. Integration
 ### 2.1. Dependencies
 
-First, add the ```FileTree``` library as a dependency to your project using a build system like Maven or Gradle:
+First, add the `FileTree` library as a dependency to your project using a build system like Maven or Gradle:
 ```groovy
 implementation 'com.zyron.openapi.filetree:filetree:1.0.0'
 ```
@@ -55,42 +55,40 @@ The specific instructions for adding a dependency will depend on your IDE and bu
 
 ### 2.2. Initialization and Loading
 
-**1. Create an Instance:** Instantiate a FileTree object, providing the root directory:
+**1. Create an Instance:** Instantiate a `FileTree` object, providing the root directory:
 
 ```kotlin
 val fileTree = FileTree(this, "/storage/emulated/0")
 ```
 
-**2. Load the Tree:** Call the loadTree() method to load the initial file tree structure. This will load the root directory and its immediate children:
+**2. Load the Tree:** Call the `loadFileTree()` method to load the initial file tree structure. This will load the root directory and its immediate children:
 
 ```kotlin
 fileTree.loadFileTree()
 ```
 ### 2.3. UI Integration
 
-This step involves integrating the ```FileTree``` library with your IDE's UI framework. The specific implementation will vary depending on your chosen UI framework. Below are examples for common frameworks:
+This step involves integrating the `FileTree` library with your IDE's UI framework. The specific implementation will vary depending on your chosen UI framework. Below are common frameworks with basic examples:
 
 - **Android View-Based (Android/Kotlin/Java):** Use `RecyclerView` to display your `FileTree` data.
 
     Docs [Getting Sarted](docs/integration/Android.md)
 
-- **Jetpack Compose (Android/Kotlin):** Define a composable that renders the file tree using your ```FileTree``` data. 
+- **Jetpack Compose (Android/Kotlin):** Define a composable that renders the file tree using your `FileTree` data. 
 
     Docs [Getting Sarted](docs/integration/Android-Jetpack-Compose.md)
 
-- **Swing (Java):** Use a JTree component and create a custom TreeModel that uses the FileTreeNode data from your ```FileTree``` object. 
+- **Swing (Java):** Use a `JTree` component and create a custom TreeModel that uses the `FileTreeNode` data from your `FileTree` object. 
 
     Docs [Getting Sarted](docs/integration/Java-Swing.md)
 
-- **SWT (Java):** Similar to Swing, use a TreeViewer and a custom TreeContentProvider to map your FileTreeNode data.
+- **SWT (Java):** Similar to Swing, use a `TreeViewer` and a custom `TreeContentProvider` to map your `FileTreeNode` data.
 
     Docs [Getting Sarted](docs/integration/Java-SWT.md)
 
 ### 2.4. Event Handling
 
-The ```FileTree``` library provides events that you can use to react to user actions within the file tree:
-
-**File Operations Completion:** Get notified when file operations (copy, paste, delete, etc.) are completed.
+The `FileTree` library provides events that you can use to react to user actions within the file tree:
 
 Handle these events in your IDE's logic to perform actions like opening files, displaying properties, or refreshing UI elements.
 
@@ -175,11 +173,11 @@ class FileIconProvider : FileTreeIconProvider {
 
 ## 5. Asynchronous File System
 
-The `FileTree` library typically uses a asynchronous system powered by built-in Kotlin Coroutines to perform core file functions(expand, collapse, loading files in FileTree) in the background thread. This ensures that the UI thread remains responsive while the functions are executed.
+The `FileTree` library typically uses a asynchronous system powered by built-in Kotlin Coroutines to perform core file functions such as expanding, collapsing and loading files in `FileTree` on the background thread. This ensures that the UI thread remains responsive while the functions are executed.
 
 ## 6. Example (Android view-based)
 
-Here's a basic example of using the FileTree library with Android views:
+Here's a basic example of using the `FileTree` library with Android views:
 
 #### Define RecyclerView in Layout (XML)
 
@@ -198,7 +196,7 @@ Here's a basic example of using the FileTree library with Android views:
 </LinearLayout>
 ```
 
-#### Setup FileTree in Activity or Fragment (Kotlin)
+#### Setup `FileTree` in Activity or Fragment (Kotlin)
 
 ```kotlin 
 import androidx.recyclerview.widget.RecyclerView 
@@ -238,13 +236,13 @@ class MainActivity : AppCompatActivity() {
 
 **Q:** How do I refresh the file tree after making changes to the file system?
 
-**A:** Use the loadFileTree() method to reload the tree structure. If you only need to update a portion of the tree, you can refresh specific nodes or sections.
+**A:** Use the `loadFileTree()` method to reload the tree structure. If you only need to update a portion of the tree, you can refresh specific nodes or sections.
 
 **Q:** Can I customize the appearance of the file tree?
 
 **A:** Yes, you can customize the appearance by using custom renderers (Swing, SWT) or composables (Jetpack Compose) to control the display of nodes.
 
-**Q:** Can I use the FileTree library for other purposes besides IDEs and Code Editors?
+**Q:** Can I use the `FileTree` library for other purposes besides IDEs and Code Editors?
 
 **A:** Yes, the library can be adapted for other applications that require file tree management, such as file explorers or project management tools.
 
