@@ -56,8 +56,8 @@ companion object {
             }
         }
         
-    val selectDirectory: MaterialButton = findViewById(R.id.select_directory)
-        selectDirectory.setOnClickListener {
+    val selectDir = findViewById<MaterialButton>(R.id.select_directory)
+        selectDir.setOnClickListener {
         selectDirectory()
         }
         checkPermission()
