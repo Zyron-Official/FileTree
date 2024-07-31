@@ -76,7 +76,7 @@ fileTree.loadFileTree()
 
 This step involves integrating the ```FileTree``` library with your IDE's UI framework. The specific implementation will vary depending on your chosen UI framework. Below are examples for common frameworks:
 
-- **Android View-Based(Android/Kotlin/Java):** Use `RecyclerView` to display your `FileTree` data.
+- **Android View-Based (Android/Kotlin/Java):** Use `RecyclerView` to display your `FileTree` data.
 
 - **Swing (Java):** Use a JTree component and create a custom TreeModel that uses the FileTreeNode data from your ```FileTree``` object. 
 
@@ -88,13 +88,13 @@ This step involves integrating the ```FileTree``` library with your IDE's UI fra
 
     You might need to create a custom composable to display the tree nodes (similar to a custom TreeCellRenderer in Swing).
 
-#### Android View-Based [(Android/Kotlin)](docs/integration/Android.md)
+***Android View-Based*** [Getting Sarted](docs/integration/Android.md)
 
-#### Android Jetpack Compose[(Android/Kotlin)](docs/integration/Android-Jetpack-Compose.md)
+***Android Jetpack Compose*** [Getting Sarted](docs/integration/Android-Jetpack-Compose.md)
 
-#### Swing [(Java)](docs/integration/Java-Swing.md)
+***Swing*** [Getting Sarted](docs/integration/Java-Swing.md)
 
-#### SWT [(Java)](docs/integration/Java-SWT.md)
+***SWT*** [Getting Sarted](docs/integration/Java-SWT.md)
 
 ### 2.4. Event Handling
 
