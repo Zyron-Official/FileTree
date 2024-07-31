@@ -93,20 +93,20 @@ class FileIconProvider : FileTreeIconProvider {
 
     override fun getIconForFile(file: File): Int {
         return when (file.name) {
-            "gradlew.bat" -> R.drawable.ic_file
-            "gradlew" -> R.drawable.ic_file
-            "settings.gradle" -> R.drawable.ic_file
-            "build.gradle" -> R.drawable.ic_file
-            "gradle.properties" -> R.drawable.ic_file
+            "gradlew.bat" -> R.drawable.ic_gradlewbat
+            "gradlew" -> R.drawable.ic_gradlew
+            "settings.gradle" -> R.drawable.ic_gradle_settings
+            "build.gradle" -> R.drawable.ic_gradle_build
+            "gradle.properties" -> R.drawable.ic_gradle_properties
             else -> getIconForExtension(file.extension)
         }
     }
 
     override fun getIconForExtension(extension: String): Int {
         return when (extension) {
-            "xml" -> R.drawable.ic_file
-            "java" -> R.drawable.ic_file
-            "kt" -> R.drawable.ic_file
+            "xml" -> R.drawable.ic_xml
+            "java" -> R.drawable.ic_java
+            "kt" -> R.drawable.ic_kotlin
             else -> getDefaultFileIcon()
         }
     }
