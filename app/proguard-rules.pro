@@ -20,17 +20,17 @@
 # hide the original source file name.
 #-renamesourcefileattribute SourceFile
 
-# Keep the FileTree class and its members
+# Keep the FileTree class
 -keep class com.zyron.filetree.FileTree { *; }
 
-# Keep the FileTreeAdapterUpdateListener class and its members
+# Keep the FileTreeAdapterUpdateListener interface
 -keep class com.zyron.filetree.FileTreeAdapterUpdateListener { *; }
 
-# Keep the FileTreeAdapter class and its members
+# Keep the FileTreeAdapter class
 -keep class com.zyron.filetree.adapter.FileTreeAdapter { *; }
 
-# Keep the FileTreeClickListener class and its members
+# Keep the FileTreeClickListener interface
 -keep class com.zyron.filetree.adapter.FileTreeClickListener { *; }
 
-# Keep the FileTreeIconProvider class and its members
+# Keep the FileTreeIconProvider class
 -keep class com.zyron.filetree.provider.FileTreeIconProvider { *; }
