@@ -23,10 +23,10 @@ import java.io.File
 
 class MainActivity : AppCompatActivity(), FileTreeClickListener {
 
-companion object {
-    private const val REQUEST_EXTERNAL_STORAGE = 1
-    private const val REQUEST_DIRECTORY_SELECTION = 2
-}
+    companion object {
+        private const val REQUEST_EXTERNAL_STORAGE = 1
+        private const val REQUEST_DIRECTORY_SELECTION = 2
+    }
 
     private lateinit var drawerLayout: DrawerLayout
     private lateinit var navigationView: NavigationView
@@ -44,7 +44,7 @@ companion object {
         drawerLayout = findViewById(R.id.drawer_layout)
         navigationView = findViewById(R.id.navigation_view)
         actionBarDrawerToggle = ActionBarDrawerToggle(this, drawerLayout, toolbar, R.string.app_name, R.string.app_name)
-        
+
         drawerLayout.addDrawerListener(actionBarDrawerToggle)
         actionBarDrawerToggle.syncState()
         toolbar.setTitle("FileTree")
@@ -55,24 +55,26 @@ companion object {
                 drawerLayout.openDrawer(GravityCompat.START)
             }
         }
-    
-    fun setupListeners() {  
-    val selectDirectory = findViewById<MaterialButton>(R.id.select_directory)
-        selectDirectory.setOnClickListener {
-        selectDirectory()
-        }
-    }
+
+        setupListeners()
         checkPermission()
     }
-    
+
+    fun setupListeners() {  
+        val selectDirectory = findViewById<MaterialButton>(R.id.select_directory)
+        selectDirectory.setOnClickListener {
+            selectDirectory()
+        }
+    }
+
     private fun checkPermission() {
         if (Build.VERSION.SDK_INT < Build.VERSION_CODES.R) {
-          if (ContextCompat.checkSelfPermission(this, Manifest.permission.MANAGE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
-              requestStoragePermission()
+            if (ContextCompat.checkSelfPermission(this, Manifest.permission.MANAGE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
+                requestStoragePermission()
             }
-          } else {
-              if (!Environment.isExternalStorageManager()) {
-                  requestAllFilesAccess()
+        } else {
+            if (!Environment.isExternalStorageManager()) {
+                requestAllFilesAccess()
             }
         }
     }
@@ -90,6 +92,7 @@ companion object {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
         if (requestCode == REQUEST_EXTERNAL_STORAGE) {
             if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                // Permission granted
             } else {
                 if (shouldShowRequestPermissionRationale(Manifest.permission.MANAGE_EXTERNAL_STORAGE)) {
                     Toast.makeText(this, "Storage access is required to browse files. Please grant permission.", Toast.LENGTH_SHORT).show()
@@ -103,7 +106,7 @@ companion object {
             }
         }
     }
-    
+
     private fun selectDirectory() {
         val intent = Intent(Intent.ACTION_OPEN_DOCUMENT_TREE)
         startActivityForResult(intent, REQUEST_DIRECTORY_SELECTION)
@@ -125,8 +128,8 @@ companion object {
     }
 
     private fun initializeFileTree(fileTree: FileTree) {
-        val recyclerView = findViewById<RecyclerView>(R.id.recycler_veiw).apply {
-        setItemViewCacheSize(100)
+        val recyclerView = findViewById<RecyclerView>(R.id.recycler_view).apply {
+            setItemViewCacheSize(100)
         }
         val fileTreeIconProvider = IntendedFileIconProvider()
         val fileTreeAdapter = FileTreeAdapter(this, fileTree, fileTreeIconProvider, this)
@@ -143,7 +146,7 @@ companion object {
             }
         })
     }
-    
+
     override fun onFileClick(file: File) {
         Toast.makeText(this, "File clicked: ${file.name}", Toast.LENGTH_SHORT).show()
     }
