@@ -57,12 +57,12 @@ class MainActivity : AppCompatActivity(), FileTreeClickListener {
             }
         }
 
-        setupListeners()
+        setupOnClickListeners()
         checkPermission()
     }
 
-    fun setupListeners() {  
-        val selectDirectory:MaterialButton = findViewById(R.id.select_directory)
+    fun setupOnClickListeners() {  
+        val selectDirectory: MaterialButton = findViewById(R.id.select_directory)
         selectDirectory.setOnClickListener {
         selectDirectory()
         }
@@ -93,7 +93,6 @@ class MainActivity : AppCompatActivity(), FileTreeClickListener {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
         if (requestCode == REQUEST_EXTERNAL_STORAGE) {
             if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                // Permission granted
             } else {
                 if (shouldShowRequestPermissionRationale(Manifest.permission.MANAGE_EXTERNAL_STORAGE)) {
                     Toast.makeText(this, "Storage access is required to browse files. Please grant permission.", Toast.LENGTH_SHORT).show()
