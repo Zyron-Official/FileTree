@@ -242,52 +242,6 @@ class MainActivity : AppCompatActivity(), FileTreeClickListener {
 }
 ```
 
-#### Define Icons in FileIconProvider Class (Kotlin)
-
-```Kotlin
-import com.zyron.filetree.provider.FileTreeIconProvider
-import java.io.File
-
-class FileIconProvider : FileTreeIconProvider {
-
-    override fun getChevronExpandIcon(): Int {
-        return R.drawable.ic_chevron_expand
-    }
-
-    override fun getChevronCollapseIcon(): Int {
-        return R.drawable.ic_chevron_collapse
-    }
-
-    override fun getFolderIcon(): Int {
-        return R.drawable.ic_folder
-    }
-
-    override fun getDefaultFileIcon(): Int {
-        return R.drawable.ic_file
-    }
-
-    override fun getIconForFile(file: File): Int {
-        return when (file.name) {
-            "gradlew.bat" -> R.drawable.ic_gradlewbat
-            "gradlew" -> R.drawable.ic_gradlew
-            "settings.gradle" -> R.drawable.ic_gradle_settings
-            "build.gradle" -> R.drawable.ic_gradle_build
-            "gradle.properties" -> R.drawable.ic_gradle_properties
-            else -> getIconForExtension(file.extension)
-        }
-    }
-
-    override fun getIconForExtension(extension: String): Int {
-        return when (extension) {
-            "xml" -> R.drawable.ic_xml
-            "java" -> R.drawable.ic_java
-            "kt" -> R.drawable.ic_kotlin
-            else -> getDefaultFileIcon()
-        }
-    }
-}
-```
-
 ## 7. Frequently Asked Questions (FAQ)
 
 **Q:** How do I get the selected file or folder in the file tree?
