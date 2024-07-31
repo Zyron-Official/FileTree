@@ -1,14 +1,20 @@
 package com.zyron.filetree
 
 import android.content.Context
-import com.zyron.filetree.viewmodel.FileTreeNode
 import kotlinx.coroutines.*
+import kotlin.collections.*
 import java.io.File
-import java.nio.file.Files
-import java.nio.file.Paths
+import java.nio.file.*
 
 interface FileTreeAdapterUpdateListener {
     fun onFileTreeUpdated(startPosition: Int, itemCount: Int)
+}
+
+data class FileTreeNode(var file: File, var parent: FileTreeNode? = null, var level: Int = 0) {
+    var isExpanded: Boolean = false
+    var childrenStartIndex: Int = 0
+    var childrenEndIndex: Int = 0
+    var childrenLoaded: Boolean = false
 }
 
 class FileTree(private val context: Context, private val rootDirectory: String) {
@@ -47,6 +53,7 @@ class FileTree(private val context: Context, private val rootDirectory: String) 
     fun getExpandedNodes(): Set<FileTreeNode> = expandedNodes
 
     private suspend fun addNode(node: FileTreeNode, parent: FileTreeNode? = null) {
+    
         node.parent = parent
         nodes.add(node)
         withContext(Dispatchers.Main) {
@@ -73,12 +80,8 @@ class FileTree(private val context: Context, private val rootDirectory: String) 
                     node.childrenStartIndex = insertIndex
                     node.childrenEndIndex = insertIndex + children.size
 
-                    val newNodes = children.mapIndexed { _, childFile ->
-                        FileTreeNode(
-                            file = childFile,
-                            parent = node,
-                            level = node.level + 1
-                        )
+                    val newNodes = children.map { childFile ->
+                        FileTreeNode(file = childFile, parent = node, level = node.level + 1)
                     }
 
                     nodes.addAll(insertIndex, newNodes)
@@ -93,11 +96,8 @@ class FileTree(private val context: Context, private val rootDirectory: String) 
             }
         }
     }
-    
-    private fun collectAllChildren(
-        node: FileTreeNode,
-        nodesToRemove: MutableList<FileTreeNode>
-    ) {
+
+    private fun collectAllChildren(node: FileTreeNode, nodesToRemove: MutableList<FileTreeNode>) {
         val children = nodes.filter { it.parent == node }
         nodesToRemove.addAll(children)
         children.forEach { childNode ->
