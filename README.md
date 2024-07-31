@@ -139,6 +139,52 @@ Resource IDs (Android): If you're using Android, you can provide resource IDs (e
 
 Paths (Generic): For cross-platform compatibility, you can allow users to provide file paths for icon images.
 
+Here's an example on how to customize icons
+
+```kotlin
+import com.zyron.filetree.provider.FileTreeIconProvider
+import java.io.File
+
+class FileIconProvider : FileTreeIconProvider {
+
+    override fun getChevronExpandIcon(): Int {
+        return R.drawable.ic_chevron_expand
+    }
+
+    override fun getChevronCollapseIcon(): Int {
+        return R.drawable.ic_chevron_collapse
+    }
+
+    override fun getFolderIcon(): Int {
+        return R.drawable.ic_folder
+    }
+
+    override fun getDefaultFileIcon(): Int {
+        return R.drawable.ic_file
+    }
+
+    override fun getIconForFile(file: File): Int {
+        return when (file.name) {
+            "gradlew.bat" -> R.drawable.ic_gradlewbat
+            "gradlew" -> R.drawable.ic_gradlew
+            "settings.gradle" -> R.drawable.ic_gradle_settings
+            "build.gradle" -> R.drawable.ic_gradle_build
+            "gradle.properties" -> R.drawable.ic_gradle_properties
+            else -> getIconForExtension(file.extension)
+        }
+    }
+
+    override fun getIconForExtension(extension: String): Int {
+        return when (extension) {
+            "xml" -> R.drawable.ic_xml
+            "java" -> R.drawable.ic_java
+            "kt" -> R.drawable.ic_kotlin
+            else -> getDefaultFileIcon()
+        }
+    }
+}
+```
+
 ## 5. Asynchronous File System
 
 The `FileTree` library typically uses a asynchronous system powered by Coroutines to perform core file functions(expand, collapse, loading files in FileTree) in the background thread. This ensures that the UI thread remains responsive while the functions are executed.
