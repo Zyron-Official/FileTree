@@ -84,3 +84,13 @@ class MainActivity : ComponentActivity() {
     }
 }
 ```
+
+#### Explanation 
+
+- `FileTreeScreen:` Main composable function displaying the file tree.
+ 
+- `FileTreeItem:` Composable for each item in the file tree.
+ 
+- `FileTreeViewModel:` Manages the state and updates the UI when data changes.
+ 
+- `FileTreeState:` Data class for holding the file tree nodes.
