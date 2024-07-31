@@ -24,10 +24,10 @@ import java.io.File
 
 class MainActivity : AppCompatActivity(), FileTreeClickListener {
 
-    companion object {
-        private const val REQUEST_EXTERNAL_STORAGE = 1
-        private const val REQUEST_DIRECTORY_SELECTION = 2
-    }
+companion object {
+    private const val REQUEST_EXTERNAL_STORAGE = 1
+    private const val REQUEST_DIRECTORY_SELECTION = 2
+}
 
     private lateinit var drawerLayout: DrawerLayout
     private lateinit var navigationView: NavigationView
@@ -128,9 +128,7 @@ class MainActivity : AppCompatActivity(), FileTreeClickListener {
     }
 
     private fun initializeFileTree(fileTree: FileTree) {
-        val recyclerView: RecyclerView = findViewById(R.id.recycler_view).apply {
-        setItemViewCacheSize(100)
-        }
+        val recyclerView: RecyclerView = findViewById(R.id.recycler_view)
         val fileTreeIconProvider = IntendedFileIconProvider()
         val fileTreeAdapter = FileTreeAdapter(this, fileTree, fileTreeIconProvider, this)
         val layoutManager = LinearLayoutManager(this)
