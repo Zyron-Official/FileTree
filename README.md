@@ -107,9 +107,9 @@ Handle these events in your IDE's logic to perform actions like opening files, d
 The `FileTree` library provides methods for performing common file system operations by using onClick and onLongClick Listeners.
 
 ```kotlin
-import com.zyron.filetree.FileTreeClickListener 
+import com.zyron.filetree.adapter.FileTreeClickListener 
 
-class FileOperationExecutor: FileTreeClickListener {
+class FileOperationExecutor : FileTreeClickListener {
 
     override fun onFileClick(file: File) {
         Toast.makeText(this, "File clicked: ${file.name}", Toast.LENGTH_SHORT).show()
@@ -133,13 +133,9 @@ class FileOperationExecutor: FileTreeClickListener {
 
 ## 4. Customizing Icons
 
-The `FileTree` library allows you to specify custom icons for files and folders. You can either provide a default set of icons or allow users to customize them within your IDE's settings.
+The `FileTree` library allows you to specify custom icons for files and folders. 
 
-Resource IDs (Android): If you're using Android, you can provide resource IDs (e.g., R.drawable.iconFolder) for icons.
-
-Paths (Generic): For cross-platform compatibility, you can allow users to provide file paths for icon images.
-
-Here's an example on how to customize icons
+Here's an example to customize icons
 
 ```kotlin
 import com.zyron.filetree.provider.FileTreeIconProvider
