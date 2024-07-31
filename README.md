@@ -88,47 +88,52 @@ This step involves integrating the ```FileTree``` library with your IDE's UI fra
 
     You might need to create a custom composable to display the tree nodes (similar to a custom TreeCellRenderer in Swing).
 
-### Example (Swing):
+### Example (Android View-Based):
 
-```java
-import com.zyron.filetree.FileTree;
-import javax.swing.*;
-import java.awt.*;
-import java.io.File;
-import java.util.ArrayList;
-import java.util.List;
+```kotlin 
+import androidx.recyclerview.widget.RecyclerView 
+import androidx.recyclerview.widget.LinearLayoutManager 
+import com.zyron.filetree.adapter.FileTreeAdapter 
+import com.zyron.filetree.FileTree
+import java.io.File
 
-public class IDEExample {
+class MainActivity : AppCompatActivity(), FileTreeClickListener {
 
-    private JTree fileTree;
-    private FileTree fileTreeModel;
-
-    public void init() {
-        // 1. Create a FileTree instance
-        fileTreeModel = new FileTree(new File("/")); // Your root directory
-
-        // 2. Load the file tree
-        fileTreeModel.loadTree();
-
-        // 3. Create a JTree and set a custom TreeModel (optional)
-        fileTree = new JTree();
-        fileTree.setModel(new CustomTreeModel(fileTreeModel.getNodes()));
-
-        // 4. Set up listeners for node selection, expansion/collapse, etc.
-        //    and handle events accordingly in your IDE's logic. 
-
-        // 5. Handle file operations
-        fileTreeModel.copyFile(sourceFile, destinationFile); // Example
-        fileTreeModel.deleteFile(fileToDelete); // Example
-
-        // 6. Add your icons for files and folders to the JTree
-        //    using the FileTreeAdapter if it's provided or by using a
-        //    custom renderer if you're using the FileTree directly.
+        private fun initializeFileTree(fileTree: FileTree) {
+        val fileTree = FileTree(this, "storage/emulated/0")
+        val recyclerView: RecyclerView = findViewById(R.id.recycler_view)
+        val fileTreeIconProvider = IntendedFileIconProvider()
+        val fileTreeAdapter = FileTreeAdapter(this, fileTree, fileTreeIconProvider, this)
+        val layoutManager = LinearLayoutManager(this)
+        recyclerView.layoutManager = layoutManager
+        recyclerView.adapter = fileTreeAdapter
+        fileTree.loadFileTree()
+        fileTree.setAdapterUpdateListener(object : FileTreeAdapterUpdateListener {
+            override fun onFileTreeUpdated(startPosition: Int, itemCount: Int) {
+                runOnUiThread {
+                    fileTreeAdapter.updateNodes(fileTree.getNodes())
+                    fileTreeAdapter.notifyItemRangeChanged(startPosition, itemCount)
+                }
+            }
+        })
     }
 
-    // Custom TreeModel for JTree (optional)
-    public class CustomTreeModel extends DefaultTreeModel {
-        // Implement a custom TreeModel based on your FileTree data
+    override fun onFileClick(file: File) {
+        Toast.makeText(this, "File clicked: ${file.name}", Toast.LENGTH_SHORT).show()
+    }
+
+    override fun onFolderClick(folder: File) {
+        Toast.makeText(this, "Folder clicked: ${folder.name}", Toast.LENGTH_SHORT).show()
+    }
+
+    override fun onFileLongClick(file: File): Boolean {
+        Toast.makeText(this, "File long-clicked: ${file.name}", Toast.LENGTH_SHORT).show()
+        return true 
+    }
+
+    override fun onFolderLongClick(folder: File): Boolean {
+        Toast.makeText(this, "Folder long-clicked: ${folder.name}", Toast.LENGTH_SHORT).show()
+        return true 
     }
 }
 ```
