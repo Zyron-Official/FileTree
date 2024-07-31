@@ -88,15 +88,13 @@ This step involves integrating the ```FileTree``` library with your IDE's UI fra
 
     You might need to create a custom composable to display the tree nodes (similar to a custom TreeCellRenderer in Swing).
 
+#### Android View-Based [(Android/Kotlin)](docs/integration/Android.md)
 
+#### Android Jetpack Compose[(Android/Kotlin)](docs/integration/Android-Jetpack-Compose.md)
 
-Android View-Based [(Android/Kotlin)](docs/integration/Android.md)
+#### Swing [(Java)](docs/integration/Java-Swing.md)
 
-Android Jetpack Compose[(Android/Kotlin)](docs/integration/Android.md)
-
-Swing [(Java)](docs/integration/Android.md)
-
-SWT [(Java)](docs/integration/Android.md)
+#### SWT [(Java)](docs/integration/Java-SWT.md)
 
 ### 2.4. Event Handling
 
