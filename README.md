@@ -173,7 +173,7 @@ class FileIconProvider : FileTreeIconProvider {
 
 ## 5. Asynchronous File System
 
-The `FileTree` library typically uses a asynchronous system powered by built-in Kotlin Coroutines to perform core file functions such as expanding, collapsing and loading files in `FileTree` on the background thread. This ensures that the UI thread remains responsive while the functions are executed.
+The `FileTree` library typically uses a built-in asynchronous system powered by Kotlin Coroutines to perform core file functions such as expanding, collapsing and loading files in `FileTree` on the background thread. This ensures that the UI thread remains responsive while the functions are executed.
 
 ## 6. Example (Android view-based)
 
@@ -210,7 +210,7 @@ class MainActivity : AppCompatActivity() {
         private fun initializeFileTree(fileTree: FileTree) {
         val recyclerView: RecyclerView = findViewById(R.id.recycler_view)
         val fileTree = FileTree(this, "storage/emulated/0")
-        val fileTreeIconProvider = IntendedFileIconProvider()
+        val fileTreeIconProvider = FileIconProvider()
         val fileTreeAdapter = FileTreeAdapter(this, fileTree, fileTreeIconProvider, this)
         val layoutManager = LinearLayoutManager(this)
         recyclerView.layoutManager = layoutManager
