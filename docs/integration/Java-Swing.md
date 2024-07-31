@@ -65,13 +65,13 @@ public class FileTreeFrame extends JFrame {
 
 #### Explanation 
 
-#### `FileTreeModel:` 
+- `FileTreeModel:` 
 
 Extends DefaultTreeModel to provide a tree model based on the file system. 
 
 createNode(File file): Recursively creates tree nodes for directories and files. 
 
-#### `FileTreeFrame:` 
+- `FileTreeFrame:` 
 
 Sets up the main application window. 
 
