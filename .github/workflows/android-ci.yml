@@ -38,16 +38,16 @@ jobs:
     - name: Build with Gradle
       run: ./gradlew build
 
-    # Step 6: Archive the APK
+    # Step 6: Build release APK
+    - name: Build Release APK
+      run: ./gradlew assembleRelease
+
+    # Step 7: Archive the Debug APK
     - name: Archive Debug APK
       uses: actions/upload-artifact@v2
       with:
         name: app-debug
         path: app/build/outputs/apk/debug/app-debug.apk
-
-    # Step 7: Build release APK
-    - name: Build Release APK
-      run: ./gradlew assembleRelease
 
     # Step 8: Archive the Release APK
     - name: Archive Release APK
@@ -79,8 +79,8 @@ jobs:
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       with:
-        tag_name: ${{ github.ref }}
-        release_name: Release ${{ github.ref }}
+        tag_name: ${{ github.ref_name }}
+        release_name: Release ${{ github.ref_name }}
         draft: false
         prerelease: false
 
