@@ -32,7 +32,7 @@ class MainActivity : AppCompatActivity(), FileTreeClickListener {
         private fun initializeFileTree(fileTree: FileTree) {
         val recyclerView: RecyclerView = findViewById(R.id.recycler_view)
         val fileTree = FileTree(this, "storage/emulated/0")
-        val fileTreeIconProvider = IntendedFileIconProvider()
+        val fileTreeIconProvider = FileIconProvider()
         val fileTreeAdapter = FileTreeAdapter(this, fileTree, fileTreeIconProvider, this)
         val layoutManager = LinearLayoutManager(this)
         recyclerView.layoutManager = layoutManager
