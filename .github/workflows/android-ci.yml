@@ -2,13 +2,13 @@ name: Android CI
 
 on:
   push:
-    branches: [ "main" ]
+    branches:
+      - "main"
     paths-ignore:
       - '**/*.md'
   pull_request:
-    branches: [ "main" ]
-  tags:
-    - 'v*'  # This triggers the workflow when a tag is pushed with a versioning pattern
+    branches:
+      - "main"
 
 jobs:
   build:
