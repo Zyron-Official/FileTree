@@ -54,7 +54,7 @@ The `FileTree` library provides a robust and modular way to manage and display f
 </div>
 <div >
 <img src="/fastlane/metadata/android/images/Screenshot_20240801-154111_FileTree.jpg" width="48%" />
-<img src="/fastlane/metadata/android/images/Screenshot_20240801-154830_FileTree.jpg width="48%" />
+<img src="/fastlane/metadata/android/images/Screenshot_20240801-154830_FileTree.jpg" width="48%" />
 </div>
 
 ## 2. Integration
