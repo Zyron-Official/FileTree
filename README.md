@@ -46,6 +46,17 @@ The `FileTree` library provides a robust and modular way to manage and display f
 
 - **Flexibility:** Integrates seamlessly with various IDE UI frameworks (Android Views, Swing, SWT, Jetpack Compose).
 
+### Overview
+
+<div >
+<img src="/fastlane/metadata/android/images/Screenshot_20240801-154141_FileTree.jpg" width="50%" />
+<img src="/fastlane/metadata/android/images/Screenshot_20240801-154809_FileTree.jpg" width="50%" />
+</div>
+<div >
+<img src="/fastlane/metadata/android/images/Screenshot_20240801-154111_FileTree.jpg" width="50%" />
+<img src="/fastlane/metadata/android/images/Screenshot_20240801-154830_FileTree.jpg width="50%" />
+</div>
+
 ## 2. Integration
 ### 2.1. Dependencies
 
