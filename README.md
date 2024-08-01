@@ -36,6 +36,8 @@ The `FileTree` library provides a robust and modular way to manage and display f
 
 - **Hierarchical File Tree Representation:** Presents files and folders in a hierarchical tree structure.
 
+- **Hover-Navigated Directory**: Highlights directories as users navigate through them by clicking. This feature enhances user experience by visually indicating the current directory and providing a clear, interactive method for exploring the directory tree.
+
 - **Lazy Loading:** Optimizes loading time by only loading child nodes when expanded.
 
 - **Asynchronous File System:** Performs file functions like expanding, collapsing, loading files in `FileTree`, etc. in the background thread to avoid blocking the Main UI Thread.
