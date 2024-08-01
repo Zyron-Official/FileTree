@@ -100,6 +100,7 @@ The `FileTree` library provides methods for performing common file system operat
 
 ```kotlin
 import com.zyron.filetree.adapter.FileTreeClickListener 
+import java.io.File
 
 class FileOperationExecutor : FileTreeClickListener {
 
@@ -249,7 +250,7 @@ class MainActivity : AppCompatActivity() {
 
 **A:** Yes, the library can be adapted for other applications that require file tree management, such as file explorers or project management tools.
 
-## License
+## 8. License
 ```
 Copyright 2024 Zyron Official.
 
