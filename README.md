@@ -217,6 +217,7 @@ class MainActivity : AppCompatActivity() {
         recyclerView.adapter = fileTreeAdapter
         fileTree.loadFileTree()
         fileTree.setAdapterUpdateListener(object : FileTreeAdapterUpdateListener {
+
             override fun onFileTreeUpdated(startPosition: Int, itemCount: Int) {
                 runOnUiThread {
                     fileTreeAdapter.updateNodes(fileTree.getNodes())
