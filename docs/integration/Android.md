@@ -30,8 +30,8 @@ import java.io.File
 class MainActivity : AppCompatActivity(), FileTreeClickListener {
 
         private fun initializeFileTree(fileTree: FileTree) {
-        val fileTree = FileTree(this, "storage/emulated/0")
         val recyclerView: RecyclerView = findViewById(R.id.recycler_view)
+        val fileTree = FileTree(this, "storage/emulated/0")
         val fileTreeIconProvider = IntendedFileIconProvider()
         val fileTreeAdapter = FileTreeAdapter(this, fileTree, fileTreeIconProvider, this)
         val layoutManager = LinearLayoutManager(this)
@@ -39,6 +39,7 @@ class MainActivity : AppCompatActivity(), FileTreeClickListener {
         recyclerView.adapter = fileTreeAdapter
         fileTree.loadFileTree()
         fileTree.setAdapterUpdateListener(object : FileTreeAdapterUpdateListener {
+
             override fun onFileTreeUpdated(startPosition: Int, itemCount: Int) {
                 runOnUiThread {
                     fileTreeAdapter.updateNodes(fileTree.getNodes())
