@@ -38,23 +38,40 @@ jobs:
     - name: Build Debug APK
       run: ./gradlew assembleDebug
 
-    # Step 6: Archive the Debug APK
+    # Step 6: Check if Debug APK exists
+    - name: Check Debug APK
+      run: ls -la app/build/outputs/apk/debug/
+
+    # Step 7: Archive the Debug APK
     - name: Archive Debug APK
       uses: actions/upload-artifact@v2
       with:
         name: app-debug
         path: app/build/outputs/apk/debug/app-debug.apk
 
-    # Step 7: Build Release APK
+    # Step 8: Build Release APK
     - name: Build Release APK
       run: ./gradlew assembleRelease
 
-    # Step 8: Archive the Release APK
+    # Step 9: Check if Release APK exists
+    - name: Check Release APK
+      run: ls -la app/build/outputs/apk/release/
+
+    # Step 10: Archive the Release APK
     - name: Archive Release APK
       uses: actions/upload-artifact@v2
       with:
         name: app-release
         path: app/build/outputs/apk/release/app-release.apk
+
+    # Step 11: Print build log if available
+    - name: Print build log
+      run: |
+        if [ -f app/build/reports/build.log ]; then
+          cat app/build/reports/build.log
+        else
+          echo "Build log file not found."
+        fi
 
   release:
     needs: build
