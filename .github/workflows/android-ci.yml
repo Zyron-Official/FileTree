@@ -4,13 +4,14 @@ on:
   push:
     branches:
       - "main"
-    tags:
-      - 'v*'  # Trigger this workflow when a tag is pushed
     paths-ignore:
       - '**/*.md'
   pull_request:
     branches:
       - "main"
+  release:
+    types:
+      - created
 
 jobs:
   build:
@@ -30,7 +31,7 @@ jobs:
 
     # Step 3: Grant execute permission for gradlew
     - name: Grant execute permission for gradlew
-      run: chmod +x ./gradlew
+      run: chmod +x gradlew
 
     # Step 4: Clean the project
     - name: Clean project
@@ -66,50 +67,45 @@ jobs:
         name: app-release
         path: app/build/outputs/apk/release/app-release.apk
 
-    # Step 11: Print build log if available
-    - name: Print build log
-      run: |
-        if [ -f app/build/reports/build.log ]; then
-          cat app/build/reports/build.log
-        else
-          echo "Build log file not found."
-        fi
+  release:
+    needs: build
+    runs-on: ubuntu-latest
+    if: github.event_name == 'release' && startsWith(github.ref, 'refs/tags/')
 
-release:
-  needs: build
-  runs-on: ubuntu-latest
-  if: github.event_name == 'release' && startsWith(github.ref, 'refs/tags/')
+    steps:
+    # Step 1: Check out the repository
+    - uses: actions/checkout@v3
 
-  steps:
-  # Step 1: Check out the repository
-  - uses: actions/checkout@v3
+    # Step 2: Download the Release APK
+    - name: Download Release APK
+      uses: actions/download-artifact@v2
+      with:
+        name: app-release
+        path: .
 
-  # Step 2: Download the Release APK
-  - name: Download Release APK
-    uses: actions/download-artifact@v2
-    with:
-      name: app-release
-      path: .
+    # Step 3: Verify APK File
+    - name: Verify APK File
+      run: ls -la app-release.apk
 
-  # Step 3: Create GitHub Release
-  - name: Create GitHub Release
-    id: create_release
-    uses: actions/create-release@v1
-    env:
-      GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-    with:
-      tag_name: ${{ github.ref_name }}
-      release_name: Release ${{ github.ref_name }}
-      draft: false
-      prerelease: false
+    # Step 4: Create GitHub Release
+    - name: Create GitHub Release
+      id: create_release
+      uses: actions/create-release@v1
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      with:
+        tag_name: ${{ github.ref_name }}
+        release_name: Release ${{ github.ref_name }}
+        draft: false
+        prerelease: false
 
-  # Step 4: Upload APK to Release
-  - name: Upload APK to Release
-    uses: actions/upload-release-asset@v1
-    env:
-      GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-    with:
-      upload_url: ${{ steps.create_release.outputs.upload_url }}
-      asset_path: ./app-release.apk
-      asset_name: app-release.apk
-      asset_content_type: application/vnd.android.package-archive
+    # Step 5: Upload APK to Release
+    - name: Upload APK to Release
+      uses: actions/upload-release-asset@v1
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      with:
+        upload_url: ${{ steps.create_release.outputs.upload_url }}
+        asset_path: ./app-release.apk
+        asset_name: app-release.apk
+        asset_content_type: application/vnd.android.package-archive
