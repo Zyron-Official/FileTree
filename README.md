@@ -49,12 +49,12 @@ The `FileTree` library provides a robust and modular way to manage and display f
 ### Overview
 
 <div >
-<img src="/fastlane/metadata/android/images/Screenshot_20240801-154141_FileTree.jpg" width="50%" />
-<img src="/fastlane/metadata/android/images/Screenshot_20240801-154809_FileTree.jpg" width="50%" />
+<img src="/fastlane/metadata/android/images/Screenshot_20240801-154141_FileTree.jpg" width="48%" />
+<img src="/fastlane/metadata/android/images/Screenshot_20240801-154809_FileTree.jpg" width="48%" />
 </div>
 <div >
-<img src="/fastlane/metadata/android/images/Screenshot_20240801-154111_FileTree.jpg" width="50%" />
-<img src="/fastlane/metadata/android/images/Screenshot_20240801-154830_FileTree.jpg width="50%" />
+<img src="/fastlane/metadata/android/images/Screenshot_20240801-154111_FileTree.jpg" width="48%" />
+<img src="/fastlane/metadata/android/images/Screenshot_20240801-154830_FileTree.jpg width="48%" />
 </div>
 
 ## 2. Integration
