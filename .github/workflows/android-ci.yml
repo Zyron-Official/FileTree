@@ -28,26 +28,26 @@ jobs:
 
     # Step 3: Grant execute permission for gradlew
     - name: Grant execute permission for gradlew
-      run: chmod +x gradlew
+      run: chmod +x ./gradlew
 
     # Step 4: Clean the project
     - name: Clean project
       run: ./gradlew clean
 
-    # Step 5: Build with Gradle
-    - name: Build with Gradle
-      run: ./gradlew build
+    # Step 5: Build Debug APK
+    - name: Build Debug APK
+      run: ./gradlew assembleDebug
 
-    # Step 6: Build release APK
-    - name: Build Release APK
-      run: ./gradlew assembleRelease
-
-    # Step 7: Archive the Debug APK
+    # Step 6: Archive the Debug APK
     - name: Archive Debug APK
       uses: actions/upload-artifact@v2
       with:
         name: app-debug
         path: app/build/outputs/apk/debug/app-debug.apk
+
+    # Step 7: Build Release APK
+    - name: Build Release APK
+      run: ./gradlew assembleRelease
 
     # Step 8: Archive the Release APK
     - name: Archive Release APK
