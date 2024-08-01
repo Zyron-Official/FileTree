@@ -61,7 +61,7 @@ The specific instructions for adding a dependency will depend on your IDE and bu
 val fileTree = FileTree(this, "/storage/emulated/0")
 ```
 
-**2. Load the Tree:** Call the `loadFileTree()` method to load the initial file tree structure. This will load the root directory and its immediate children:
+**2. Load the FileTree:** Call the `loadFileTree()` method to load the initial file tree structure. This will load the root directory and its immediate children:
 
 ```kotlin
 fileTree.loadFileTree()
@@ -248,7 +248,7 @@ class MainActivity : AppCompatActivity() {
 
 ## License
 ```
-Copyright 2024 Zyron
+Copyright 2024 Zyron Official.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
