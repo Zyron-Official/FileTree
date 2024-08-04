@@ -61,6 +61,9 @@ The `FileTree` library provides a robust and modular way to manage and display f
 ### 2.1. Dependencies
 
 First, add the `FileTree` library as a dependency to your project using a build system like Maven or Gradle:
+
+#### Note: (This Dependency is in pending in Maven for Review) you can't use this dependency at the moment, if you want to integrate FileTree you should add FileTree Locally within your project.
+
 ```groovy
 implementation 'com.zyron.openapi.filetree:filetree:1.0.0'
 ```
