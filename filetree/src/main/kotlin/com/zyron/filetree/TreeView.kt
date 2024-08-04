@@ -6,6 +6,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.zyron.filetree.adapter.FileTreeAdapter
 import com.zyron.filetree.adapter.FileTreeClickListener
+import com.zyron.filetree.provider.FileTreeIconProvider
 import com.zyron.filetree.utils.Utils.runOnUiThread
 
 class TreeView : RecyclerView {
@@ -22,26 +23,38 @@ class TreeView : RecyclerView {
     }
 
     constructor(context: Context, attrs: AttributeSet?, defstyleAttrs: Int) : super(
-        context,
-        attrs,
-        defstyleAttrs
+        context, attrs, defstyleAttrs
     ) {
         this.context = context
     }
 
 
     fun init(path: String) {
-        init(path, null)
+        init(path, null,null)
     }
 
-    fun init(path: String, listener: FileTreeClickListener?) {
+    fun init(path: String,listener: FileTreeClickListener?){
+        init(path,listener,null)
+    }
+
+    fun init(
+        path: String,
+        listener: FileTreeClickListener?,
+        fileTreeIconProvider: FileTreeIconProvider?
+    ) {
         this.path = path
         fileTree = FileTree(context, path)
+
         val fileTreeAdapter = if (listener == null) {
             FileTreeAdapter(context, fileTree!!)
         } else {
-            FileTreeAdapter(context, fileTree!!, listener)
+            if (fileTreeIconProvider != null) {
+                FileTreeAdapter(context, fileTree!!,fileTreeIconProvider, listener)
+            }else{
+                FileTreeAdapter(context, fileTree!!, listener)
+            }
         }
+
         layoutManager = LinearLayoutManager(context)
         adapter = fileTreeAdapter
         fileTree!!.loadFileTree()

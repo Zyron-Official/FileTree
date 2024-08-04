@@ -1,6 +1,7 @@
 package com.zyron.filetree
 
 import android.content.Context
+import android.util.Log
 import kotlinx.coroutines.*
 import kotlin.collections.*
 import java.io.File
@@ -26,6 +27,12 @@ class FileTree(private val context: Context, private val rootDirectory: String) 
     private val scope = CoroutineScope(Dispatchers.IO + SupervisorJob())
 
     init {
+        val file = File(rootDirectory)
+        val rw = file.canRead() && file.canWrite()
+        if (!file.exists() || !rw){
+            Log.e("FileTree","Provided path : $rootDirectory is invalid or does not exist")
+            Log.d("FileTree","continuing anyways...")
+        }
         scope.coroutineContext[Job]?.invokeOnCompletion {
             if (it is CancellationException) {
             }
