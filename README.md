@@ -230,7 +230,7 @@ class MainActivity : AppCompatActivity() {
         val fileIconProvider = FileIconProvider()
         val fileOperationExecutor = FileOperationExecutor(requireContext())
 
-        fileTreeView.init(path, fileOperationExecutor, fileIconProvider)
+        fileTreeView.init("storage/emulated/0", fileOperationExecutor, fileIconProvider, this)
 }
 ```
 
