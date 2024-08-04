@@ -34,7 +34,7 @@ class FileTreeAdapter(private val context: Context, private val fileTree: FileTr
     private var nodes: MutableList<FileTreeNode> = fileTree.getNodes().toMutableList()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): FileTreeViewHolder {
-        val view = LayoutInflater.from(parent.context).inflate(R.layout.recycler_view_item, parent, false)
+        val view = LayoutInflater.from(parent.context).inflate(R.layout.filetree_view_item, parent, false)
         return FileTreeViewHolder(view)
     }
 
