@@ -26,11 +26,9 @@ interface FileTreeClickListener {
 }
 
 class FileTreeAdapter(private val context: Context, private val fileTree: FileTree,private val fileTreeIconProvider: FileTreeIconProvider, private val listener: FileTreeClickListener? = null) : RecyclerView.Adapter<FileTreeViewHolder>(), FileTreeAdapterUpdateListener {
+    
     @JvmOverloads
-    constructor(context: Context, fileTree: FileTree,listener: FileTreeClickListener? = null) : this(context,fileTree,
-        DefaultFileIconProvider(),listener)
-
-
+    constructor(context: Context, fileTree: FileTree,listener: FileTreeClickListener? = null) : this(context, fileTree, DefaultFileIconProvider(), listener)
 
     private var selectedItemPosition: Int = RecyclerView.NO_POSITION
     private var nodes: MutableList<FileTreeNode> = fileTree.getNodes().toMutableList()
@@ -42,21 +40,21 @@ class FileTreeAdapter(private val context: Context, private val fileTree: FileTr
 
     override fun onBindViewHolder(holder: FileTreeViewHolder, position: Int) {
         val node = nodes[position]
-        
+
         val indentationDp = 12 * node.level
         val indentationPx = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, indentationDp.toFloat(), context.resources.displayMetrics).toInt()
-        
+
         val isRtl = context.resources.configuration.layoutDirection == View.LAYOUT_DIRECTION_RTL
 
         val layoutParams = holder.itemView.layoutParams as ViewGroup.MarginLayoutParams
         if (isRtl) {
             layoutParams.rightMargin = indentationPx
             layoutParams.leftMargin = 0
-            
+
         } else {
             layoutParams.leftMargin = indentationPx
             layoutParams.rightMargin = 0
-            
+
         }
         holder.itemView.layoutParams = layoutParams
 
