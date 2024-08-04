@@ -47,7 +47,7 @@
         style="@style/Widget.Material3.NavigationView">
         
         <com.zyron.filetree.widget.FileTreeView
-            android:id="@+id/treeView"
+            android:id="@+id/file_tree_view"
             android:layout_width="match_parent"
             android:layout_height="match_parent"/>
 
