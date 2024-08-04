@@ -14,16 +14,9 @@ import com.zyron.filetree.provider.FileTreeIconProvider
 import com.zyron.filetree.provider.DefaultFileIconProvider
 import com.zyron.filetree.viewholder.FileTreeViewHolder
 import com.zyron.filetree.viewmodel.FileTreeNodeDiffCallback
+import com.zyron.filetree.interfaces.FileTreeEventListener
 import java.io.File
 import java.nio.file.Files
-
-interface FileTreeEventListener {
-    fun onFileClick(file: File)
-    fun onFolderClick(folder: File)
-    fun onFileLongClick(file: File): Boolean
-    fun onFolderLongClick(folder: File): Boolean
-    fun onFileTreeViewUpdated(startPosition: Int, itemCount: Int)
-}
 
 class FileTreeAdapter(private val context: Context, private val fileTree: FileTree, private val fileTreeIconProvider: FileTreeIconProvider, private val fileTreeEventListener: FileTreeEventListener? = null) : RecyclerView.Adapter<FileTreeViewHolder>(), FileTreeAdapterUpdateListener {
     
