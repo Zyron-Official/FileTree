@@ -7,7 +7,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.zyron.filetree.FileTree
 import com.zyron.filetree.FileTreeAdapterUpdateListener
 import com.zyron.filetree.adapter.FileTreeAdapter
-import com.zyron.filetree.adapter.FileTreeEventListener
+import com.zyron.filetree.interfaces.FileTreeEventListener
 import com.zyron.filetree.provider.FileTreeIconProvider
 import com.zyron.filetree.utils.Utils.runOnUiThread
 
