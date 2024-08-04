@@ -10,6 +10,7 @@ import com.zyron.filetree.provider.FileTreeIconProvider
 import com.zyron.filetree.utils.Utils.runOnUiThread
 
 class TreeView : RecyclerView {
+    
     private val context: Context
     private var path: String? = null
     private var fileTree: FileTree? = null
@@ -22,9 +23,7 @@ class TreeView : RecyclerView {
         this.context = context
     }
 
-    constructor(context: Context, attrs: AttributeSet?, defstyleAttrs: Int) : super(
-        context, attrs, defstyleAttrs
-    ) {
+    constructor(context: Context, attrs: AttributeSet?, defstyleAttrs: Int) : super(context, attrs, defstyleAttrs) {
         this.context = context
     }
 
@@ -36,11 +35,7 @@ class TreeView : RecyclerView {
         init(path,listener,null)
     }
 
-    fun init(
-        path: String,
-        listener: FileTreeClickListener?,
-        fileTreeIconProvider: FileTreeIconProvider?
-    ) {
+    fun init(path: String, listener: FileTreeClickListener?, fileTreeIconProvider: FileTreeIconProvider?) {
         this.path = path
         fileTree = FileTree(context, path)
 
