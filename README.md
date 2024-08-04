@@ -217,9 +217,10 @@ Here's a basic example of using the `FileTree` library with Android views:
 #### Setup FileTree in Activity or Fragment (Kotlin)
 
 ```kotlin 
+import androidx.appcompat.app.AppCompatActivity
+import com.zyron.filetree.FileTree
 import com.zyron.filetree.widget.FileTreeView
 import com.zyron.filetree.adapter.FileTreeAdapter 
-import com.zyron.filetree.FileTree
 import com.zyron.filetree.resources.FileIconProvider
 import com.zyron.filetree.operationexecutor.FileOperationExecutor
 import java.io.File
