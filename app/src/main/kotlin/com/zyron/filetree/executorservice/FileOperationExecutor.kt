@@ -26,6 +26,6 @@ class FileOperationExecutor(private val context: Context) : FileTreeEventListene
     }
 
     override fun onFileTreeViewUpdated(startPosition: Int, itemCount: Int) {
-        print("FileTreeView has ben updated.")
+        print(context, "FileTreeView has ben updated.")
     }
 }
