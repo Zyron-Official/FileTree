@@ -92,7 +92,7 @@ class FileTreeAdapter(private val context: Context, private val fileTree: FileTr
             }
 
             holder.itemView.setOnLongClickListener {
-                listener?.onFolderLongClick(node.file) ?: false
+                fileTreeEventListener?.onFolderLongClick(node.file) ?: false
             }
 
         } else if (node.file.isFile) {
@@ -102,11 +102,11 @@ class FileTreeAdapter(private val context: Context, private val fileTree: FileTr
             holder.fileNameView.text = node.file.name
 
             holder.itemView.setOnClickListener {
-                listener?.onFileClick(node.file)
+                fileTreeEventListener?.onFileClick(node.file)
             }
 
             holder.itemView.setOnLongClickListener {
-                listener?.onFileLongClick(node.file) ?: false
+                fileTreeEventListener?.onFileLongClick(node.file) ?: false
             }
         }
     }
