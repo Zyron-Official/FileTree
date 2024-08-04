@@ -56,7 +56,7 @@ class FileTreeView : RecyclerView {
         fileTree!!.loadFileTree()
         fileTree!!.setAdapterUpdateListener(object : FileTreeAdapterUpdateListener {
             override fun onFileTreeUpdated(startPosition: Int, itemCount: Int) {
-                listener?.onFileTreeViewUpdated(startPosition, itemCount)
+                fileTreeEventListener?.onFileTreeViewUpdated(startPosition, itemCount)
                 runOnUiThread {
                     fileTreeAdapter.updateNodes(fileTree!!.getNodes())
                     fileTreeAdapter.notifyItemRangeChanged(startPosition, itemCount)
