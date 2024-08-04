@@ -7,7 +7,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.zyron.filetree.FileTree
 import com.zyron.filetree.FileTreeAdapterUpdateListener
 import com.zyron.filetree.adapter.FileTreeAdapter
-import com.zyron.filetree.adapter.FileTreeClickListener
+import com.zyron.filetree.adapter.FileTreeEventListener
 import com.zyron.filetree.provider.FileTreeIconProvider
 import com.zyron.filetree.utils.Utils.runOnUiThread
 
@@ -33,11 +33,11 @@ class FileTreeView : RecyclerView {
         init(path, null,null)
     }
 
-    fun init(path: String,listener: FileTreeClickListener?){
+    fun init(path: String,listener: FileTreeEventListener?){
         init(path,listener,null)
     }
 
-    fun init(path: String, listener: FileTreeClickListener?, fileTreeIconProvider: FileTreeIconProvider?) {
+    fun init(path: String, listener: FileTreeEventListener?, fileTreeIconProvider: FileTreeIconProvider?) {
         this.path = path
         fileTree = FileTree(context, path)
 
