@@ -29,15 +29,15 @@ class FileTreeView : RecyclerView {
         this.context = context
     }
 
-    fun init(path: String) {
-        init(path, null,null)
+    fun initializeFileTree(path: String) {
+        initializeFileTree(path, null,null)
     }
 
-    fun init(path: String,listener: FileTreeEventListener?){
-        init(path,listener,null)
+    fun initializeFileTree(path: String,listener: FileTreeEventListener?){
+        initializeFileTree(path,listener,null)
     }
 
-    fun init(path: String, listener: FileTreeEventListener?, fileTreeIconProvider: FileTreeIconProvider?) {
+    fun initializeFileTree(path: String, listener: FileTreeEventListener?, fileTreeIconProvider: FileTreeIconProvider?) {
         this.path = path
         fileTree = FileTree(context, path)
 
