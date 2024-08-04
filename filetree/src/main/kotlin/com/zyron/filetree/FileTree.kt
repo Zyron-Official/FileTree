@@ -26,7 +26,7 @@ class FileTree(private val context: Context, private val rootDirectory: String) 
     private val scope = CoroutineScope(Dispatchers.IO + SupervisorJob())
     private var loading = false
 
-    fun initializeFileTree {
+    fun initializeFileTree() {
         val file = File(rootDirectory)
         val rw = file.canRead() && file.canWrite()
         if (!file.exists() || !rw){
