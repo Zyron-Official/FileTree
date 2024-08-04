@@ -98,7 +98,7 @@ companion object {
                 } else {
                     Toast.makeText(this, "Permission denied. Please allow storage access in App Settings.", Toast.LENGTH_SHORT).show()
                     val intent = Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS)
-                    intent.data = Uri.parse("package:" + packageName)
+                    intent.data = Uri.parse("package:$packageName")
                     startActivity(intent)
                 }
             }
