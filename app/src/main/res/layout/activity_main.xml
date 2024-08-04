@@ -46,8 +46,8 @@
         android:layout_gravity="start"
         style="@style/Widget.Material3.NavigationView">
         
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/recycler_view"
+        <com.zyron.filetree.TreeView
+            android:id="@+id/treeView"
             android:layout_width="match_parent"
             android:layout_height="match_parent"/>
 

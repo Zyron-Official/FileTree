@@ -1,6 +1,6 @@
-package com.zyron.filetree
+package com.zyron.filetree.provider
 
-import com.zyron.filetree.provider.FileTreeIconProvider
+import com.zyron.filetree.R
 import java.io.File
 
 class DefaultFileIconProvider : FileTreeIconProvider {

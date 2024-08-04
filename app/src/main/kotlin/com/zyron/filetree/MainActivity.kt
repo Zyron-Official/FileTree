@@ -7,6 +7,7 @@ import android.net.*
 import android.os.*
 import android.provider.*
 import android.widget.*
+import androidx.annotation.RequiresApi
 import androidx.appcompat.app.*
 import androidx.core.app.*
 import androidx.core.view.*
@@ -27,12 +28,10 @@ companion object {
 }
 
     private lateinit var drawerLayout: DrawerLayout
-    private lateinit var recyclerView: RecyclerView 
+    private lateinit var treeView: TreeView
     private lateinit var navigationView: NavigationView
     private lateinit var actionBarDrawerToggle: ActionBarDrawerToggle
-    private lateinit var toolbar: MaterialToolbar
-    private lateinit var selectDirectory: MaterialButton
-    private var selectedDirectory: String? = null
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -43,6 +42,9 @@ companion object {
         drawerLayout = findViewById(R.id.drawer_layout)
         navigationView = findViewById(R.id.navigation_view)
         actionBarDrawerToggle = ActionBarDrawerToggle(this, drawerLayout, toolbar, R.string.app_name, R.string.app_name)
+
+
+        treeView = findViewById(R.id.treeView)
 
         drawerLayout.addDrawerListener(actionBarDrawerToggle)
         actionBarDrawerToggle.syncState()
@@ -78,6 +80,7 @@ companion object {
         }
     }
 
+
     private fun requestStoragePermission() {
         ActivityCompat.requestPermissions(this, arrayOf(Manifest.permission.MANAGE_EXTERNAL_STORAGE), REQUEST_EXTERNAL_STORAGE)
     }
@@ -110,6 +113,7 @@ companion object {
         startActivityForResult(intent, REQUEST_DIRECTORY_SELECTION)
     }
 
+    @Deprecated("Deprecated in Java")
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
 
@@ -118,29 +122,17 @@ companion object {
                 if (resultCode == RESULT_OK && data != null) {
                     val treeUri = data.data
                     val path = treeUri?.path?.replace("/tree/primary:", "/storage/emulated/0/")
-                    val fileTree = FileTree(this, path ?: "")
-                    initializeFileTree(fileTree)
+                    if (path != null) {
+                        treeView.init(path,this)
+                    }else{
+                        Toast.makeText(this,"Path is null", Toast.LENGTH_LONG).show()
+                    }
                 }
             }
         }
     }
 
-    private fun initializeFileTree(fileTree: FileTree) {
-        val recyclerView: RecyclerView = findViewById(R.id.recycler_view)
-        val fileTreeAdapter = FileTreeAdapter(this, fileTree,this)
-        val layoutManager = LinearLayoutManager(this)
-        recyclerView.layoutManager = layoutManager
-        recyclerView.adapter = fileTreeAdapter
-        fileTree.loadFileTree()
-        fileTree.setAdapterUpdateListener(object : FileTreeAdapterUpdateListener {
-            override fun onFileTreeUpdated(startPosition: Int, itemCount: Int) {
-                runOnUiThread {
-                    fileTreeAdapter.updateNodes(fileTree.getNodes())
-                    fileTreeAdapter.notifyItemRangeChanged(startPosition, itemCount)
-                }
-            }
-        })
-    }
+
 
     override fun onFileClick(file: File) {
         Toast.makeText(this, "File clicked: ${file.name}", Toast.LENGTH_SHORT).show()
@@ -158,5 +150,9 @@ companion object {
     override fun onFolderLongClick(folder: File): Boolean {
         Toast.makeText(this, "Folder long-clicked: ${folder.name}", Toast.LENGTH_SHORT).show()
         return true 
+    }
+
+    override fun onTreeViewUpdate(startPosition: Int, itemCount: Int) {
+        println("treeview updated")
     }
 }
