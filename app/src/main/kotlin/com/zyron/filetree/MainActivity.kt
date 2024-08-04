@@ -121,7 +121,7 @@ companion object {
                     val path = treeUri?.path?.replace("/tree/primary:", "/storage/emulated/0/")
                     val fileOperationExecutor = FileOperationExecutor(this)
                     if (path != null) {
-                    fileTreeView.init(path, fileOperationExecutor)
+                    fileTreeView.initializeFileTree(path, fileOperationExecutor)
                     } else {
                         Toast.makeText(this,"File Path is null", Toast.LENGTH_LONG).show()
                     }
