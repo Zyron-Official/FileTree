@@ -1,10 +1,9 @@
-package com.zyron.filetree.extensions
+package com.zyron.filetree
 
 import com.zyron.filetree.provider.FileTreeIconProvider
-import com.zyron.filetree.R
 import java.io.File
 
-class IntendedFileIconProvider : FileTreeIconProvider {
+class DefaultFileIconProvider : FileTreeIconProvider {
 
     override fun getChevronExpandIcon(): Int {
         return R.drawable.ic_chevron_expand
