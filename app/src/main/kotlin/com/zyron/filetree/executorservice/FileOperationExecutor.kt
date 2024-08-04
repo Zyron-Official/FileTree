@@ -24,4 +24,8 @@ class FileOperationExecutor(private val context: Context) : FileTreeEventListene
         Toast.makeText(context, "Folder long-clicked: ${folder.name}", Toast.LENGTH_SHORT).show()
         return true
     }
+
+    override fun onFileTreeViewUpdated(startPosition: Int, itemCount: Int) {
+        print("FileTreeView has ben updated.")
+    }
 }
