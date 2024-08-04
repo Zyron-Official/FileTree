@@ -119,7 +119,7 @@ companion object {
                 if (resultCode == RESULT_OK && data != null) {
                     val treeUri = data.data
                     val path = treeUri?.path?.replace("/tree/primary:", "/storage/emulated/0/")
-                    val fileOperationExecutor = FileOperationExecutor(requireContext())
+                    val fileOperationExecutor = FileOperationExecutor(this)
                     if (path != null) {
                     fileTreeView.init(path, fileOperationExecutor)
                     } else {
