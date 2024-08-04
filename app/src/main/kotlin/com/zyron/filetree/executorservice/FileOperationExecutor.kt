@@ -2,7 +2,7 @@ package com.zyron.filetree.executorservice
 
 import android.content.Context
 import android.widget.Toast
-import com.zyron.filetree.adapter.FileTreeEventListener
+import com.zyron.filetree.interfaces.FileTreeEventListener
 import java.io.File
 
 class FileOperationExecutor(private val context: Context) : FileTreeEventListener {
