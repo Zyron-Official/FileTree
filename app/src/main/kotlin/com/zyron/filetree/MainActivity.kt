@@ -28,7 +28,7 @@ companion object {
 }
 
     private lateinit var drawerLayout: DrawerLayout
-    private lateinit var treeView: TreeView
+    private lateinit var fileTreeView: FileTreeView
     private lateinit var navigationView: NavigationView
     private lateinit var actionBarDrawerToggle: ActionBarDrawerToggle
 
@@ -44,7 +44,7 @@ companion object {
         actionBarDrawerToggle = ActionBarDrawerToggle(this, drawerLayout, toolbar, R.string.app_name, R.string.app_name)
 
 
-        treeView = findViewById(R.id.treeView)
+        fileTreeView = findViewById(R.id.file_tree_view)
 
         drawerLayout.addDrawerListener(actionBarDrawerToggle)
         actionBarDrawerToggle.syncState()
@@ -123,7 +123,7 @@ companion object {
                     val treeUri = data.data
                     val path = treeUri?.path?.replace("/tree/primary:", "/storage/emulated/0/")
                     if (path != null) {
-                        treeView.init(path,this)
+                        fileTreeView.init(path,this)
                     }else{
                         Toast.makeText(this,"Path is null", Toast.LENGTH_LONG).show()
                     }
@@ -153,6 +153,6 @@ companion object {
     }
 
     override fun onTreeViewUpdate(startPosition: Int, itemCount: Int) {
-        println("treeview updated")
+        println("FileTree updated")
     }
 }
