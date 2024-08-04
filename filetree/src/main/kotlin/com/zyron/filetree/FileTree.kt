@@ -23,10 +23,10 @@ class FileTree(private val context: Context, private val rootDirectory: String) 
     private val nodes: MutableList<FileTreeNode> = mutableListOf()
     private val expandedNodes: MutableSet<FileTreeNode> = mutableSetOf()
     private var adapterUpdateListener: FileTreeAdapterUpdateListener? = null
-    private var loading = false
     private val scope = CoroutineScope(Dispatchers.IO + SupervisorJob())
+    private var loading = false
 
-    init {
+    initializeFileTree {
         val file = File(rootDirectory)
         val rw = file.canRead() && file.canWrite()
         if (!file.exists() || !rw){
