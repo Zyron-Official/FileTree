@@ -25,10 +25,10 @@ interface FileTreeEventListener {
     fun onFileTreeViewUpdated(startPosition: Int, itemCount: Int)
 }
 
-class FileTreeAdapter(private val context: Context, private val fileTree: FileTree,private val fileTreeIconProvider: FileTreeIconProvider, private val listener: FileTreeClickListener? = null) : RecyclerView.Adapter<FileTreeViewHolder>(), FileTreeAdapterUpdateListener {
+class FileTreeAdapter(private val context: Context, private val fileTree: FileTree,private val fileTreeIconProvider: FileTreeIconProvider, private val listener: FileTreeEventListener? = null) : RecyclerView.Adapter<FileTreeViewHolder>(), FileTreeAdapterUpdateListener {
     
     @JvmOverloads
-    constructor(context: Context, fileTree: FileTree,listener: FileTreeClickListener? = null) : this(context, fileTree, DefaultFileIconProvider(), listener)
+    constructor(context: Context, fileTree: FileTree,listener: FileTreeEventListener? = null) : this(context, fileTree, DefaultFileIconProvider(), listener)
 
     private var selectedItemPosition: Int = RecyclerView.NO_POSITION
     private var nodes: MutableList<FileTreeNode> = fileTree.getNodes().toMutableList()
