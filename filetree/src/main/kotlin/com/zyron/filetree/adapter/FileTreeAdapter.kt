@@ -17,7 +17,7 @@ import com.zyron.filetree.viewmodel.FileTreeNodeDiffCallback
 import java.io.File
 import java.nio.file.Files
 
-interface FileTreeClickListener {
+interface FileTreeEventListener {
     fun onFileClick(file: File)
     fun onFolderClick(folder: File)
     fun onFileLongClick(file: File): Boolean
