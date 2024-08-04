@@ -30,6 +30,8 @@ class FileTreeAdapter(private val context: Context, private val fileTree: FileTr
     constructor(context: Context, fileTree: FileTree,listener: FileTreeClickListener? = null) : this(context,fileTree,
         DefaultFileIconProvider(),listener)
 
+
+
     private var selectedItemPosition: Int = RecyclerView.NO_POSITION
     private var nodes: MutableList<FileTreeNode> = fileTree.getNodes().toMutableList()
 
