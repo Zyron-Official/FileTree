@@ -17,7 +17,9 @@ import androidx.drawerlayout.widget.*
 import com.google.android.material.navigation.NavigationView
 import com.google.android.material.appbar.MaterialToolbar
 import com.google.android.material.button.MaterialButton
-import com.zyron.filetree.adapter.*
+import com.zyron.filetree.FileTreeView
+import com.zyron.filetree.adapter.FileTreeAdapter 
+import com.zyron.filetree.adapter.FileTreeClickListener 
 import java.io.File
 
 class MainActivity : AppCompatActivity(), FileTreeClickListener {
