@@ -33,7 +33,7 @@ class FileTreeView : RecyclerView {
         initializeFileTree(path, null,null)
     }
 
-    fun initializeFileTree(path: String,listener: FileTreeEventListener?){
+    fun initializeFileTree(path: String, fileTreeEventListener: FileTreeEventListener?){
         initializeFileTree(path, fileTreeEventListener, null)
     }
 
