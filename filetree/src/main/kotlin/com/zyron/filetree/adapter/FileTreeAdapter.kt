@@ -22,7 +22,7 @@ interface FileTreeClickListener {
     fun onFolderClick(folder: File)
     fun onFileLongClick(file: File): Boolean
     fun onFolderLongClick(folder: File): Boolean
-    fun onTreeViewUpdate(startPosition: Int, itemCount: Int)
+    fun onFileTreeViewUpdated(startPosition: Int, itemCount: Int)
 }
 
 class FileTreeAdapter(private val context: Context, private val fileTree: FileTree,private val fileTreeIconProvider: FileTreeIconProvider, private val listener: FileTreeClickListener? = null) : RecyclerView.Adapter<FileTreeViewHolder>(), FileTreeAdapterUpdateListener {
