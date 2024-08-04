@@ -6,13 +6,13 @@ import android.view.*
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
-import com.zyron.filetree.provider.DefaultFileIconProvider
 import com.zyron.filetree.R
 import com.zyron.filetree.FileTree
 import com.zyron.filetree.FileTreeNode
 import com.zyron.filetree.FileTreeAdapterUpdateListener
 import com.zyron.filetree.provider.FileTreeIconProvider
 import com.zyron.filetree.viewholder.FileTreeViewHolder
+import com.zyron.filetree.provider.DefaultFileIconProvider
 import com.zyron.filetree.viewmodel.FileTreeNodeDiffCallback
 import java.io.File
 import java.nio.file.Files
