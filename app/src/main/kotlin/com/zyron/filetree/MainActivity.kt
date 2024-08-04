@@ -27,9 +27,9 @@ companion object {
     private const val REQUEST_DIRECTORY_SELECTION = 2
 }
 
-    private lateinit var drawerLayout: DrawerLayout
     private lateinit var fileTreeView: FileTreeView
-    private lateinit var fileOperationExecutor: FileOperationExecutor 
+    private lateinit var fileOperationExecutor: FileOperationExecutor
+    private lateinit var drawerLayout: DrawerLayout 
     private lateinit var navigationView: NavigationView
     private lateinit var actionBarDrawerToggle: ActionBarDrawerToggle
 
