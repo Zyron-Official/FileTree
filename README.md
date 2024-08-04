@@ -227,7 +227,9 @@ import java.io.File
 class MainActivity : AppCompatActivity() {
 
         val fileTreeView : FileTreeView = findViewById(R.id.file_tree_view)
+        val fileIconProvider = FileIconProvider()
         val fileOperationExecutor = FileOperationExecutor(requireContext())
+
         fileTreeView.init(path, fileOperationExecutor, fileIconProvider)
 }
 ```
