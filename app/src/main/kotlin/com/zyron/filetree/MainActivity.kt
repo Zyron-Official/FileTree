@@ -148,6 +148,6 @@ companion object {
     }
 
     override fun onFileTreeViewUpdated(startPosition: Int, itemCount: Int) {
-        println("FileTree updated")
+        println("FileTreeView updated")
     }
 }
