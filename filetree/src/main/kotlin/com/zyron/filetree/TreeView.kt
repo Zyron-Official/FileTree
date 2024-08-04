@@ -28,7 +28,6 @@ class TreeView : RecyclerView {
         this.context = context
     }
 
-
     fun init(path: String) {
         init(path, null,null)
     }
@@ -68,5 +67,4 @@ class TreeView : RecyclerView {
             }
         })
     }
-
 }
