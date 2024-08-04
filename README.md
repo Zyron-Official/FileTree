@@ -87,7 +87,7 @@ fileTree.loadFileTree()
 
 This step involves integrating the `FileTree` library with your IDE's UI framework. The specific implementation will vary depending on your chosen UI framework. Below are common frameworks with basic examples:
 
-- **Android View-Based (Android/Kotlin/Java):** Use `RecyclerView` to display your `FileTree` data.
+- **Android View-Based (Android/Kotlin/Java):** Define `FileTreeView` in your Layout (XML) to display your `FileTree` data.
 
     Docs [Getting Sarted](docs/integration/Android.md)
 
@@ -111,30 +111,30 @@ Handle these events in your IDE's logic to perform actions like opening files, d
 
 ## 3. File Operations
 
-The `FileTree` library provides methods for performing common file system operations by using onClick and onLongClick Listeners.
+The `FileTree` library provides Event Listeners for performing common file system operations by using FileTreeEventListener Interface.
 
 ```kotlin
-import com.zyron.filetree.adapter.FileTreeClickListener 
+import com.zyron.filetree.adapter.FileTreeEventListener 
 import java.io.File
 
-class FileOperationExecutor : FileTreeClickListener {
+class FileOperationExecutor(private val context: Context) : FileTreeEventListener {
 
     override fun onFileClick(file: File) {
-        Toast.makeText(this, "File clicked: ${file.name}", Toast.LENGTH_SHORT).show()
+        Toast.makeText(context, "File clicked: ${file.name}", Toast.LENGTH_SHORT).show()
     }
 
     override fun onFolderClick(folder: File) {
-        Toast.makeText(this, "Folder clicked: ${folder.name}", Toast.LENGTH_SHORT).show()
+        Toast.makeText(context, "Folder clicked: ${folder.name}", Toast.LENGTH_SHORT).show()
     }
 
     override fun onFileLongClick(file: File): Boolean {
-        Toast.makeText(this, "File long-clicked: ${file.name}", Toast.LENGTH_SHORT).show()
-        return true 
+        Toast.makeText(context, "File long-clicked: ${file.name}", Toast.LENGTH_SHORT).show()
+        return true
     }
 
     override fun onFolderLongClick(folder: File): Boolean {
-        Toast.makeText(this, "Folder long-clicked: ${folder.name}", Toast.LENGTH_SHORT).show()
-        return true 
+        Toast.makeText(context, "Folder long-clicked: ${folder.name}", Toast.LENGTH_SHORT).show()
+        return true
     }
 }
 ```
@@ -197,7 +197,7 @@ The `FileTree` library typically uses a built-in asynchronous system powered by 
 
 Here's a basic example of using the `FileTree` library with Android views:
 
-#### Define RecyclerView in Layout (XML)
+#### Define FileTreeView in Layout (XML)
 
 ```XML
 <?xml version="1.0" encoding="utf-8"?>
@@ -206,8 +206,8 @@ Here's a basic example of using the `FileTree` library with Android views:
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recycler_view"
+    <com.zyron.filetree.widget.FileTreeView
+        android:id="@+id/file_tree_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
 
@@ -217,33 +217,17 @@ Here's a basic example of using the `FileTree` library with Android views:
 #### Setup FileTree in Activity or Fragment (Kotlin)
 
 ```kotlin 
-import androidx.recyclerview.widget.RecyclerView 
-import androidx.recyclerview.widget.LinearLayoutManager 
+import com.zyron.filetree.widget.FileTreeView
 import com.zyron.filetree.adapter.FileTreeAdapter 
 import com.zyron.filetree.FileTree
+import com.zyron.filetree.resources.FileIconProvider
+com.zyron.filetree.operationexecutor.FileOperationExecutor
 import java.io.File
 
 class MainActivity : AppCompatActivity() {
 
-        private fun initializeFileTree(fileTree: FileTree) {
-        val recyclerView: RecyclerView = findViewById(R.id.recycler_view)
-        val fileTree = FileTree(this, "storage/emulated/0")
-        val fileTreeIconProvider = FileIconProvider()
-        val fileTreeAdapter = FileTreeAdapter(this, fileTree, fileTreeIconProvider, this)
-        val layoutManager = LinearLayoutManager(this)
-        recyclerView.layoutManager = layoutManager
-        recyclerView.adapter = fileTreeAdapter
-        fileTree.loadFileTree()
-        fileTree.setAdapterUpdateListener(object : FileTreeAdapterUpdateListener {
-
-            override fun onFileTreeUpdated(startPosition: Int, itemCount: Int) {
-                runOnUiThread {
-                    fileTreeAdapter.updateNodes(fileTree.getNodes())
-                    fileTreeAdapter.notifyItemRangeChanged(startPosition, itemCount)
-                }
-            }
-        })
-    }
+        val fileTreeView : FileTreeView = findViewById(R.id.file_tree_view)
+        fileTreeView.init(path, fileTreeEventListener, fileIconProvider)
 }
 ```
 
