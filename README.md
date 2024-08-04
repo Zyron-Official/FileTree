@@ -221,13 +221,13 @@ import com.zyron.filetree.widget.FileTreeView
 import com.zyron.filetree.adapter.FileTreeAdapter 
 import com.zyron.filetree.FileTree
 import com.zyron.filetree.resources.FileIconProvider
-com.zyron.filetree.operationexecutor.FileOperationExecutor
+import com.zyron.filetree.operationexecutor.FileOperationExecutor
 import java.io.File
 
 class MainActivity : AppCompatActivity() {
 
         val fileTreeView : FileTreeView = findViewById(R.id.file_tree_view)
-        fileTreeView.init(path, fileTreeEventListener, fileIconProvider)
+        fileTreeView.init(path, FileOperationExecutor, fileIconProvider)
 }
 ```
 
