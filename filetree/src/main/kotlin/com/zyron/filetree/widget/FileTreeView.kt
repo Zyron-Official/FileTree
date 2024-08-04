@@ -41,7 +41,7 @@ class FileTreeView : RecyclerView {
         this.path = path
         fileTree = FileTree(context, path)
 
-        val fileTreeAdapter = if (listener == null) {
+        val fileTreeAdapter = if (fileTreeEventListener == null) {
             FileTreeAdapter(context, fileTree!!)
         } else {
             if (fileTreeIconProvider != null) {
