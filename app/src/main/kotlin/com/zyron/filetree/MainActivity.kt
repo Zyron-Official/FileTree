@@ -18,10 +18,10 @@ import com.google.android.material.appbar.MaterialToolbar
 import com.google.android.material.button.MaterialButton
 import com.zyron.filetree.widget.FileTreeView
 import com.zyron.filetree.adapter.FileTreeAdapter 
-import com.zyron.filetree.adapter.FileTreeClickListener 
+import com.zyron.filetree.adapter.FileTreeEventListener 
 import java.io.File
 
-class MainActivity : AppCompatActivity(), FileTreeClickListener {
+class MainActivity : AppCompatActivity(), FileTreeEventListener {
 
 companion object {
     private const val REQUEST_EXTERNAL_STORAGE = 1
