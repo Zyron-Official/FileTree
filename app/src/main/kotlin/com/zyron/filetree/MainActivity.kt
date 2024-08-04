@@ -32,19 +32,16 @@ companion object {
     private lateinit var navigationView: NavigationView
     private lateinit var actionBarDrawerToggle: ActionBarDrawerToggle
 
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         val toolbar: MaterialToolbar = findViewById(R.id.toolbar)
         setSupportActionBar(toolbar)
-
+        
+        fileTreeView = findViewById(R.id.file_tree_view)
         drawerLayout = findViewById(R.id.drawer_layout)
         navigationView = findViewById(R.id.navigation_view)
         actionBarDrawerToggle = ActionBarDrawerToggle(this, drawerLayout, toolbar, R.string.app_name, R.string.app_name)
-
-
-        fileTreeView = findViewById(R.id.file_tree_view)
 
         drawerLayout.addDrawerListener(actionBarDrawerToggle)
         actionBarDrawerToggle.syncState()
@@ -79,7 +76,6 @@ companion object {
             }
         }
     }
-
 
     private fun requestStoragePermission() {
         ActivityCompat.requestPermissions(this, arrayOf(Manifest.permission.MANAGE_EXTERNAL_STORAGE), REQUEST_EXTERNAL_STORAGE)
@@ -125,14 +121,12 @@ companion object {
                     if (path != null) {
                         fileTreeView.init(path,this)
                     }else{
-                        Toast.makeText(this,"Path is null", Toast.LENGTH_LONG).show()
+                        Toast.makeText(this,"File Path is null", Toast.LENGTH_LONG).show()
                     }
                 }
             }
         }
     }
-
-
 
     override fun onFileClick(file: File) {
         Toast.makeText(this, "File clicked: ${file.name}", Toast.LENGTH_SHORT).show()
