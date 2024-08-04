@@ -6,7 +6,7 @@ import android.view.*
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
-import com.zyron.filetree.DefaultFileIconProvider
+import com.zyron.filetree.provider.DefaultFileIconProvider
 import com.zyron.filetree.R
 import com.zyron.filetree.FileTree
 import com.zyron.filetree.FileTreeNode
@@ -22,11 +22,13 @@ interface FileTreeClickListener {
     fun onFolderClick(folder: File)
     fun onFileLongClick(file: File): Boolean
     fun onFolderLongClick(folder: File): Boolean
+    fun onTreeViewUpdate(startPosition: Int, itemCount: Int)
 }
 
 class FileTreeAdapter(private val context: Context, private val fileTree: FileTree,private val fileTreeIconProvider: FileTreeIconProvider, private val listener: FileTreeClickListener? = null) : RecyclerView.Adapter<FileTreeViewHolder>(), FileTreeAdapterUpdateListener {
     @JvmOverloads
-    constructor(context: Context, fileTree: FileTree,listener: FileTreeClickListener? = null) : this(context,fileTree,DefaultFileIconProvider(),listener)
+    constructor(context: Context, fileTree: FileTree,listener: FileTreeClickListener? = null) : this(context,fileTree,
+        DefaultFileIconProvider(),listener)
 
     private var selectedItemPosition: Int = RecyclerView.NO_POSITION
     private var nodes: MutableList<FileTreeNode> = fileTree.getNodes().toMutableList()
