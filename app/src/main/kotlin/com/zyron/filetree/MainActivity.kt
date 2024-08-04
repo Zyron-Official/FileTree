@@ -17,8 +17,8 @@ import com.google.android.material.navigation.NavigationView
 import com.google.android.material.appbar.MaterialToolbar
 import com.google.android.material.button.MaterialButton
 import com.zyron.filetree.widget.FileTreeView
-import com.zyron.filetree.adapter.FileTreeAdapter 
 import com.zyron.filetree.adapter.FileTreeEventListener 
+import com.zyron.filetree.executorservice.FileOperationExecutor
 import java.io.File
 
 class MainActivity : AppCompatActivity(), FileTreeEventListener {
@@ -119,35 +119,14 @@ companion object {
                 if (resultCode == RESULT_OK && data != null) {
                     val treeUri = data.data
                     val path = treeUri?.path?.replace("/tree/primary:", "/storage/emulated/0/")
+                    val fileOperationExecutor = FileOperationExecutor(requireContext())
                     if (path != null) {
-                        fileTreeView.init(path, this)
+                    fileTreeView.init(path, fileOperationExecutor)
                     } else {
                         Toast.makeText(this,"File Path is null", Toast.LENGTH_LONG).show()
                     }
                 }
             }
         }
-    }
-
-    override fun onFileClick(file: File) {
-        Toast.makeText(this, "File clicked: ${file.name}", Toast.LENGTH_SHORT).show()
-    }
-
-    override fun onFolderClick(folder: File) {
-        Toast.makeText(this, "Folder clicked: ${folder.name}", Toast.LENGTH_SHORT).show()
-    }
-
-    override fun onFileLongClick(file: File): Boolean {
-        Toast.makeText(this, "File long-clicked: ${file.name}", Toast.LENGTH_SHORT).show()
-        return true 
-    }
-
-    override fun onFolderLongClick(folder: File): Boolean {
-        Toast.makeText(this, "Folder long-clicked: ${folder.name}", Toast.LENGTH_SHORT).show()
-        return true 
-    }
-
-    override fun onFileTreeViewUpdated(startPosition: Int, itemCount: Int) {
-        print("FileTreeView has ben updated.")
     }
 }
