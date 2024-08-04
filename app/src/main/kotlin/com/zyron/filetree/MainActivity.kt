@@ -12,7 +12,6 @@ import androidx.appcompat.app.*
 import androidx.core.app.*
 import androidx.core.view.*
 import androidx.core.content.*
-import androidx.recyclerview.widget.*
 import androidx.drawerlayout.widget.*
 import com.google.android.material.navigation.NavigationView
 import com.google.android.material.appbar.MaterialToolbar
