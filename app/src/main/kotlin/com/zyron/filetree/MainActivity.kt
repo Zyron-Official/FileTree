@@ -147,7 +147,7 @@ companion object {
         return true 
     }
 
-    override fun onFileTreeViewUpdated(startPosition: Int, itemCount: Int) {
-        println("FileTreeView updated")
+    override fun onFileTreeViewUpdate(startPosition: Int, itemCount: Int) {
+        println("FileTreeView Updated Successfully")
     }
 }
