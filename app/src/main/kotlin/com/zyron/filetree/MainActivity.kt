@@ -6,7 +6,6 @@ import android.content.pm.*
 import android.net.*
 import android.os.*
 import android.provider.*
-import android.content.*
 import android.widget.*
 import androidx.appcompat.app.*
 import androidx.core.app.*
@@ -18,8 +17,6 @@ import com.google.android.material.navigation.NavigationView
 import com.google.android.material.appbar.MaterialToolbar
 import com.google.android.material.button.MaterialButton
 import com.zyron.filetree.adapter.*
-import com.zyron.filetree.extensions.*
-import com.zyron.filetree.R
 import java.io.File
 
 class MainActivity : AppCompatActivity(), FileTreeClickListener {
@@ -130,8 +127,7 @@ companion object {
 
     private fun initializeFileTree(fileTree: FileTree) {
         val recyclerView: RecyclerView = findViewById(R.id.recycler_view)
-        val fileTreeIconProvider = IntendedFileIconProvider()
-        val fileTreeAdapter = FileTreeAdapter(this, fileTree, fileTreeIconProvider, this)
+        val fileTreeAdapter = FileTreeAdapter(this, fileTree,this)
         val layoutManager = LinearLayoutManager(this)
         recyclerView.layoutManager = layoutManager
         recyclerView.adapter = fileTreeAdapter
