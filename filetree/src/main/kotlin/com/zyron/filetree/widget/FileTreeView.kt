@@ -5,6 +5,7 @@ import android.util.AttributeSet
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.zyron.filetree.FileTree
+import com.zyron.filetree.FileTreeAdapterUpdateListener
 import com.zyron.filetree.adapter.FileTreeAdapter
 import com.zyron.filetree.adapter.FileTreeClickListener
 import com.zyron.filetree.provider.FileTreeIconProvider
