@@ -17,11 +17,10 @@ import com.google.android.material.navigation.NavigationView
 import com.google.android.material.appbar.MaterialToolbar
 import com.google.android.material.button.MaterialButton
 import com.zyron.filetree.widget.FileTreeView
-import com.zyron.filetree.adapter.FileTreeEventListener 
 import com.zyron.filetree.executorservice.FileOperationExecutor
 import java.io.File
 
-class MainActivity : AppCompatActivity(), FileTreeEventListener {
+class MainActivity : AppCompatActivity() {
 
 companion object {
     private const val REQUEST_EXTERNAL_STORAGE = 1
@@ -30,6 +29,7 @@ companion object {
 
     private lateinit var drawerLayout: DrawerLayout
     private lateinit var fileTreeView: FileTreeView
+    private lateinit var fileOperationExecutor: FileOperationExecutor 
     private lateinit var navigationView: NavigationView
     private lateinit var actionBarDrawerToggle: ActionBarDrawerToggle
 
