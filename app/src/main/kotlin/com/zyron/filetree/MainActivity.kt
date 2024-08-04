@@ -120,7 +120,7 @@ companion object {
                     val treeUri = data.data
                     val path = treeUri?.path?.replace("/tree/primary:", "/storage/emulated/0/")
                     if (path != null) {
-                        fileTreeView.init(path,this)
+                        fileTreeView.init(path, this)
                     } else {
                         Toast.makeText(this,"File Path is null", Toast.LENGTH_LONG).show()
                     }
