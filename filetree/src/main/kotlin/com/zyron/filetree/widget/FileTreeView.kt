@@ -34,10 +34,10 @@ class FileTreeView : RecyclerView {
     }
 
     fun initializeFileTree(path: String,listener: FileTreeEventListener?){
-        initializeFileTree(path,listener,null)
+        initializeFileTree(path, fileTreeEventListener, null)
     }
 
-    fun initializeFileTree(path: String, listener: FileTreeEventListener?, fileTreeIconProvider: FileTreeIconProvider?) {
+    fun initializeFileTree(path: String, fileTreeEventListener: FileTreeEventListener?, fileTreeIconProvider: FileTreeIconProvider?) {
         this.path = path
         fileTree = FileTree(context, path)
 
@@ -45,9 +45,9 @@ class FileTreeView : RecyclerView {
             FileTreeAdapter(context, fileTree!!)
         } else {
             if (fileTreeIconProvider != null) {
-                FileTreeAdapter(context, fileTree!!,fileTreeIconProvider, listener)
+                FileTreeAdapter(context, fileTree!!,fileTreeIconProvider, fileTreeEventListener)
             }else{
-                FileTreeAdapter(context, fileTree!!, listener)
+                FileTreeAdapter(context, fileTree!!, fileTreeEventListener)
             }
         }
 
