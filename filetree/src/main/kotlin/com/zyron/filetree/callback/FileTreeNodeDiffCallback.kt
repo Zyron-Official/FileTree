@@ -1,9 +1,9 @@
-package com.zyron.filetree.viewmodel
+package com.zyron.filetree.callback
 
 import androidx.recyclerview.widget.*
-import com.zyron.filetree.FileTreeNode
+import com.zyron.filetree.Node
 
-class FileTreeNodeDiffCallback(private val oldList: List<FileTreeNode>, private val newList: List<FileTreeNode>) : DiffUtil.Callback() {
+class FileTreeNodeDiffCallback(private val oldList: List<Node>, private val newList: List<Node>) : DiffUtil.Callback() {
 
     override fun getOldListSize(): Int {
         return oldList.size
