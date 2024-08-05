@@ -29,6 +29,12 @@ class FileTreeView : RecyclerView {
         this.context = context
     }
 
+
+    init {
+        //smooth scrolling but increase ram usage
+        setItemViewCacheSize(300)
+    }
+
     fun initializeFileTree(path: String) {
         initializeFileTree(path, null, null)
     }
@@ -53,13 +59,12 @@ class FileTreeView : RecyclerView {
 
         layoutManager = LinearLayoutManager(context)
         adapter = fileTreeAdapter
-        fileTree!!.loadFileTree()
         fileTree!!.setAdapterUpdateListener(object : FileTreeAdapterUpdateListener {
             override fun onFileTreeUpdated(startPosition: Int, itemCount: Int) {
                 fileTreeEventListener?.onFileTreeViewUpdated(startPosition, itemCount)
                 runOnUiThread {
                     fileTreeAdapter.updateNodes(fileTree!!.getNodes())
-                    fileTreeAdapter.notifyItemRangeChanged(startPosition, itemCount)
+                    //fileTreeAdapter.notifyItemRangeChanged(startPosition, itemCount)
                 }
             }
         })

@@ -5,7 +5,8 @@ import android.os.Looper
 
 object Utils {
     private val handler = Handler(Looper.getMainLooper())
-    fun runOnUiThread(runnable: Runnable){
+    fun runOnUiThread(runnable: Runnable) {
         handler.post(runnable)
     }
+
 }

@@ -1,33 +1,42 @@
 package com.zyron.filetree.adapter
 
 import android.content.Context
-import android.util.*
-import android.view.*
+import android.util.TypedValue
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
-import com.zyron.filetree.R
 import com.zyron.filetree.FileTree
-import com.zyron.filetree.FileTreeNode
 import com.zyron.filetree.FileTreeAdapterUpdateListener
-import com.zyron.filetree.provider.FileTreeIconProvider
-import com.zyron.filetree.provider.DefaultFileIconProvider
-import com.zyron.filetree.viewholder.FileTreeViewHolder
-import com.zyron.filetree.viewmodel.FileTreeNodeDiffCallback
+import com.zyron.filetree.Node
+import com.zyron.filetree.R
+import com.zyron.filetree.callback.FileTreeNodeDiffCallback
 import com.zyron.filetree.interfaces.FileTreeEventListener
-import java.io.File
+import com.zyron.filetree.provider.DefaultFileIconProvider
+import com.zyron.filetree.provider.FileTreeIconProvider
+import com.zyron.filetree.viewholder.FileTreeViewHolder
 import java.nio.file.Files
 
-class FileTreeAdapter(private val context: Context, private val fileTree: FileTree, private val fileTreeIconProvider: FileTreeIconProvider, private val fileTreeEventListener: FileTreeEventListener? = null) : RecyclerView.Adapter<FileTreeViewHolder>(), FileTreeAdapterUpdateListener {
-    
+class FileTreeAdapter(
+    private val context: Context,
+    private val fileTree: FileTree,
+    private val fileTreeIconProvider: FileTreeIconProvider,
+    private val fileTreeEventListener: FileTreeEventListener? = null
+) : RecyclerView.Adapter<FileTreeViewHolder>(), FileTreeAdapterUpdateListener {
+
     @JvmOverloads
-    constructor(context: Context, fileTree: FileTree, fileTreeEventListener: FileTreeEventListener? = null) : this(context, fileTree, DefaultFileIconProvider(), fileTreeEventListener)
+    constructor(
+        context: Context, fileTree: FileTree, fileTreeEventListener: FileTreeEventListener? = null
+    ) : this(context, fileTree, DefaultFileIconProvider(), fileTreeEventListener)
 
     private var selectedItemPosition: Int = RecyclerView.NO_POSITION
-    private var nodes: MutableList<FileTreeNode> = fileTree.getNodes().toMutableList()
+    private var nodes: MutableList<Node> = fileTree.getNodes().toMutableList()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): FileTreeViewHolder {
-        val view = LayoutInflater.from(parent.context).inflate(R.layout.filetree_view_item, parent, false)
+        val view = LayoutInflater.from(parent.context)
+            .inflate(R.layout.filetree_view_item, parent, false)
         return FileTreeViewHolder(view)
     }
 
@@ -35,7 +44,9 @@ class FileTreeAdapter(private val context: Context, private val fileTree: FileTr
         val node = nodes[position]
 
         val indentationDp = 12 * node.level
-        val indentationPx = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, indentationDp.toFloat(), context.resources.displayMetrics).toInt()
+        val indentationPx = TypedValue.applyDimension(
+            TypedValue.COMPLEX_UNIT_DIP, indentationDp.toFloat(), context.resources.displayMetrics
+        ).toInt()
 
         val isRtl = context.resources.configuration.layoutDirection == View.LAYOUT_DIRECTION_RTL
 
@@ -64,12 +75,17 @@ class FileTreeAdapter(private val context: Context, private val fileTree: FileTr
 
         holder.itemView.setBackgroundResource(R.drawable.item_background)
 
-        holder.itemView.isSelected = position == selectedItemPosition && node.isExpanded && Files.isDirectory(node.file.toPath())
+        holder.itemView.isSelected =
+            position == selectedItemPosition && node.isExpanded && Files.isDirectory(node.file.toPath())
 
         if (Files.isDirectory(node.file.toPath())) {
             holder.chevronIconView.setImageDrawable(ContextCompat.getDrawable(context, chevronIcon))
             holder.chevronIconView.visibility = View.VISIBLE
-            holder.fileIconView.setImageDrawable(ContextCompat.getDrawable(context, fileTreeIconProvider.getFolderIcon()))
+            holder.fileIconView.setImageDrawable(
+                ContextCompat.getDrawable(
+                    context, fileTreeIconProvider.getFolderIcon()
+                )
+            )
             holder.fileNameView.text = node.file.name
 
             holder.itemView.setOnClickListener {
@@ -89,9 +105,13 @@ class FileTreeAdapter(private val context: Context, private val fileTree: FileTr
             }
 
         } else if (node.file.isFile) {
-            holder.chevronIconView.setImageDrawable(ContextCompat.getDrawable(context, chevronIcon))        
+            holder.chevronIconView.setImageDrawable(ContextCompat.getDrawable(context, chevronIcon))
             holder.chevronIconView.visibility = View.INVISIBLE
-            holder.fileIconView.setImageDrawable(ContextCompat.getDrawable(context, fileTreeIconProvider.getIconForFile(node.file)))
+            holder.fileIconView.setImageDrawable(
+                ContextCompat.getDrawable(
+                    context, fileTreeIconProvider.getIconForFile(node.file)
+                )
+            )
             holder.fileNameView.text = node.file.name
 
             holder.itemView.setOnClickListener {
@@ -112,7 +132,7 @@ class FileTreeAdapter(private val context: Context, private val fileTree: FileTr
         }
     }
 
-    fun updateNodes(newNodes: List<FileTreeNode>) {
+    fun updateNodes(newNodes: List<Node>) {
         val diffResult = DiffUtil.calculateDiff(FileTreeNodeDiffCallback(nodes, newNodes))
         nodes.clear()
         nodes.addAll(newNodes)
