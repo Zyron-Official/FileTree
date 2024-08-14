@@ -1,6 +1,6 @@
 ### Example (Android View-Based):
 
-#### Define RecyclerView in XML Layout
+#### Define FileTreeView in Layout (XML)
 
 ```XML
 <?xml version="1.0" encoding="utf-8"?>
@@ -9,88 +9,93 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recycler_view"
+    <com.zyron.filetree.widget.FileTreeView
+        android:id="@+id/file_tree_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
 
 </LinearLayout>
 ```
 
-#### Setup FileTree in Activity or Fragment(Kotlin)
+#### Setup FileTree in Activity or Fragment (Kotlin)
 
 ```kotlin 
-import androidx.recyclerview.widget.RecyclerView 
-import androidx.recyclerview.widget.LinearLayoutManager 
-import com.zyron.filetree.adapter.FileTreeAdapter 
-import com.zyron.filetree.adapter.FileTreeClickListener
+import androidx.appcompat.app.AppCompatActivity
 import com.zyron.filetree.FileTree
+import com.zyron.filetree.widget.FileTreeView
+import com.zyron.filetree.adapter.FileTreeAdapter 
+import com.zyron.filetree.resources.FileIconProvider
+import com.zyron.filetree.operationexecutor.FileOperationExecutor
 import java.io.File
 
-class MainActivity : AppCompatActivity(), FileTreeClickListener {
+class MainActivity : AppCompatActivity() {
 
-        private fun initializeFileTree(fileTree: FileTree) {
-        val recyclerView: RecyclerView = findViewById(R.id.recycler_view)
-        val fileTree = FileTree(this, "storage/emulated/0")
-        val fileTreeIconProvider = FileIconProvider()
-        val fileTreeAdapter = FileTreeAdapter(this, fileTree, fileTreeIconProvider, this)
-        val layoutManager = LinearLayoutManager(this)
-        recyclerView.layoutManager = layoutManager
-        recyclerView.adapter = fileTreeAdapter
-        fileTree.loadFileTree()
-        fileTree.setAdapterUpdateListener(object : FileTreeAdapterUpdateListener {
+        val fileTreeView: FileTreeView = findViewById(R.id.file_tree_view)
+        val fileIconProvider = FileIconProvider()
+        val fileOperationExecutor = FileOperationExecutor(requireContext())
+        fileTreeView.initializeFileTree("/storage/emulated/0", fileOperationExecutor, fileIconProvider, this)
+}
+```
 
-            override fun onFileTreeUpdated(startPosition: Int, itemCount: Int) {
-                runOnUiThread {
-                    fileTreeAdapter.updateNodes(fileTree.getNodes())
-                    fileTreeAdapter.notifyItemRangeChanged(startPosition, itemCount)
-                }
-            }
-        })
-    }
+### Setup EventListener Class for File Operations
+
+The `FileTree` library provides Event Listeners for performing common file system operations by using FileTreeEventListener Interface.
+
+```kotlin
+import com.zyron.filetree.adapter.FileTreeEventListener 
+import java.io.File
+
+class FileOperationExecutor(private val context: Context) : FileTreeEventListener {
 
     override fun onFileClick(file: File) {
-        Toast.makeText(this, "File clicked: ${file.name}", Toast.LENGTH_SHORT).show()
+        Toast.makeText(context, "File clicked: ${file.name}", Toast.LENGTH_SHORT).show()
     }
 
     override fun onFolderClick(folder: File) {
-        Toast.makeText(this, "Folder clicked: ${folder.name}", Toast.LENGTH_SHORT).show()
+        Toast.makeText(context, "Folder clicked: ${folder.name}", Toast.LENGTH_SHORT).show()
     }
 
     override fun onFileLongClick(file: File): Boolean {
-        Toast.makeText(this, "File long-clicked: ${file.name}", Toast.LENGTH_SHORT).show()
-        return true 
+        Toast.makeText(context, "File long-clicked: ${file.name}", Toast.LENGTH_SHORT).show()
+        return true
     }
 
     override fun onFolderLongClick(folder: File): Boolean {
-        Toast.makeText(this, "Folder long-clicked: ${folder.name}", Toast.LENGTH_SHORT).show()
-        return true 
+        Toast.makeText(context, "Folder long-clicked: ${folder.name}", Toast.LENGTH_SHORT).show()
+        return true
     }
 }
 ```
 
 #### Define Icons in FileIconProvider Class(Kotlin)
 
-```Kotlin
+```kotlin
 import com.zyron.filetree.provider.FileTreeIconProvider
 import java.io.File
 
 class FileIconProvider : FileTreeIconProvider {
 
-    override fun getChevronExpandIcon(): Int {
-        return R.drawable.ic_chevron_expand
+    override fun getChevronIcon(): Int {
+        return R.drawable.ic_chevron
     }
 
-    override fun getChevronCollapseIcon(): Int {
-        return R.drawable.ic_chevron_collapse
-    }
-
-    override fun getFolderIcon(): Int {
+    override fun getDefaultFolderIcon(): Int {
         return R.drawable.ic_folder
     }
 
     override fun getDefaultFileIcon(): Int {
         return R.drawable.ic_file
+    }
+
+    override fun getIconForFolder(folder: File): Int {
+        return when (folder.name) {
+            "app" -> R.drawable.ic_folder
+            "src" -> R.drawable.ic_folder
+            "kotlin" -> R.drawable.ic_folder
+            "java" -> R.drawable.ic_folder
+            "res" -> R.drawable.ic_folder
+            else -> getDefaultFolderIcon()
+        }
     }
 
     override fun getIconForFile(file: File): Int {

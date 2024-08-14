@@ -22,29 +22,31 @@ This documentation guides you on how to integrate and use the `FileTree` library
 
   **4. Customizing Icons**
 
-  **5. Asynchronous File System**
+  **5. AttributeSet**
 
-  **6. Example (Android View-Based)**
+  **6. Asynchronous File System**
 
-  **7. Frequently Asked Questions (FAQ)**
+  **7. Example (Android View-Based)**
 
   **8. License.**
 
 ## 1. Introduction
 
-The `FileTree` library provides a robust and modular way to manage and display file trees within your IDEs and code editors. It offers the following key features:
+The `FileTree` library offers a comprehensive and modular solution for managing and displaying file trees within IDEs and code editors. It is designed to provide the following key features:
 
-- **Hierarchical File Tree Representation:** Presents files and folders in a hierarchical tree structure.
+- **Hierarchical File Tree Representation:** Displays files and folders in an organized hierarchical tree structure.
 
-- **Hover-Navigated Directory**: Highlights directories as users navigate through them by clicking. This feature enhances user experience by visually indicating the current directory and providing a clear, interactive method for exploring the directory tree.
+- **Hover-Navigated Directory:** Highlights directories as users navigate through them with clicks. This feature enhances user experience by visually indicating the current directory, offering a clear and interactive method for exploring the directory tree.
 
-- **Lazy Loading:** Optimizes loading time by only loading child nodes when expanded.
+- **Lazy Loading:** Improves loading time by loading child nodes only when they are expanded.
 
-- **Asynchronous File System:** Performs file functions like expanding, collapsing, loading files in `FileTree`, etc. in the background thread to avoid blocking the Main UI Thread.
+- **Asynchronous File System:** Executes file operations like expanding, collapsing, and loading files in the `FileTree` on a background thread, preventing the Main UI Thread from being blocked.
 
-- **Customizable Icons:** Allows you to set custom icons for files and folders.
+- **Customizable Icons:** Enables the use of custom icons for files and folders.
 
-- **Flexibility:** Integrates seamlessly with various IDE UI frameworks (Android Views, Swing, SWT, Jetpack Compose).
+- **Concurrent FileMap:** Maintains a record of recently accessed files and directories, facilitating quick access to previously expanded files and directories.
+
+- **RecyclerItemView:** Utilizes the built-in RecycledViewPool of RecyclerView to reuse old views, reducing memory usage by avoiding the creation of new views.
 
 ### Overview
 
@@ -72,36 +74,18 @@ The specific instructions for adding a dependency will depend on your IDE and bu
 
 ### 2.2. Initialization and Loading
 
-**1. Create an Instance:** Instantiate a `FileTree` object, providing the root directory:
+**1. Initialize:** Instantiate a `FileTree` object, providing the root directory:
 
 ```kotlin
-val fileTree = FileTree(this, "/storage/emulated/0")
-```
-
-**2. Load the FileTree:** Call the `loadFileTree()` method to load the initial file tree structure. This will load the root directory and its immediate children:
-
-```kotlin
-fileTree.loadFileTree()
+fileTreeView.initializeFileTree(this, "/storage/emulated/0")
 ```
 ### 2.3. UI Integration
 
-This step involves integrating the `FileTree` library with your IDE's UI framework. The specific implementation will vary depending on your chosen UI framework. Below are common frameworks with basic examples:
+This step involves integrating the `FileTree`  Library within your  project, here's a basic example using Android Views:
 
 - **Android View-Based (Android/Kotlin/Java):** Define `FileTreeView` in your Layout (XML) to display your `FileTree` data.
 
     Docs [Getting Sarted](docs/integration/Android.md)
-
-- **Jetpack Compose (Android/Kotlin):** Define a composable that renders the file tree using your `FileTree` data. 
-
-    Docs [Getting Sarted](docs/integration/Android-Jetpack-Compose.md)
-
-- **Swing (Java):** Use a `JTree` component and create a custom TreeModel that uses the `FileTreeNode` data from your `FileTree` object. 
-
-    Docs [Getting Sarted](docs/integration/Java-Swing.md)
-
-- **SWT (Java):** Similar to Swing, use a `TreeViewer` and a custom `TreeContentProvider` to map your `FileTreeNode` data.
-
-    Docs [Getting Sarted](docs/integration/Java-SWT.md)
 
 ### 2.4. Event Handling
 
@@ -151,20 +135,27 @@ import java.io.File
 
 class FileIconProvider : FileTreeIconProvider {
 
-    override fun getChevronExpandIcon(): Int {
-        return R.drawable.ic_chevron_expand
+    override fun getChevronIcon(): Int {
+        return R.drawable.ic_chevron
     }
 
-    override fun getChevronCollapseIcon(): Int {
-        return R.drawable.ic_chevron_collapse
-    }
-
-    override fun getFolderIcon(): Int {
+    override fun getDefaultFolderIcon(): Int {
         return R.drawable.ic_folder
     }
 
     override fun getDefaultFileIcon(): Int {
         return R.drawable.ic_file
+    }
+
+    override fun getIconForFolder(folder: File): Int {
+        return when (folder.name) {
+            "app" -> R.drawable.ic_folder
+            "src" -> R.drawable.ic_folder
+            "kotlin" -> R.drawable.ic_folder
+            "java" -> R.drawable.ic_folder
+            "res" -> R.drawable.ic_folder
+            else -> getDefaultFolderIcon()
+        }
     }
 
     override fun getIconForFile(file: File): Int {
@@ -189,11 +180,43 @@ class FileIconProvider : FileTreeIconProvider {
 }
 ```
 
-## 5. Asynchronous File System
+## 5. AttributeSet 
+
+| Attribute Name            | Description                                                                                     | Default Value | XML Attribute                   | Type    |
+|---------------------------|-------------------------------------------------------------------------------------------------|---------------|---------------------------------|---------|
+| **recyclerItemViewCount** | Defines the maximum number of items the RecyclerView can hold in its recycled view pool.        | 200           | `app:recyclerItemViewCount`     | Integer |
+| **recyclerItemViewEnabled** | Enables or disables the use of a recycled view pool for the RecyclerView.                      | true          | `app:recyclerItemViewEnabled`   | Boolean |
+| **itemViewCacheSize**     | Sets the maximum size for the view cache in the RecyclerView.                                   | 100           | `app:itemViewCacheSize`         | Integer |
+| **itemViewCachingEnabled** | Enables or disables caching of item views in the RecyclerView.                                 | true          | `app:itemViewCachingEnabled`    | Boolean |
+| **fileMapMaxSize**        | Specifies the maximum number of entries in the file map, which caches recently accessed files and directories. | 150           | `app:fileMapMaxSize`            | Integer |
+| **fileMapEnabled**        | Enables or disables the file map functionality.                                                 | true          | `app:fileMapEnabled`            | Boolean |
+| **fileTreeAnimation**     | Sets the animation style for expanding and collapsing the file tree.                            | 4             | `app:fileTreeAnimation`         | Integer |
+| **fileTreeAnimationEnabled** | Enables or disables animations for the file tree.                                             | true          | `app:fileTreeAnimationEnabled`  | Boolean |
+
+### Usage Example
+
+To configure these attributes in your XML layout file, use the following syntax:
+
+```xml
+<com.zyron.filetree.widget.FileTreeView
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    app:recyclerItemViewCount="250"
+    app:recyclerItemViewEnabled="true"
+    app:itemViewCacheSize="120"
+    app:itemViewCachingEnabled="true"
+    app:fileMapMaxSize="180"
+    app:fileMapEnabled="true"
+    app:fileTreeAnimation="FallDown"
+    app:fileTreeAnimationEnabled="false"/>
+```
+Adjust these values according to your application's needs to optimize performance and user experience.
+
+## 6. Asynchronous File System
 
 The `FileTree` library typically uses a built-in asynchronous system powered by Kotlin Coroutines to perform core file functions such as expanding, collapsing and loading files in `FileTree` on the background thread. This ensures that the UI thread remains responsive while the functions are executed.
 
-## 6. Example (Android view-based)
+## 7. Example (Android view-based)
 
 Here's a basic example of using the `FileTree` library with Android views:
 
@@ -233,24 +256,6 @@ class MainActivity : AppCompatActivity() {
         fileTreeView.initializeFileTree("/storage/emulated/0", fileOperationExecutor, fileIconProvider, this)
 }
 ```
-
-## 7. Frequently Asked Questions (FAQ)
-
-**Q:** How do I get the selected file or folder in the file tree?
-
-**A:** Use the event listener for node selection to retrieve the selected node. The selected node will likely represent the FileTreeNode object that you can use to access the underlying File object.
-
-**Q:** How do I refresh the file tree after making changes to the file system?
-
-**A:** Use the `loadFileTree()` method to reload the tree structure. If you only need to update a portion of the tree, you can refresh specific nodes or sections.
-
-**Q:** Can I customize the appearance of the file tree?
-
-**A:** Yes, you can customize the appearance by using custom renderers (Swing, SWT) or composables (Jetpack Compose) to control the display of nodes.
-
-**Q:** Can I use the `FileTree` library for other purposes besides IDEs and Code Editors?
-
-**A:** Yes, the library can be adapted for other applications that require file tree management, such as file explorers or project management tools.
 
 ## 8. License
 ```
