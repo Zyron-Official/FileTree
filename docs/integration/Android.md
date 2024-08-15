@@ -21,9 +21,7 @@
 
 ```kotlin 
 import androidx.appcompat.app.AppCompatActivity
-import com.zyron.filetree.FileTree
-import com.zyron.filetree.widget.FileTreeView
-import com.zyron.filetree.adapter.FileTreeAdapter 
+import com.zyron.filetree.widget.FileTreeView 
 import com.zyron.filetree.resources.FileIconProvider
 import com.zyron.filetree.operationexecutor.FileOperationExecutor
 import java.io.File
@@ -42,7 +40,7 @@ class MainActivity : AppCompatActivity() {
 The `FileTree` library provides Event Listeners for performing common file system operations by using FileTreeEventListener Interface.
 
 ```kotlin
-import com.zyron.filetree.adapter.FileTreeEventListener 
+import com.zyron.filetree.events.FileTreeEventListener 
 import java.io.File
 
 class FileOperationExecutor(private val context: Context) : FileTreeEventListener {
