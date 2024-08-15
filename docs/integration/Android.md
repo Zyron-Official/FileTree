@@ -87,11 +87,11 @@ class FileIconProvider : FileTreeIconProvider {
 
     override fun getIconForFolder(folder: File): Int {
         return when (folder.name) {
-            "app" -> R.drawable.ic_folder
-            "src" -> R.drawable.ic_folder
-            "kotlin" -> R.drawable.ic_folder
-            "java" -> R.drawable.ic_folder
-            "res" -> R.drawable.ic_folder
+            "app" -> R.drawable.ic_folder_app
+            "src" -> R.drawable.ic_folder_src
+            "kotlin" -> R.drawable.ic_folder_kotlin
+            "java" -> R.drawable.ic_folder_java
+            "res" -> R.drawable.ic_folder_res
             else -> getDefaultFolderIcon()
         }
     }
