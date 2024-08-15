@@ -74,7 +74,7 @@ The specific instructions for adding a dependency will depend on your IDE and bu
 
 ### 2.2. Initialization and Loading
 
-**1. Initialize:** Instantiate a `FileTree` object, providing the root directory:
+**1. Initialize:** Initialize `FileTree`, providing the root directory:
 
 ```kotlin
 fileTreeView.initializeFileTree(this, "/storage/emulated/0")
@@ -98,7 +98,7 @@ Handle these events in your IDE's logic to perform actions like opening files, d
 The `FileTree` library provides Event Listeners for performing common file system operations by using FileTreeEventListener Interface.
 
 ```kotlin
-import com.zyron.filetree.adapter.FileTreeEventListener 
+import com.zyron.filetree.events.FileTreeEventListener 
 import java.io.File
 
 class FileOperationExecutor(private val context: Context) : FileTreeEventListener {
@@ -149,11 +149,11 @@ class FileIconProvider : FileTreeIconProvider {
 
     override fun getIconForFolder(folder: File): Int {
         return when (folder.name) {
-            "app" -> R.drawable.ic_folder
-            "src" -> R.drawable.ic_folder
-            "kotlin" -> R.drawable.ic_folder
-            "java" -> R.drawable.ic_folder
-            "res" -> R.drawable.ic_folder
+            "app" -> R.drawable.ic_folder_app
+            "src" -> R.drawable.ic_folder_src
+            "kotlin" -> R.drawable.ic_folder_kotlin
+            "java" -> R.drawable.ic_folder_java
+            "res" -> R.drawable.ic_folder_res
             else -> getDefaultFolderIcon()
         }
     }
@@ -241,9 +241,7 @@ Here's a basic example of using the `FileTree` library with Android views:
 
 ```kotlin 
 import androidx.appcompat.app.AppCompatActivity
-import com.zyron.filetree.FileTree
-import com.zyron.filetree.widget.FileTreeView
-import com.zyron.filetree.adapter.FileTreeAdapter 
+import com.zyron.filetree.widget.FileTreeView 
 import com.zyron.filetree.resources.FileIconProvider
 import com.zyron.filetree.operationexecutor.FileOperationExecutor
 import java.io.File
