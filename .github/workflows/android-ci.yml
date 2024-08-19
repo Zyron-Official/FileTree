@@ -38,6 +38,9 @@ jobs:
       - name: Give permission to executable
         run: chmod +x gradlew
 
+      - name: List APK files
+  run: ls -R app/build/outputs/apk/
+
       - name: Generate APK
         run: ./gradlew assemble${{ matrix.build-type }}
 
