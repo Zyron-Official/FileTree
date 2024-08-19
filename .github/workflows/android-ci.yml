@@ -38,14 +38,14 @@ jobs:
       - name: Give permission to executable
         run: chmod +x gradlew
 
-      - name: List APK files
-  run: ls -R app/build/outputs/apk/
-
       - name: Generate APK
         run: ./gradlew assemble${{ matrix.build-type }}
+
+      - name: List APK files
+        run: ls -R app/build/outputs/apk/
 
       - name: Upload APK
         uses: actions/upload-artifact@master
         with:
           name: app-${{ matrix.build-type }}
-          path: app/build/outputs/apk/${{ matrix.build-type }}/app-${{ matrix.build-type }}.apk
+          path: app/build/outputs/apk/${{ matrix.build-type }}/*.apk
