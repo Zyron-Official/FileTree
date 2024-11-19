@@ -1,10 +1,10 @@
 ## FileTree: A Powerful File Explorer Library for IDEs and Code Editors.
 
-This documentation guides you on how to integrate and use the `FileTree` library within your IDEs and Code Editors to provide a user-friendly and efficient file browsing experience.
-
 > [!WARNING]
 > 
 > **This Project is deprecated and no longer maintained in favor of [Orbit-VFMS](https://github.com/Zyron-Official/Orbit-VFMS).**
+
+This documentation guides you on how to integrate and use the `FileTree` library within your IDEs and Code Editors to provide a user-friendly and efficient file browsing experience.
 
 ### Table of Contents:
 
