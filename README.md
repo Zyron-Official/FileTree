@@ -67,8 +67,10 @@ The `FileTree` library offers a comprehensive and modular solution for managing 
 
 First, add the `FileTree` library as a dependency to your project using a build system like Maven or Gradle:
 
+[![](https://jitpack.io/v/Zyron-Official/FileTree.svg)](https://jitpack.io/#Zyron-Official/FileTree)
+
 ```gradle
-dependencyResolutionManagement {
+ dependencyResolutionManagement {
 		repositoriesMode.set(RepositoriesMode.FAIL_ON_PROJECT_REPOS)
 		repositories {
 			mavenCentral()
