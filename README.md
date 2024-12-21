@@ -85,7 +85,7 @@ dependencyResolutionManagement {
 
 ```gradle
 dependencies {
-    implementation 'com.github.Zyron-Official:FileTree:Tag'
+    implementation 'com.github.Zyron-Official:FileTree:Version'
 }
 ```
 The specific instructions for adding a dependency will depend on your IDE and build system.
