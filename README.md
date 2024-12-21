@@ -71,7 +71,7 @@ First, add the `FileTree` library as a dependency to your project using a build 
 
 ```gradle
 dependencyResolutionManagement {
-repositoriesMode.set(RepositoriesMode.FAIL_ON_PROJECT_REPOS)
+    repositoriesMode.set(RepositoriesMode.FAIL_ON_PROJECT_REPOS)
 	repositories {
 		mavenCentral()
 		maven { url 'https://jitpack.io' }
