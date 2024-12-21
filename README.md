@@ -79,7 +79,7 @@ First, add the `FileTree` library as a dependency to your project using a build 
 	}
 ```
 
-```groovy
+```gradle
 	dependencies {
 	        implementation 'com.github.Zyron-Official:FileTree:Tag'
 	}
