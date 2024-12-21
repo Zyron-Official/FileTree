@@ -70,19 +70,19 @@ First, add the `FileTree` library as a dependency to your project using a build 
 [![](https://jitpack.io/v/Zyron-Official/FileTree.svg)](https://jitpack.io/#Zyron-Official/FileTree)
 
 ```gradle
- dependencyResolutionManagement {
-		repositoriesMode.set(RepositoriesMode.FAIL_ON_PROJECT_REPOS)
-		repositories {
-			mavenCentral()
-			maven { url 'https://jitpack.io' }
-		}
+dependencyResolutionManagement {
+repositoriesMode.set(RepositoriesMode.FAIL_ON_PROJECT_REPOS)
+	repositories {
+		mavenCentral()
+		maven { url 'https://jitpack.io' }
 	}
+}
 ```
 
 ```gradle
-	dependencies {
-	        implementation 'com.github.Zyron-Official:FileTree:Tag'
-	}
+dependencies {
+	       implementation 'com.github.Zyron-Official:FileTree:Tag'
+}
 ```
 The specific instructions for adding a dependency will depend on your IDE and build system.
 
